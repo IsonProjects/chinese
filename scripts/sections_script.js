@@ -48,9 +48,9 @@ function toSection(id) {
 
     for (const inputNode of searchNode.querySelectorAll("input")) {
         if (inputNode.classList.contains(id + "_search")) {
-            inputNode.style.display = "";
+            inputNode.parentElement.style.display = "";
             searchNode.style.display = "";
         }
-        else inputNode.style.display = "none";
+        else inputNode.parentElement.style.display = "none";
     }
 }

@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateColorScheme();
 
     document.querySelector(".toggle_theme_button").addEventListener("click", () => {
-        localStorage.setItem("theme", localStorage.getItem("theme") == "dark" ? "light" : "dark");
+        localStorage.setItem("theme", localStorage.getItem("theme") === "dark" ? "light" : "dark");
         updateColorScheme();
     });
 });

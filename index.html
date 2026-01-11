@@ -48,12 +48,16 @@
             </div>
             
             <div class="category_selector settings_selector">
-                <input class="checkbox" type="checkbox">
+                <label>
+                    <input class="checkbox" type="checkbox">
+                </label>
                 <p class="name">%name%</p>
             </div>
             
             <div class="exercise_type_selector settings_selector">
-                <input class="checkbox" type="checkbox">
+                <label>
+                    <input class="checkbox" type="checkbox">
+                </label>
                 <p class="name">%name%</p>
             </div>
             
@@ -86,8 +90,12 @@
             </div>
 
             <div class="row search">
-                <input class="words_search" placeholder="Поиск">
-                <input class="grammars_search" placeholder="Поиск">
+                <label>
+                    <input class="words_search" placeholder="Поиск">
+                </label>
+                <label>
+                    <input class="grammars_search" placeholder="Поиск">
+                </label>
             </div>
         </header>
 
@@ -114,7 +122,9 @@
 
                     <div class="settings_section">
                         <p class="title">Количество упражнений</p>
-                        <input class="exercises_amount_input" type="number" min="1" placeholder="Число">
+                        <label>
+                            <input class="exercises_amount_input" type="number" min="1" placeholder="Число">
+                        </label>
                     </div>
                 </div>
 
@@ -134,12 +144,16 @@
                     <div class="select_pinyin_layout layout" style="display: none;"></div>
                     <div class="translate_word_character_layout layout" style="display: none;">
                         <p class="character chinese_text">%character%</p>
-                        <input class="translation_input">
+                        <label>
+                            <input class="translation_input">
+                        </label>
                         <p class="correct_answer" style="display: none">%correct%</p>
                     </div>
                     <div class="translate_word_audio_layout layout" style="display: none;">
                         <svg class="audio_button" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M545.54-81.62v-88q106.54-27.53 173.42-115 66.89-87.46 66.89-197.38 0-108.92-67.39-195.38-67.38-86.47-172.92-114v-88q142.69 27.92 234.5 139.92 91.8 112 91.8 257.46 0 146.46-91.8 259.46-91.81 113-234.5 140.92ZM88.16-360v-240h162.46l199.53-201.53v643.06L250.62-360H88.16Zm457.38 38.15v-316.3q44.46 23 70.54 65.46 26.07 42.46 26.07 92.69 0 50.61-26.27 92.88-26.27 42.27-70.34 65.27ZM364.15-594l-78 80h-112v68h112l78 80v-228Zm-95 114Z"/></svg>
-                        <input class="translation_input">
+                        <label>
+                            <input class="translation_input">
+                        </label>
                         <p class="correct_answer" style="display: none">%correct%</p>
                     </div>
                 </div>

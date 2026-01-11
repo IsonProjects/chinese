@@ -8,7 +8,7 @@ function pronounce(text) {
 }
 
 function shuffle(array) {
-    if (array.length == 0) return;
+    if (array.length === 0) return;
 
     for (let i = array.length - 1; i > 0; i--) {
         const randomI = Math.floor(Math.random() * i);
@@ -41,7 +41,7 @@ function findToneChar(pinyin) {
         const c = pinyin[i];
 
         for (const chars of toneChars) {
-            if (chars.includes(c) && chars.indexOf(c) != 0) return c;
+            if (chars.includes(c) && chars.indexOf(c) !== 0) return c;
         }
     }
 
