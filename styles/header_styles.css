@@ -56,8 +56,6 @@ header .row {
     header .row {
         gap: 0.5em;
         padding: 0.5em;
-        border-bottom: none;
-        border-top: 3px solid var(--main-color);
 
         .title {
             display: none;
