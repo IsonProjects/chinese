@@ -4,7 +4,7 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: fixed;
+    position: sticky;
     top: 0;
     z-index: 100;
 }
@@ -42,33 +42,17 @@ header .row {
     }
 }
 
-.section {
-    --section-padding: 157px;
-    padding-top: var(--section-padding);
-}
-
 
 
 .search input {
     max-height: 3em;
     max-width: 12em;
-    border: 2px solid var(--main-color);
     text-align: center;
-
-    &:focus {
-        border: 2px solid var(--hint-color);
-    }
 }
 
 
 
 @media (width <= 500px) {
-    header {
-        top: auto;
-        bottom: 0;
-        flex-direction: column-reverse;
-    }
-
     header .row {
         gap: 0.5em;
         padding: 0.5em;
@@ -78,11 +62,6 @@ header .row {
         .title {
             display: none;
         }
-    }
-
-    .section {
-        padding-top: 0;
-        padding-bottom: var(--section-padding);
     }
 }
 

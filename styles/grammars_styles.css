@@ -10,22 +10,11 @@
     padding: 1.5em;
     background-color: var(--second-color);
     border-radius: 1em;
-}
-
-.grammar_info {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 1em;
 
     .name {
         font-size: 1.25em;
         font-weight: 600;
-    }
-
-    .categories {
-        font-size: 1em;
-        color: var(--hint-color);
+        margin-bottom: 1em;
     }
 }
 

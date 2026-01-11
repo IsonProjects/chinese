@@ -16,7 +16,7 @@ function addExerciseType(id, name, generate, load) {
 
 function findExerciseType(id) {
     for (const exerciseType of exerciseTypes) {
-        if (exerciseType.id == id) return exerciseType;
+        if (exerciseType.id === id) return exerciseType;
     }
 
     return null;
@@ -99,8 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.querySelector(".exercises_section .start_exercises_button").addEventListener("click", () => {
-        if (selectedExerciseCategories.length == 0) return;
-        if (selectedExerciseTypes.length == 0) return;
+        if (selectedExerciseCategories.length === 0) return;
+        if (selectedExerciseTypes.length === 0) return;
         startExercises();
     });
 
@@ -220,9 +220,9 @@ function generateMatchPairsExercise(availableWords) {
 
     const mode = Math.floor(Math.random() * 3);
     for (const word of selectedWords) {
-        if (mode == 0) content.set(word.character, word.pinyin);
-        else if (mode == 1) content.set(word.character, word.translation);
-        else if (mode == 2) content.set(word.pinyin, word.translation);
+        if (mode === 0) content.set(word.character, word.pinyin);
+        else if (mode === 1) content.set(word.character, word.translation);
+        else if (mode === 2) content.set(word.pinyin, word.translation);
     }
 
     return {
@@ -296,7 +296,7 @@ function loadMatchPairsExercise(exercise, exerciseNode, titleNode) {
         selectedValue.classList.remove("incorrect");
         void selectedKey.offsetWidth;
 
-        if (selectedKey.id == selectedValue.id) {
+        if (selectedKey.id === selectedValue.id) {
             selectedKey.classList.add("correct");
             selectedValue.classList.add("correct");
         }
@@ -394,7 +394,7 @@ function loadSelectPinyinExercise(exercise, exerciseNode, titleNode) {
                 pinyinItemNode.classList.add("selected");
             }
 
-            exercisesActionButtonNode.disabled = layoutNode.querySelectorAll(".pinyin_item.selected").length != contentLength;
+            exercisesActionButtonNode.disabled = layoutNode.querySelectorAll(".pinyin_item.selected").length !== contentLength;
         });
 
         layoutNode.appendChild(pinyinItemNode);
@@ -405,7 +405,7 @@ function loadSelectPinyinExercise(exercise, exerciseNode, titleNode) {
             const correct = exercise.content[i].correct;
             const selectedNode = layoutNode.querySelector(".pinyin_item.selected.column_" + i);
 
-            if (selectedNode.innerHTML == correct) {
+            if (selectedNode.innerHTML === correct) {
                 selectedNode.classList.add("correct");
             }
             else {
@@ -453,14 +453,14 @@ function loadTranslateWordAudioExercise(exercise, exerciseNode, titleNode) {
     correctAnswerNode.style.display = "none";
 
     translationInputNode.oninput = () => {
-        exercisesActionButtonNode.disabled = translationInputNode.value.length == 0;
+        exercisesActionButtonNode.disabled = translationInputNode.value.length === 0;
     }
 
     exercisesActionButtonNode.onclick = () => {
         const translation = exercise.content.translation.toLowerCase();
         const input = translationInputNode.value.toLowerCase();
 
-        if (input == translation) {
+        if (input === translation) {
             translationInputNode.classList.add("correct");
             exercisesCorrectAmount++;
         }
@@ -504,14 +504,14 @@ function loadTranslateWordCharacterExercise(exercise, exerciseNode, titleNode) {
     correctAnswerNode.style.display = "none";
 
     translationInputNode.oninput = () => {
-        exercisesActionButtonNode.disabled = translationInputNode.value.length == 0;
+        exercisesActionButtonNode.disabled = translationInputNode.value.length === 0;
     }
 
     exercisesActionButtonNode.onclick = () => {
         const translation = exercise.content.translation.toLowerCase();
         const input = translationInputNode.value.toLowerCase();
 
-        if (input == translation) {
+        if (input === translation) {
             translationInputNode.classList.add("correct");
             exercisesCorrectAmount++;
         }

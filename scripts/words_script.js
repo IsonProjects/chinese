@@ -568,57 +568,36 @@ for (const word of words) {
 
 
 
-let allowedWordsTranscription = words.map(word => word.id);
-let allowedWordsTranslate = words.map(word => word.id);
+const wordsSearch = document.querySelector(".search .words_search");
+let filteredWords = words.map(word => word.id);
 
-const transcriptionSearch = document.querySelector(".search .transcription_search");
-const translateSearch = document.querySelector(".search .translate_search");
+wordsSearch.addEventListener("input", () => {
+    const searchValue = wordsSearch.value.toLowerCase().replaceAll(" ", "");
 
-transcriptionSearch.addEventListener("input", () => {
-    if (transcriptionSearch.value == "") {
-        allowedWordsTranscription = words.map(word => word.id);
-    }
+    if (searchValue === "") filteredWords = words.map(word => word.id);
     else {
-        allowedWordsTranscription = [];
+        filteredWords = [];
+
         for (const word of words) {
-            if (word.id.split("_")[0].includes(transcriptionSearch.value.toLowerCase().replaceAll(" ", ""))) {
-                allowedWordsTranscription.push(word.id);
+            if (word.id.split("_")[0].includes(searchValue) ||
+                word.translation.toLowerCase().replaceAll(" ", "").includes(searchValue)) {
+                filteredWords.push(word.id);
             }
         }
-    }
-    
 
-    if (allowedWordsTranscription.length == 0) {
-        for (const word of words) {
-            if (word.id.split("_")[0].replaceAll(/[0-9]/g, "").includes(transcriptionSearch.value.toLowerCase().replaceAll(" ", ""))) {
-                allowedWordsTranscription.push(word.id);
-            }
-        }
-    }
-
-    updateWordsList();
-});
-
-translateSearch.addEventListener("input", () => {
-    if (translateSearch.value == "") {
-        allowedWordsTranslate = words.map(word => word.id);
-    }
-    else {
-        allowedWordsTranslate = [];
-        for (const word of words) {
-            if (word.translation.toLowerCase().replaceAll(" ", "").includes(translateSearch.value.toLowerCase().replaceAll(" ", ""))) {
-                allowedWordsTranslate.push(word.id);
+        if (filteredWords.length === 0) {
+            for (const word of words) {
+                if (word.id.split("_")[0].replaceAll(/[0-9]/g, "").includes(searchValue)) {
+                    filteredWords.push(word.id);
+                }
             }
         }
     }
 
-    updateWordsList();
-});
-
-function updateWordsList() {
     for (const word of words) {
         const wordNode = document.querySelector(".words ." + word.id);
-        if (allowedWordsTranscription.includes(word.id) && allowedWordsTranslate.includes(word.id)) wordNode.style.display = "";
+
+        if (filteredWords.includes(word.id)) wordNode.style.display = "";
         else wordNode.style.display = "none";
     }
 
@@ -634,4 +613,4 @@ function updateWordsList() {
             }
         }
     }
-}
+});

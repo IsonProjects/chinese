@@ -27,6 +27,7 @@ html {
     color: var(--font-color);
     height: 100%;
     cursor: default;
+    overflow-x: hidden;
     overflow-y: scroll;
 }
 
@@ -60,7 +61,7 @@ input {
     padding: 0.5em;
     color: var(--font-color);
     background-color: var(--second-color);
-    border: 2px solid var(--pale-color);
+    border: 2px solid var(--main-color);
     border-radius: 1em;
     font-size: 1em;
     font-family: inherit;
@@ -70,7 +71,7 @@ input {
 
 input:hover, input:focus-visible {
     background-color: var(--main-color);
-    border-color: var(--hint-color);
+    border-color: var(--pale-color);
 }
 
 input:invalid {
@@ -91,5 +92,5 @@ input::-webkit-inner-spin-button {
 }
 
 .chinese_text {
-    font-family: "Noto Sans SC";
+    font-family: "Noto Sans SC", serif;
 }

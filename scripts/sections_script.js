@@ -39,27 +39,18 @@ function toSection(id) {
     }
 
     if (id === "grammars") document.title = "Китайский - Грамматика";
-    else if (id == "words") document.title = "Китайский - Слова";
-    else if (id == "exercises") document.title = "Китайский - Упражнения";
-    else if (id == "settings") document.title = "Китайский - Настройки";
+    else if (id === "words") document.title = "Китайский - Слова";
+    else if (id === "exercises") document.title = "Китайский - Упражнения";
+    else if (id === "settings") document.title = "Китайский - Настройки";
     else document.title = "Китайский";
 
-    let hasInput = false;
+    searchNode.style.display = "none";
+
     for (const inputNode of searchNode.querySelectorAll("input")) {
         if (inputNode.classList.contains(id + "_search")) {
-            console.log(inputNode.classList);
             inputNode.style.display = "";
-            hasInput = true;
+            searchNode.style.display = "";
         }
         else inputNode.style.display = "none";
-    }
-
-    if (!hasInput) {
-        searchNode.style.display = "none";
-        document.querySelector("body > ." + id + "_section").style.setProperty("--section-padding", "80px");
-    }
-    else {
-        searchNode.style.display = "";
-        document.querySelector("body > ." + id + "_section").style.setProperty("--section-padding", "157px");
     }
 }
