@@ -1,0 +1,276 @@
+.exercises_start_page {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+}
+
+.exercises_settings {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.exercises_settings .settings_section {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    background-color: var(--second-color);
+    border-radius: 1em;
+    padding: 1em;
+
+    .title {
+        font-size: 1.25em;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    &.collapsed div {
+        display: none;
+    }
+}
+
+.exercises_settings .settings_section .settings_selectors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+
+    .settings_selector {
+        display: flex;
+        gap: 0.5em;
+        align-items: center;
+    }
+}
+
+.start_exercises_button {
+    align-self: center;
+}
+
+
+
+.exercises_page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5em;
+}
+
+.exercises_page .header {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    margin-top: 1em;
+
+    .close_button {
+        height: 1.5em;
+        fill: var(--hint-color);
+        cursor: pointer;
+    }
+}
+
+.exercises_page .header .progress_bar {
+    height: 0.5em;
+    border-radius: 1em;
+
+    &::-webkit-progress-bar {
+        background-color: var(--hint-color);
+        border-radius: 1em;
+    }
+
+    &::-webkit-progress-value {
+        background-color: var(--correct-color);
+        border-radius: 1em;
+    }
+}
+ 
+.exercises_page .footer {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 1em;
+
+    .action_button {
+        transition: 0.2s;
+    }
+
+    .action_button:disabled {
+        filter: brightness(80%);
+        pointer-events: none;
+    }
+}
+
+.exercises_page .exercise {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    .title {
+        align-self: center;
+        font-size: 1.25em;
+        font-weight: 600;
+    }
+}
+
+.exercises_page .exercise .match_pairs_layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5em;
+    padding: 1em;
+    background-color: var(--second-color);
+    border-radius: 1em;
+
+    .pair_item {
+        text-align: center;
+        padding: 0.5em;
+        background-color: var(--main-color);
+        border-radius: 1em;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .pair_item:hover {
+        background-color: var(--pale-color);
+    }
+
+    .pair_item.selected {
+        --selected-color: var(--selection-color);
+        background-color: var(--selected-color);
+    }
+
+    .pair_item.correct {
+        animation: correct 0.5s ease-in-out;
+        background-color: var(--hint-color);
+        cursor: default;
+    }
+
+    .pair_item.incorrect {
+        animation: incorrect 0.5s ease-in-out;
+    }
+}
+
+.exercises_page .exercise .select_pinyin_layout {
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 0.5em;
+    padding: 1em;
+    background-color: var(--second-color);
+    border-radius: 1em;
+
+    .character_item {
+        text-align: center;
+    }
+    
+    .pinyin_item {
+        text-align: center;
+        padding: 0.5em;
+        background-color: var(--main-color);
+        border-radius: 1em;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .pinyin_item:hover {
+        background-color: var(--pale-color);
+    }
+
+    .pinyin_item.selected {
+        background-color: var(--selection-color);
+    }
+
+    .pinyin_item.correct {
+        background-color: var(--correct-color);
+    }
+
+    .pinyin_item.incorrect {
+        background-color: var(--incorrect-color);
+    }
+
+    &.disabled .pinyin_item {
+        pointer-events: none;
+    }
+}
+
+.exercises_page .exercise .translate_word_audio_layout,
+.exercises_page .exercise .translate_word_character_layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 1em;
+    background-color: var(--second-color);
+    border-radius: 1em;
+
+    .translation_input.correct {
+        background-color: var(--correct-color);
+    }
+
+    .translation_input.incorrect {
+        background-color: var(--incorrect-color);
+    }
+
+    .translation_input:disabled {
+        pointer-events: none;
+    }
+    
+    .correct_answer {
+        font-size: 0.9em;
+        font-weight: 500;
+    }
+}
+
+.exercises_page .exercise .translate_word_audio_layout .audio_button {
+    height: 1.5em;
+    cursor: pointer;
+}
+
+.exercises_page .exercise .translate_word_character_layout .character {
+    font-weight: 500;
+}
+
+
+
+.exercises_results_page {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+    padding: 1em;
+}
+
+.exercises_results_page .results_section {
+    padding: 1em;
+    background-color: var(--second-color);
+    border-radius: 1em;
+
+    .label {
+        font-weight: 500;
+    }
+}
+
+
+
+@keyframes correct {
+    0% {
+        background-color: var(--selected-color);
+    }
+
+    50% {
+        background-color: var(--correct-color);
+    }
+
+    100% {
+        background-color: var(--hint-color);
+    }
+}
+
+@keyframes incorrect {
+    50% {
+        background-color: var(--incorrect-color);
+    }
+}
+
+
+
+@media (width <= 500px) {
+    .exercises_page .footer {
+        margin-bottom: calc(65px + 1em);
+    }
+}

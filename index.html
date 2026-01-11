@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Китайский</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="styles/styles.css?<?include '/param.php';?>">
+        <link rel="stylesheet" href="styles/header_styles.css?<?include '/param.php';?>">
+        <link rel="stylesheet" href="styles/words_styles.css?<?include '/param.php';?>">
+        <link rel="stylesheet" href="styles/grammars_styles.css?<?include '/param.php';?>">
+        <link rel="stylesheet" href="styles/exercises_styles.css?<?include '/param.php';?>">
+        
+        <script src="scripts/script.js?<?include '/param.php';?>"></script>
+        <script src="scripts/sections_script.js?<?include '/param.php';?>"></script>
+        <script src="scripts/words_script.js?<?include '/param.php';?>" defer></script>
+        <script src="scripts/grammar_script.js?<?include '/param.php';?>" defer></script>
+        <script src="scripts/exercises_script.js?<?include '/param.php';?>" defer></script>
+        <script src="scripts/settings_script.js?<?include '/param.php';?>"></script>
+    </head>
+    
+    <body>
+        <div class="templates" style="display: none">
+            <div class="category">
+                <p class="name">%name%</p>
+                <div class="words"></div>
+            </div>
+
+            <div class="word">
+                <p class="character selectable_text chinese_text">%character%</p>
+                <p class="info selectable_text">%info%</p>
+            </div>
+
+            <div class="grammar">
+                <div class="grammar_info">
+                    <p class="name">%name%</p>
+                    <p class="categories">%categories%</p>
+                </div>
+
+                <div class="examples"></div>
+            </div>
+
+            <div class="example">
+                <p class="construction selectable_text chinese_text">%construction%</p>
+                <p class="sentence selectable_text chinese_text">%sentence%</p>
+                <p class="translation selectable_text">%translation%</p>
+            </div>
+            
+            <div class="category_selector settings_selector">
+                <input class="checkbox" type="checkbox">
+                <p class="name">%name%</p>
+            </div>
+            
+            <div class="exercise_type_selector settings_selector">
+                <input class="checkbox" type="checkbox">
+                <p class="name">%name%</p>
+            </div>
+            
+            <p class="pair_item">%text%</p>
+            <p class="character_item chinese_text">%character%</p>
+            <p class="pinyin_item">%pinyin%</p>
+        </div>
+
+        <header>
+            <div class="row sections_selectors">
+                <div class="selector words_selector">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M159.69-379.69h50.08l15.61-46.69h103.39L345-379.69h49.85l-91.7-251.85H251l-91.31 251.85Zm81.93-89.85 34.81-101.69h1.65l35.46 101.69h-71.92Zm316.07-92.61v-48.62q32.62-17.95 68.27-26.13 35.66-8.18 74.04-8.18 24.08 0 46.77 3.43 22.69 3.42 45.54 9.04v50.15q-22.46-7.85-44.66-11.39-22.19-3.54-47.65-3.54-38.38 0-74.35 9.12-35.96 9.12-67.96 26.12Zm0 219.23v-49.39q31.85-17.95 68.08-26.13 36.23-8.17 74.23-8.17 24.08 0 46.77 3.42 22.69 3.42 45.54 9.04V-364q-22.46-7.85-44.66-11.39-22.19-3.53-47.65-3.53-38.38 0-74.35 9.19-35.96 9.19-67.96 26.81Zm0-109.23v-49.39q32.62-17.95 68.27-26.13 35.66-8.18 74.04-8.18 24.08 0 46.77 3.43 22.69 3.42 45.54 9.04v50.15q-22.46-7.85-44.66-11.39-22.19-3.53-47.65-3.53-38.38 0-74.35 9.5-35.96 9.5-67.96 26.5ZM256-309.23q49.69 0 96.69 11.77T446-262.61v-401.24q-42.15-26.46-91.23-39.69-49.08-13.23-98.77-13.23-36 0-69.27 5.65-33.27 5.66-66.27 18.78-4.61 1.54-6.54 4.42-1.92 2.89-1.92 6.35v386.03q0 5.39 3.85 7.89 3.84 2.5 8.46.57 31.46-11.69 63.4-16.92 31.95-5.23 68.29-5.23Zm260 46.62q46.31-23.08 92.31-34.85 46-11.77 95.69-11.77 36 0 68.12 5.23 32.11 5.23 63.57 16.92 4.62 1.93 8.46-.57 3.85-2.5 3.85-7.89v-384.31q0-3.46-1.92-6.15-1.93-2.69-6.54-4.62-33-13.84-66.27-20-33.27-6.15-69.27-6.15-49.69 0-97.77 13.23T516-663.85v401.24Zm-36 101.99q-48.38-37.69-105.38-58.15-57-20.46-118.62-20.46-40.61 0-78.92 9.61Q138.77-220 104-201.23q-22.08 9.84-42.04-3.12T42-241.08v-462.3q0-12.93 6.66-24.27Q55.31-739 67.85-744q44.61-21.77 91.65-32.27 47.04-10.5 96.5-10.5 60.38 0 117.08 16.46 56.69 16.47 106.92 46.62 50.23-30.15 106.92-46.62 56.7-16.46 117.08-16.46 49.46 0 96.5 10.5T892.15-744q12.54 5 19.19 16.35 6.66 11.34 6.66 24.27v462.3q0 23.77-20.73 36.35-20.73 12.57-43.58 2.73-34.38-18.39-72.11-27.81-37.73-9.42-77.58-9.42-61.62 0-118.62 20.46-57 20.46-105.38 58.15ZM279-489.69Z"/></svg>
+                    <p class="title">Слова</p>
+                </div>
+
+                <div class="selector grammars_selector">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M148-370v-86h314v86H148Zm0-178v-86h476v86H148Zm0-178v-86h476v86H148Zm382.62 578v-123.69l221.15-220.16q9.29-9.58 20.18-13.55 10.89-3.98 21.78-3.98 11.88 0 23.2 4.03 11.32 4.04 20.53 13.12l37 38.38q9.46 9.47 13.5 20.16Q892-423 892-411.31t-4.17 22.85q-4.18 11.16-13.37 20.3L654.31-148H530.62Zm300.69-263.31-37-37.38 37 37.38Zm-240 202.62h38l129.84-130.47-18.38-19-18.62-18.76-130.84 130.23v38Zm149.46-149.47-18.62-18.76 37 37.76-18.38-19Z"/></svg>
+                    <p class="title">Грамматика</p>
+                </div>
+
+                <div class="selector exercises_selector">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M206.31-114q-41.92 0-70.12-28.19Q108-170.39 108-212.31v-545.38q0-41.92 28.19-70.12Q164.39-856 206.31-856h154q13.77-34.31 46.08-58.15Q438.69-938 480-938q41.69 0 74 23.85 32.31 23.84 45.69 58.15h154q41.92 0 70.12 28.19Q852-799.61 852-757.69v545.38q0 41.92-28.19 70.12Q795.61-114 753.69-114H206.31Zm0-86h547.38q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46v-545.38q0-4.62-3.85-8.46-3.84-3.85-8.46-3.85H206.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46v545.38q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85ZM274-277.62h290v-85.99H274v85.99ZM274-442h412v-86H274v86Zm0-164.39h412v-85.99H274v85.99Zm206-195.76q13 0 21.5-8.5t8.5-21.5q0-13-8.5-21.5t-21.5-8.5q-13 0-21.5 8.5t-8.5 21.5q0 13 8.5 21.5t21.5 8.5ZM194-200v-570 570Z"/></svg>
+                    <p class="title">Упражнения</p>
+                </div>
+
+                <div class="selector settings_selector">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m364.69-68-17.23-128.85q-10.07-4.38-23.24-11.53-13.16-7.15-22.91-15.31L179.46-173 65.16-377l100.61-77.77q-.38-6.85-.96-13.92-.58-7.08-.58-13.93 0-5.94.58-12.34.58-6.4.96-14.27L65.16-585l114.3-201.23 117.46 48.31q11.47-8.46 25.39-15.96t25.77-13.27L364.69-894h230.62l16.23 128.23q13 6.54 25.57 13.27 12.58 6.73 24.43 15.58l119-49.31L894.84-585l-104.15 78.92q1.15 6.69 1.35 13.62.19 6.92.19 12.46 0 5.15-.39 12.08-.38 6.92-.76 14.77L892.46-377 778.15-173l-121.61-51.08q-10.85 7.85-21.81 14.46-10.96 6.62-22.19 11.39L595.31-68H364.69ZM439-154h79.46L533-262.15q31.62-8 58.37-23.32 26.76-15.32 51.48-39.3L740.23-284l40.39-68-84.77-65.38q5-15.54 7.3-31.7 2.31-16.15 2.31-32.65 0-16.89-1.81-31.42-1.8-14.54-6.8-32.7L781.38-610 743-678l-99.54 40.38q-20.08-22.46-50.01-39.71-29.93-17.26-60.83-24.52L521-808h-82.38l-11.24 104.77q-34.61 8.23-62.53 24.65-27.93 16.43-51.47 40.96L217-678l-40.38 68L260-545.62q-5 18.24-7 33.62-2 15.38-2 29.81 0 13.19 2 29.19t6.62 36.62l-83 64.38L217-284l97-41q26.77 25.38 54.19 40.81 27.43 15.42 58.81 23.42L439-154Zm38.46-180q61.52 0 104.76-43.24T625.46-482q0-61.52-43.24-104.76T477.46-630q-61.54 0-104.77 43.24T329.46-482q0 61.52 43.23 104.76T477.46-334ZM479-481Z"/></svg>
+                    <p class="title">Настройки</p>
+                </div>
+            </div>
+
+            <div class="row search">
+                <input class="grammars_search name_search" placeholder="Поиск по названию">
+                <input class="grammars_search category_search" placeholder="Поиск по категориям">
+                <input class="words_search transcription_search" placeholder="Поиск по транскрипции">
+                <input class="words_search translate_search" placeholder="Поиск по переводу">
+            </div>
+        </header>
+
+        <div class="section grammars_section">
+            <div class="grammars"></div>
+        </div>
+
+        <div class="section words_section">
+            <div class="categories"></div>
+        </div>
+
+        <div class="section exercises_section">
+            <div class="exercises_start_page">
+                <div class="exercises_settings">
+                    <div class="settings_section">
+                        <p class="title">Категории</p>
+                        <div class="categories_selectors settings_selectors"></div>
+                    </div>
+
+                    <div class="settings_section">
+                        <p class="title">Типы упражнений</p>
+                        <div class="exercise_types_selectors settings_selectors"></div>
+                    </div>
+
+                    <div class="settings_section">
+                        <p class="title">Количество упражнений</p>
+                        <input class="exercises_amount_input" type="number" min="1" placeholder="Число">
+                    </div>
+                </div>
+
+                <button class="start_exercises_button">Начать</button>
+            </div>
+
+            <div class="exercises_page">
+                <div class="header">
+                    <svg class="close_button" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M252-189.85 191.85-252l227-228-227-230L252-772.15l229 230 227-230L768.15-710l-227 230 227 228L708-189.85l-227-230-229 230Z"/></svg>
+                    <progress class="progress_bar"></progress>
+                </div>
+
+                <div class="exercise">
+                    <p class="title">%title%</p>
+
+                    <div class="match_pairs_layout layout" style="display: none;"></div>
+                    <div class="select_pinyin_layout layout" style="display: none;"></div>
+                    <div class="translate_word_character_layout layout" style="display: none;">
+                        <p class="character chinese_text">%character%</p>
+                        <input class="translation_input">
+                        <p class="correct_answer" style="display: none">%correct%</p>
+                    </div>
+                    <div class="translate_word_audio_layout layout" style="display: none;">
+                        <svg class="audio_button" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M545.54-81.62v-88q106.54-27.53 173.42-115 66.89-87.46 66.89-197.38 0-108.92-67.39-195.38-67.38-86.47-172.92-114v-88q142.69 27.92 234.5 139.92 91.8 112 91.8 257.46 0 146.46-91.8 259.46-91.81 113-234.5 140.92ZM88.16-360v-240h162.46l199.53-201.53v643.06L250.62-360H88.16Zm457.38 38.15v-316.3q44.46 23 70.54 65.46 26.07 42.46 26.07 92.69 0 50.61-26.27 92.88-26.27 42.27-70.34 65.27ZM364.15-594l-78 80h-112v68h112l78 80v-228Zm-95 114Z"/></svg>
+                        <input class="translation_input">
+                        <p class="correct_answer" style="display: none">%correct%</p>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <button class="action_button">%action%</button>
+                </div>
+            </div>
+
+            <div class="exercises_results_page">
+                <div class="results_section">
+                    <p class="label">Время</p>
+                    <p class="time">%time%</p>
+                </div>
+
+                <div class="results_section">
+                    <p class="label">Результат</p>
+                    <p class="result">%result%</p>
+                </div>
+
+                <button class="close_button">Закрыть</button>
+            </div>
+        </div>
+
+        <div class="section settings_section">
+            <div class="settings">
+                <button class="toggle_theme_button">Сменить тему</button>
+            </div>
+        </div>
+    </body>
+</html>

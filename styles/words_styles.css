@@ -1,0 +1,47 @@
+.words_section .categories {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1em;
+    gap: 1em;
+}
+
+.words_section .categories .category {
+    width: 100%;
+    padding: 1.5em;
+    background-color: var(--second-color);
+    border-radius: 1em;
+
+    .name {
+        margin-bottom: 1em;
+        font-size: 1.25em;
+        font-weight: 600;
+    }
+}
+
+
+
+.category .words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.words .word {
+    padding: 1em;
+    background-color: var(--main-color);
+    border-radius: 1em;
+    cursor: pointer;
+
+    p {
+        cursor: pointer;
+    }
+}
+
+.word .character {
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.word .info {
+    color: var(--hint-color);
+}
