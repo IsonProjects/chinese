@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (const grammar of grammars) {
         const grammarNode = grammarTemplate.cloneNode(true);
         grammarNode.style.display = "block";
-        grammarNode.classList.add(grammar.id);
+        grammarNode.classList.add("grammar_" + grammar.id);
 
         const nameNode = grammarNode.querySelector(".name");
         nameNode.innerHTML = grammar.name;
@@ -176,7 +176,7 @@ function filterGrammars(e) {
     grammarsNode.classList.add("not_found");
 
     for (const grammar of grammars) {
-        const grammarNode = grammarsNode.querySelector("." + grammar.id);
+        const grammarNode = grammarsNode.querySelector(".grammar_" + grammar.id);
 
         if (filteredGrammars.includes(grammar.id)) {
             grammarNode.style.display = "";
