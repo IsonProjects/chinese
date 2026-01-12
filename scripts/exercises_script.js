@@ -24,9 +24,9 @@ function findExerciseType(id) {
 
 
 
-const selectedExerciseCategories = [];
-const selectedExerciseTypes = [];
-let exercisesAmount = 1;
+let selectedExerciseCategories = [];
+let selectedExerciseTypes = [];
+let exercisesAmount = 10;
 
 let exercisesStartPageNode;
 let exercisesPageNode;
@@ -45,10 +45,30 @@ document.addEventListener("DOMContentLoaded", () => {
     exercisesProgressBarNode = exercisesPageNode.querySelector(".progress_bar");
     exercisesActionButtonNode = exercisesPageNode.querySelector(".action_button");
     exercisesResultsPageNode = document.querySelector(".exercises_section .exercises_results_page");
-    
     stopExercises();
 
+    exercisesStartPageNode.querySelector(".categories_settings .select_all_button").addEventListener("click", () => {
+        selectedExerciseCategories = categories.map(category => category.id);
+        exercisesStartPageNode.querySelectorAll(".categories_selectors input").forEach(input => input.checked = true);
+    });
+
+    exercisesStartPageNode.querySelector(".categories_settings .unselect_all_button").addEventListener("click", () => {
+        selectedExerciseCategories = [];
+        exercisesStartPageNode.querySelectorAll(".categories_selectors input").forEach(input => input.checked = false);
+    });
+
+    exercisesStartPageNode.querySelector(".exercise_types_settings .select_all_button").addEventListener("click", () => {
+        selectedExerciseTypes = exerciseTypes.map(exerciseType => exerciseType.id);
+        exercisesStartPageNode.querySelectorAll(".exercise_types_selectors input").forEach(input => input.checked = true);
+    });
+
+    exercisesStartPageNode.querySelector(".exercise_types_settings .unselect_all_button").addEventListener("click", () => {
+        selectedExerciseTypes = [];
+        exercisesStartPageNode.querySelectorAll(".exercise_types_selectors input").forEach(input => input.checked = false);
+    });
+
     const categorySelectorTemplate = document.querySelector(".templates .category_selector");
+    const exerciseTypeSelectorTemplate = document.querySelector(".templates .exercise_type_selector");
 
     for (const category of categories) {
         const categorySelectorNode = categorySelectorTemplate.cloneNode(true);
@@ -65,10 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
         nameNode.htmlFor = category.id;
         nameNode.innerText = category.name;
 
-        document.querySelector(".exercises_section .categories_selectors").appendChild(categorySelectorNode);
+        exercisesStartPageNode.querySelector(".exercises_section .categories_selectors").appendChild(categorySelectorNode);
     }
-
-    const exerciseTypeSelectorTemplate = document.querySelector(".templates .exercise_type_selector");
 
     for (const exerciseType of exerciseTypes) {
         const exerciseTypeSelectorNode = exerciseTypeSelectorTemplate.cloneNode(true);
@@ -85,24 +103,24 @@ document.addEventListener("DOMContentLoaded", () => {
         nameNode.htmlFor = exerciseType.id;
         nameNode.innerText = exerciseType.name;
 
-        document.querySelector(".exercises_section .exercise_types_selectors").appendChild(exerciseTypeSelectorNode);
+        exercisesStartPageNode.querySelector(".exercises_section .exercise_types_selectors").appendChild(exerciseTypeSelectorNode);
     }
 
-    const exercisesAmountInputNode = document.querySelector(".exercises_section .exercises_amount_input");
+    const exercisesAmountInputNode = exercisesStartPageNode.querySelector(".exercises_section .exercises_amount_input");
     exercisesAmountInputNode.value = exercisesAmount;
     exercisesAmountInputNode.addEventListener("change", () => {
         if (!exercisesAmountInputNode.value) return;
         exercisesAmount = Number.parseInt(exercisesAmountInputNode.value);
     });
 
-    for (const settingsSection of document.querySelectorAll(".exercises_section .settings_section")) {
+    for (const settingsSection of exercisesStartPageNode.querySelectorAll(".exercises_section .settings_section")) {
         settingsSection.classList.add("collapsed");
         settingsSection.querySelector(".title").addEventListener("click", () => {
             settingsSection.classList.toggle("collapsed");
         });
     }
 
-    document.querySelector(".exercises_section .start_exercises_button").addEventListener("click", () => {
+    exercisesStartPageNode.querySelector(".exercises_section .start_exercises_button").addEventListener("click", () => {
         if (selectedExerciseCategories.length === 0) return;
         if (selectedExerciseTypes.length === 0) return;
         startExercises();

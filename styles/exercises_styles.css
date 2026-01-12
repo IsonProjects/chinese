@@ -19,14 +19,36 @@
     border-radius: 1em;
     padding: 1em;
 
+    &.collapsed .settings_selectors {
+        display: none;
+    }
+}
+
+.exercises_settings .settings_section .top {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
     .title {
         font-size: 1.25em;
         font-weight: 600;
         cursor: pointer;
     }
 
-    &.collapsed div {
-        display: none;
+    .space {
+        flex: 1;
+    }
+
+    svg {
+        height: 1.25em;
+        padding: 0.3em;
+        border-radius: 1em;
+        transition: background-color 0.2s;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--main-color);
+        }
     }
 }
 
