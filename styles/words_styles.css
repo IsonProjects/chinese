@@ -3,6 +3,10 @@
     flex-wrap: wrap;
     padding: 1em;
     gap: 1em;
+
+    .not_found_label {
+        display: none;
+    }
 }
 
 .words_section .categories .category {
@@ -15,6 +19,14 @@
         margin-bottom: 1em;
         font-size: 1.25em;
         font-weight: 600;
+    }
+}
+
+.words_section .categories.not_found {
+    justify-content: center;
+
+    .not_found_label {
+        display: block;
     }
 }
 

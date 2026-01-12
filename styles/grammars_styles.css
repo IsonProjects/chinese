@@ -1,11 +1,15 @@
-.grammars {
+.grammars_section .grammars {
     display: flex;
     flex-wrap: wrap;
     padding: 1em;
     gap: 1em;
+
+    .not_found_label {
+        display: none;
+    }
 }
 
-.grammar {
+.grammars_section .grammars .grammar {
     width: 100%;
     padding: 1.5em;
     background-color: var(--second-color);
@@ -15,6 +19,14 @@
         font-size: 1.25em;
         font-weight: 600;
         margin-bottom: 1em;
+    }
+}
+
+.grammars_section .grammars.not_found {
+    justify-content: center;
+
+    .not_found_label {
+        display: block;
     }
 }
 

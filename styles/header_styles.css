@@ -42,12 +42,14 @@ header .row {
     }
 }
 
-
-
 .search input {
     max-height: 3em;
     max-width: 12em;
     text-align: center;
+}
+
+.section .not_found {
+    align-self: center;
 }
 
 

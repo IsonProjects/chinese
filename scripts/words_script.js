@@ -433,7 +433,7 @@ addWord("kuai4", "shop", "块", "kuài", "Валюта");
 addWord("yuan2_2", "shop", "元", "yuán", "Китайская валюта");
 
 addWord("gong1zuo4", "work", "工作", "gōng zuò", "Работать");
-addWord("shang4ban1", "work", "上班", "shàng bān", "Ходить на работу");
+addWord("shang4ban1", "work", "上班", "shàng bān", "Идти на работу");
 addWord("fan4dian4", "work", "饭店", "fàn diàn", "Ресторан, отель, гостиница");
 
 addWord("tian1qi4", "weather", "天气", "tiān qì", "Погода");
@@ -542,37 +542,43 @@ addWord("zheng4zai4", "other", "正在", "zhèng zài", "Быть в проце�
 
 
 
-const categoryTemplate = document.querySelector(".templates .category");
-for (const category of categories) {
-    const categoryNode = categoryTemplate.cloneNode(true);
-    categoryNode.classList.add(category.id);
+let categoriesNode;
 
-    const nameNode = categoryNode.querySelector(".name");
-    nameNode.innerText = category.name;
+document.addEventListener("DOMContentLoaded", () => {
+    categoriesNode = document.querySelector(".words_section .categories");
 
-    document.querySelector(".words_section .categories").appendChild(categoryNode);
-}
+    const categoryTemplate = document.querySelector(".templates .category");
+    const wordTemplate = document.querySelector(".templates .word");
 
-const wordTemplate = document.querySelector(".templates .word");
-for (const word of words) {
-    const wordNode = wordTemplate.cloneNode(true);
-    wordNode.classList.add(word.id);
+    for (const category of categories) {
+        const categoryNode = categoryTemplate.cloneNode(true);
+        categoryNode.classList.add(category.id);
 
-    wordNode.querySelector(".character").innerText = word.character;
-    wordNode.querySelector(".info").innerText = word.pinyin + " - " + word.translation;
+        const nameNode = categoryNode.querySelector(".name");
+        nameNode.innerText = category.name;
 
-    wordNode.addEventListener("click", () => pronounce(word.character));
+        categoriesNode.appendChild(categoryNode);
+    }
 
-    document.querySelector("." + word.category + " .words").appendChild(wordNode);
-}
+    for (const word of words) {
+        const wordNode = wordTemplate.cloneNode(true);
+        wordNode.classList.add(word.id);
 
+        wordNode.querySelector(".character").innerText = word.character;
+        wordNode.querySelector(".info").innerText = word.pinyin + " - " + word.translation;
 
+        wordNode.addEventListener("click", () => pronounce(word.character));
 
-const wordsSearch = document.querySelector(".search .words_search");
-let filteredWords = words.map(word => word.id);
+        document.querySelector("." + word.category + " .words").appendChild(wordNode);
+    }
 
-wordsSearch.addEventListener("input", () => {
-    const searchValue = wordsSearch.value.toLowerCase().replaceAll(" ", "");
+    const wordsSearch = document.querySelector(".search .words_search");
+    wordsSearch.addEventListener("input", filterWords);
+});
+
+function filterWords(e) {
+    const searchValue = e.target.value.toLowerCase().replaceAll(" ", "");
+    let filteredWords;
 
     if (searchValue === "") filteredWords = words.map(word => word.id);
     else {
@@ -595,22 +601,24 @@ wordsSearch.addEventListener("input", () => {
     }
 
     for (const word of words) {
-        const wordNode = document.querySelector(".words ." + word.id);
+        const wordNode = categoriesNode.querySelector(".words ." + word.id);
 
         if (filteredWords.includes(word.id)) wordNode.style.display = "";
         else wordNode.style.display = "none";
     }
 
+    categoriesNode.classList.add("not_found");
+
     for (const category of categories) {
-        const categoryNode = document.querySelector("." + category.id);
-        const categoryWordsNode = categoryNode.querySelector(".words");
+        const categoryNode = categoriesNode.querySelector("." + category.id);
         categoryNode.style.display = "none";
 
-        for (const child of categoryWordsNode.children) {
+        for (const child of categoryNode.querySelector(".words").children) {
             if (child.style.display !== "none") {
                 categoryNode.style.display = "block";
+                categoriesNode.classList.remove("not_found");
                 break;
             }
         }
     }
-});
+}
