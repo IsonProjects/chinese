@@ -52,7 +52,7 @@ header .row {
 
 
 
-@media (width <= 500px) {
+@media (width <= 575px) {
     header .row {
         gap: 0.5em;
         padding: 0.5em;

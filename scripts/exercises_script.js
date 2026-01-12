@@ -167,6 +167,7 @@ function loadExercise() {
 
     exercisesActionButtonNode.innerHTML = "Ответить";
     exercisesActionButtonNode.disabled = true;
+    exercisesActionButtonNode.style.display = "";
 
     for (const layoutNode of exerciseNode.querySelectorAll(".layout")) {
         layoutNode.style.display = "none";
@@ -206,23 +207,29 @@ function exerciseFinished() {
 
 
 function generateMatchPairsExercise(availableWords) {
-    const selectedWords = [];
-    const selectedWordsIds = [];
-
-    while (selectedWords.length < 5) {
-        const selectedWord = availableWords[Math.floor(Math.random() * availableWords.length)];
-        if (selectedWordsIds.includes(selectedWord.id)) continue;
-        selectedWords.push(selectedWord);
-        selectedWordsIds.push(selectedWord.id);
-    }
-
     const content = new Map();
-
     const mode = Math.floor(Math.random() * 3);
-    for (const word of selectedWords) {
-        if (mode === 0) content.set(word.character, word.pinyin);
-        else if (mode === 1) content.set(word.character, word.translation);
-        else if (mode === 2) content.set(word.pinyin, word.translation);
+
+    while (content.size < 5) {
+        const word = availableWords[Math.floor(Math.random() * availableWords.length)];
+
+        let key, value;
+        if (mode === 0) {
+            key = word.character;
+            value = word.pinyin;
+        }
+        else if (mode === 1) {
+            key = word.character;
+            value = word.translation;
+        }
+        else if (mode === 2) {
+            key = word.pinyin;
+            value = word.translation;
+        }
+
+        if (content.has(key)) continue;
+        if (Array.from(content.values()).includes(value)) continue;
+        content.set(key, value);
     }
 
     return {

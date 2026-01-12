@@ -91,11 +91,6 @@
     .action_button {
         transition: 0.2s;
     }
-
-    .action_button:disabled {
-        filter: brightness(80%);
-        pointer-events: none;
-    }
 }
 
 .exercises_page .exercise {
@@ -132,13 +127,12 @@
     }
 
     .pair_item.selected {
-        --selected-color: var(--selection-color);
-        background-color: var(--selected-color);
+        background-color: var(--selection-color);
     }
 
     .pair_item.correct {
         animation: correct 0.5s ease-in-out;
-        background-color: var(--hint-color);
+        background-color: var(--correct-color);
         cursor: default;
     }
 
@@ -205,10 +199,6 @@
     .translation_input.incorrect {
         background-color: var(--incorrect-color);
     }
-
-    .translation_input:disabled {
-        pointer-events: none;
-    }
     
     .correct_answer {
         font-size: 0.9em;
@@ -249,15 +239,11 @@
 
 @keyframes correct {
     0% {
-        background-color: var(--selected-color);
-    }
-
-    50% {
-        background-color: var(--correct-color);
+        background-color: var(--selection-color);
     }
 
     100% {
-        background-color: var(--hint-color);
+        background-color: var(--correct-color);
     }
 }
 
@@ -269,7 +255,7 @@
 
 
 
-@media (width <= 500px) {
+@media (width <= 575px) {
     .exercises_page .footer {
         margin-bottom: calc(65px + 1em);
     }
