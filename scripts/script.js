@@ -1,3 +1,12 @@
+Array.prototype["remove"] = function(element) {
+    const index = this.indexOf(element);
+    if (index >= 0) { // only splice array when item is found
+        this.splice(index, 1); // 2nd parameter means remove one item only
+    }
+}
+
+
+
 function pronounce(text) {
     const speechSynthesis = new SpeechSynthesisUtterance(text);
     speechSynthesis.volume = 1;

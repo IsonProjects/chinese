@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const checkboxNode = categorySelectorNode.querySelector(".checkbox");
         checkboxNode.addEventListener("change", () => {
             if (checkboxNode.checked) selectedExerciseCategories.push(category.id);
-            else selectedExerciseCategories.pop(category.id);
+            else selectedExerciseCategories.remove(category.id);
         });
 
         const nameNode = categorySelectorNode.querySelector(".name");
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const checkboxNode = exerciseTypeSelectorNode.querySelector(".checkbox");
         checkboxNode.addEventListener("change", () => {
             if (checkboxNode.checked) selectedExerciseTypes.push(exerciseType.id);
-            else selectedExerciseTypes.pop(exerciseType.id);
+            else selectedExerciseTypes.remove(exerciseType.id);
         });
 
         const nameNode = exerciseTypeSelectorNode.querySelector(".name");
