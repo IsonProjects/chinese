@@ -130,18 +130,25 @@
 .exercises_page .exercise .match_pairs_layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, 1fr);
     gap: 0.5em;
     padding: 1em;
     background-color: var(--second-color);
     border-radius: 1em;
 
     .pair_item {
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         padding: 0.5em;
         background-color: var(--main-color);
         border-radius: 1em;
         cursor: pointer;
         transition: 0.2s;
+
+        .text {
+            text-align: center;
+        }
     }
 
     .pair_item:hover {
@@ -153,13 +160,13 @@
     }
 
     .pair_item.correct {
-        animation: correct 0.5s ease-in-out;
+        animation: correct 0.2s ease-in-out;
         background-color: var(--correct-color);
         cursor: default;
     }
 
     .pair_item.incorrect {
-        animation: incorrect 0.5s ease-in-out;
+        animation: incorrect 0.2s ease-in-out;
     }
 }
 

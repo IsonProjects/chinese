@@ -282,7 +282,7 @@ function loadMatchPairsExercise(exercise, exerciseNode, titleNode) {
         const pairItemKeyNode = pairItemTemplate.cloneNode(true);
         pairItemKeyNode.classList.add("key");
         pairItemKeyNode.id = i;
-        pairItemKeyNode.innerHTML = key;
+        pairItemKeyNode.querySelector(".text").innerHTML = key;
         pairItemKeyNode.addEventListener("click", () => {
             if (pairItemKeyNode.classList.contains("correct")) return;
             if (pairItemKeyNode.classList.contains("selected")) {
@@ -299,7 +299,7 @@ function loadMatchPairsExercise(exercise, exerciseNode, titleNode) {
         const pairItemValueNode = pairItemTemplate.cloneNode(true);
         pairItemValueNode.classList.add("value");
         pairItemValueNode.id = nonShuffledValues.indexOf(value);
-        pairItemValueNode.innerHTML = value;
+        pairItemValueNode.querySelector(".text").innerHTML = value;
         pairItemValueNode.addEventListener("click", () => {
             if (pairItemValueNode.classList.contains("correct")) return;
             if (pairItemValueNode.classList.contains("selected")) {
@@ -487,7 +487,7 @@ function loadTranslateWordAudioExercise(exercise, exerciseNode, titleNode) {
 
     exercisesActionButtonNode.onclick = () => {
         const translation = exercise.content.translation.toLowerCase();
-        const input = translationInputNode.value.toLowerCase();
+        const input = translationInputNode.value.toLowerCase().trim();
 
         if (input === translation) {
             translationInputNode.classList.add("correct");
@@ -538,7 +538,7 @@ function loadTranslateWordCharacterExercise(exercise, exerciseNode, titleNode) {
 
     exercisesActionButtonNode.onclick = () => {
         const translation = exercise.content.translation.toLowerCase();
-        const input = translationInputNode.value.toLowerCase();
+        const input = translationInputNode.value.toLowerCase().trim();
 
         if (input === translation) {
             translationInputNode.classList.add("correct");
