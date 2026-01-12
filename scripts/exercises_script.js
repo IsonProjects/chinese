@@ -22,11 +22,9 @@ function findExerciseType(id) {
     return null;
 }
 
-
-
-let selectedExerciseCategories = [];
-let selectedExerciseTypes = [];
-let exercisesAmount = 10;
+let selectedExerciseCategories = new Set(localStorage.getItemOrDefault("selected_exercise_categories", []));
+let selectedExerciseTypes = new Set(localStorage.getItemOrDefault("selected_exercise_types", []));
+let exercisesAmount = localStorage.getItemOrDefault("exercises_amount", 5);
 
 let exercisesStartPageNode;
 let exercisesPageNode;
@@ -53,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     exercisesStartPageNode.querySelector(".categories_settings .unselect_all_button").addEventListener("click", () => {
-        selectedExerciseCategories = [];
+        selectedExerciseCategories = new Set();
         exercisesStartPageNode.querySelectorAll(".categories_selectors input").forEach(input => input.checked = false);
     });
 
@@ -63,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     exercisesStartPageNode.querySelector(".exercise_types_settings .unselect_all_button").addEventListener("click", () => {
-        selectedExerciseTypes = [];
+        selectedExerciseTypes = new Set();
         exercisesStartPageNode.querySelectorAll(".exercise_types_selectors input").forEach(input => input.checked = false);
     });
 
@@ -75,10 +73,12 @@ document.addEventListener("DOMContentLoaded", () => {
         categorySelectorNode.classList.add(category.id);
 
         const checkboxNode = categorySelectorNode.querySelector(".checkbox");
+        checkboxNode.checked = selectedExerciseCategories.has(category.id);
         checkboxNode.id = category.id;
         checkboxNode.addEventListener("change", () => {
-            if (checkboxNode.checked) selectedExerciseCategories.push(category.id);
-            else selectedExerciseCategories.remove(category.id);
+            if (checkboxNode.checked) selectedExerciseCategories.add(category.id);
+            else selectedExerciseCategories.delete(category.id);
+            localStorage.setItemJson("selected_exercise_categories", [...selectedExerciseCategories]);
         });
 
         const nameNode = categorySelectorNode.querySelector(".name");
@@ -93,10 +93,12 @@ document.addEventListener("DOMContentLoaded", () => {
         exerciseTypeSelectorNode.classList.add(exerciseType.id);
 
         const checkboxNode = exerciseTypeSelectorNode.querySelector(".checkbox");
+        checkboxNode.checked = selectedExerciseTypes.has(exerciseType.id);
         checkboxNode.id = exerciseType.id;
         checkboxNode.addEventListener("change", () => {
-            if (checkboxNode.checked) selectedExerciseTypes.push(exerciseType.id);
-            else selectedExerciseTypes.remove(exerciseType.id);
+            if (checkboxNode.checked) selectedExerciseTypes.add(exerciseType.id);
+            else selectedExerciseTypes.delete(exerciseType.id);
+            localStorage.setItemJson("selected_exercise_types", [...selectedExerciseTypes]);
         });
 
         const nameNode = exerciseTypeSelectorNode.querySelector(".name");
@@ -111,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     exercisesAmountInputNode.addEventListener("change", () => {
         if (!exercisesAmountInputNode.value) return;
         exercisesAmount = Number.parseInt(exercisesAmountInputNode.value);
+        localStorage.setItem("exercises_amount", exercisesAmount);
     });
 
     for (const settingsSection of exercisesStartPageNode.querySelectorAll(".exercises_section .settings_section")) {
