@@ -1,8 +1,13 @@
-Array.prototype["remove"] = function(element) {
-    const index = this.indexOf(element);
-    if (index >= 0) { // only splice array when item is found
-        this.splice(index, 1); // 2nd parameter means remove one item only
-    }
+Storage.prototype.getItemOrDefault = function(key, defaultValue) {
+    const item = this.getItem(key);
+    if (item != null && item !== "") return JSON.parse(item);
+
+    localStorage.setItem(key, JSON.stringify(defaultValue));
+    return defaultValue;
+}
+
+Storage.prototype.setItemJson = function(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
 }
 
 
