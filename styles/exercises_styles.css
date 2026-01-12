@@ -75,13 +75,13 @@
     flex-direction: column;
     align-items: center;
     gap: 5em;
+    padding: 1em;
 }
 
 .exercises_page .header {
     display: flex;
     gap: 0.5em;
     align-items: center;
-    margin-top: 1em;
 
     .close_button {
         height: 1.5em;
@@ -279,13 +279,5 @@
 @keyframes incorrect {
     50% {
         background-color: var(--incorrect-color);
-    }
-}
-
-
-
-@media (width <= 575px) {
-    .exercises_page .footer {
-        margin-bottom: calc(65px + 1em);
     }
 }
