@@ -97,6 +97,30 @@ input:disabled {
 
 
 
+input[type="checkbox"] {
+    width: 1.5em;
+    height: 1.5em;
+    background-color: var(--second-color);
+    border: solid 2px var(--main-color);
+    border-radius: 1em;
+    cursor: pointer;
+    appearance: none;
+}
+
+input[type="checkbox"] + label {
+    cursor: pointer;
+}
+
+input[type="checkbox"]:hover {
+    border-color: var(--pale-color);
+}
+
+input[type="checkbox"]:checked {
+    border-color: var(--selection-color);
+}
+
+
+
 .selectable_text {
 	-webkit-user-select: text;
 	user-select: text;

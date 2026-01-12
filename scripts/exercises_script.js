@@ -55,12 +55,14 @@ document.addEventListener("DOMContentLoaded", () => {
         categorySelectorNode.classList.add(category.id);
 
         const checkboxNode = categorySelectorNode.querySelector(".checkbox");
+        checkboxNode.id = category.id;
         checkboxNode.addEventListener("change", () => {
             if (checkboxNode.checked) selectedExerciseCategories.push(category.id);
             else selectedExerciseCategories.remove(category.id);
         });
 
         const nameNode = categorySelectorNode.querySelector(".name");
+        nameNode.htmlFor = category.id;
         nameNode.innerText = category.name;
 
         document.querySelector(".exercises_section .categories_selectors").appendChild(categorySelectorNode);
@@ -73,12 +75,14 @@ document.addEventListener("DOMContentLoaded", () => {
         exerciseTypeSelectorNode.classList.add(exerciseType.id);
 
         const checkboxNode = exerciseTypeSelectorNode.querySelector(".checkbox");
+        checkboxNode.id = exerciseType.id;
         checkboxNode.addEventListener("change", () => {
             if (checkboxNode.checked) selectedExerciseTypes.push(exerciseType.id);
             else selectedExerciseTypes.remove(exerciseType.id);
         });
 
         const nameNode = exerciseTypeSelectorNode.querySelector(".name");
+        nameNode.htmlFor = exerciseType.id;
         nameNode.innerText = exerciseType.name;
 
         document.querySelector(".exercises_section .exercise_types_selectors").appendChild(exerciseTypeSelectorNode);
