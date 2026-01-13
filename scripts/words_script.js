@@ -8,17 +8,20 @@ function addCategory(id, name) {
     });
 }
 
-function addWord(id, category, character, pinyin, translation) {
-    for (const word of words) {
-        if (word.id === id) {
-            console.error(`Duplicate word id "${id}"`);
-            return;
-        }
+function addWord(id, categoryId, character, pinyin, translation) {
+    if (!categories.some(category => category.id === categoryId)) {
+        console.error(`Unknown category "${categoryId}" word id "${id}"`);
+        return;
+    }
+
+    if (words.some(word => word.id === id)) {
+        console.error(`Duplicate word id "${id}"`);
+        return;
     }
 
     words.push({
         id: id,
-        category: category,
+        category: categoryId,
         character: character,
         pinyin: pinyin,
         translation: translation
@@ -34,15 +37,19 @@ addCategory("adjectives", "Прилагательные");
 addCategory("talking", "Общение");
 addCategory("colors", "Цвета");
 addCategory("school", "Школа");
+addCategory("office_supplies", "Канцелярские принадлежности");
 addCategory("clothes", "Одежда");
 addCategory("appearance", "Внешность");
 addCategory("health", "Здоровье");
+addCategory("nature", "Природа");
 addCategory("animals", "Животные");
 addCategory("food", "Еда");
 addCategory("fruits_and_vegetables", "Фрукты и овощи");
 addCategory("drinks", "Напитки");
-addCategory("my_house", "Мой дом");
+addCategory("interior", "Интерьер");
 addCategory("family", "Семья");
+addCategory("personal_info", "Личная информация");
+addCategory("schedule", "Распорядок дня");
 addCategory("time", "Время");
 addCategory("countries", "Страны");
 addCategory("transport", "Транспорт");
@@ -51,6 +58,7 @@ addCategory("shop", "Магазин");
 addCategory("work", "Работа");
 addCategory("weather", "Погода");
 addCategory("hobby", "Хобби");
+addCategory("books", "Книги");
 addCategory("counting_words", "Счётные слова");
 addCategory("location", "Указания места");
 addCategory("questions", "Вопросы");
@@ -85,32 +93,30 @@ addWord("qian1", "numbers", "千", "qiān", "Тысяча");
 addWord("zuo3you4", "numbers", "左右", "zuǒ yòu", "Примерно, около");
 addWord("ci4", "numbers", "次", "cì", "Раз");
 
-addWord("xi3huan", "verbs", "喜欢", "xǐ huan", "Нравится");
+addWord("xi3huan", "verbs", "喜欢", "xǐ huan", "Нравиться");
 addWord("ai4", "verbs", "爱", "ài", "Любить");
 addWord("shi4", "verbs", "是", "shì", "Быть, являться");
 addWord("zai4", "verbs", "在", "zài", "Находиться");
 addWord("deng3", "verbs", "等", "děng", "Ждать");
 addWord("qu4", "verbs", "去", "qù", "Идти, перемещаться");
-addWord("zou3lu4", "verbs", "走路", "zǒu lù", "Ходить");
+addWord("zou3lu4", "verbs", "走路", "zǒu lù", "Ходить пешком");
 addWord("dai4_1", "verbs", "带", "dài", "Брать с собой");
 addWord("kan4", "verbs", "看", "kàn", "Смотреть, видеть");
 addWord("hui4", "verbs", "会", "huì", "Уметь");
 addWord("xiang3", "verbs", "想", "xiǎng", "Думать, мечтать, хотеть, желать");
+addWord("xiang1xin4", "verbs", "相信", "xiāng xìn", "Верить");
+addWord("kao3lu4", "verbs", "考虑", "kǎo lǜ", "Думать, подумать, обдумать");
 addWord("jin4", "verbs", "进", "jìn", "Входить");
-addWord("zuo4_1", "verbs", "坐", "zuò", "Сидеть, садиться");
+addWord("zuo4_1", "verbs", "坐", "zuò", "Сидеть");
 addWord("zhan4", "verbs", "站", "zhàn", "Стоять");
 addWord("qi3lai2", "verbs", "起来", "qǐ lái", "Вставать");
-addWord("qi3chuang1", "verbs", "起床", "qǐ chuáng", "Вставать с кровати");
-addWord("shui4jiao4", "verbs", "睡觉", "shuì jiào", "Спать");
 addWord("du2", "verbs", "读", "dú", "Читать вслух");
 addWord("xie3", "verbs", "写", "xiě", "Писать");
 addWord("zuo4_2", "verbs", "做", "zuò", "Делать");
 addWord("gei3", "verbs", "给", "gěi", "Давать");
 addWord("lai2", "verbs", "来", "lái", "Приходить");
 addWord("hui2", "verbs", "回", "huí", "Возвращаться");
-addWord("xi3zao3", "verbs", "洗澡", "xǐ zǎo", "Принимать душ/ванну");
-addWord("xi3lian3", "verbs", "洗脸", "xǐ liǎn", "Умываться");
-addWord("jian4", "verbs", "见", "jiàn", "Встречаться");
+addWord("jian4", "verbs", "见", "jiàn", "Встречаться, видеть");
 addWord("ren4shi2", "verbs", "认识", "rèn shí", "Знать, знакомиться (2 человека)");
 addWord("zhi1dao4", "verbs", "知道", "zhī dào", "Знать");
 addWord("da3", "verbs", "打", "dǎ", "Бить, ударять");
@@ -128,6 +134,10 @@ addWord("shan4chang2", "verbs", "擅长", "shàn cháng", "Быть сильны
 addWord("hai4pa4", "verbs", "害怕", "hài pà", "Бояться");
 addWord("ting1qi3lai2", "verbs", "听起来", "tīng qǐ lái", "Звучать, звучать как, казаться");
 addWord("wang4", "verbs", "忘", "wàng", "Забыть");
+addWord("can1jia1", "verbs", "参加", "cān jiā", "Участвовать, принимать участие");
+addWord("na2", "verbs", "拿", "ná", "Держать");
+addWord("nan2guo4", "verbs", "难过", "nán guò", "Огорчаться, расстраиваться");
+addWord("jian4shen1", "verbs", "健身", "jiàn shēn", "Тренироваться");
 
 addWord("xiao3", "adjectives", "小", "xiǎo", "Маленький");
 addWord("da4", "adjectives", "大", "dà", "Большой");
@@ -142,7 +152,14 @@ addWord("fei1chang2", "adjectives", "非常", "fēi cháng", "Очень");
 addWord("ting3de", "adjectives", "挺的", "tǐng de", "Очень");
 addWord("tai4le", "adjectives", "太了", "tài le", "Слишком");
 addWord("hao3", "adjectives", "好", "hǎo", "Хорошо, хороший");
-addWord("cha1", "adjectives", "差", "chā", "Плохо, плохой");
+addWord("cha1", "adjectives", "差", "chā", "Плохо, плохой")
+addWord("qing1", "adjectives", "轻", "qīng", "Лёгкий");
+addWord("zhong4", "adjectives", "重", "zhòng", "Тяжёлый");
+addWord("lang4man4", "adjectives", "浪漫", "làng màn", "Романтичный");
+addWord("gan3ren2", "adjectives", "感人", "gǎn rén", "Трогательный");
+addWord("cong1ming2", "adjectives", "聪明", "cōng míng", "Умный");
+addWord("xing4yun4", "adjectives", "幸运", "xìng yùn", "Везучий");
+addWord("qing1chu3", "adjectives", "清楚", "qīng chǔ", "Ясный, ясно");
 
 addWord("jiao4_1", "talking", "叫", "jiào", "Звать");
 addWord("ting1", "talking", "听", "tīng", "Слушать");
@@ -163,6 +180,8 @@ addWord("bu2yong4xie4", "talking", "不用谢", "bú yòng xiè", "Пожалу�
 addWord("bu2ke4qi4", "talking", "不客气", "bú kè qì", "Всегда пожалуйста");
 addWord("bu2cuo4", "talking", "不错", "bú cuò", "Всё хорошо");
 addWord("guan1xi4", "talking", "关系", "guān xì", "Отношение");
+addWord("liao2tian1", "talking", "聊天", "liáo tiān", "Разговаривать, болтать, болтовня");
+addWord("jian4yi4", "talking", "建议", "jiàn yì", "Предложение, совет");
 
 addWord("yan2se4", "colors", "颜色", "yán sè", "Цвет");
 addWord("hong2se4", "colors", "红色", "hóng sè", "Красный цвет");
@@ -190,6 +209,8 @@ addWord("nan2sheng1", "school", "男生", "nán shēng", "Ученик");
 addWord("nu3sheng1", "school", "女生", "nǚ shēng", "Ученица");
 addWord("xiao3xue2sheng1", "school", "小学生", "xiǎo xué shēng", "Ученик начальной школы");
 addWord("zhong1xue2sheng1", "school", "中学生", "zhōng xué shēng", "Ученик средней школы");
+addWord("gao1zhong2sheng1", "school", "高中生", "gāo zhōng shēng", "Ученик старшей школы");
+addWord("da4xue2sheng1", "school", "大学生", "dà xué shēng", "Студент");
 addWord("tong2xue2", "school", "同学", "tóng xué", "Одноклассник");
 addWord("peng2you3", "school", "朋友", "péng yǒu", "Друг");
 addWord("ban1", "school", "班", "bān", "Класс (люди)");
@@ -211,6 +232,7 @@ addWord("xi4ju4", "school", "戏剧", "xì jù", "Театральный кру�
 addWord("cao1chang3", "school", "操场", "cāo chǎng", "Спортивная площадка");
 addWord("li3tang2", "school", "礼堂", "lǐ táng", "Актовый зал");
 addWord("ti3yu4guan3", "school", "体育馆", "tǐ yù guǎn", "Спортзал");
+addWord("jian4shen1fang2", "school", "健身房", "jiàn shēn fáng", "Тренажёрный зал");
 addWord("tu2shu1guan3", "school", "图书馆", "tú shū guǎn", "Библиотека");
 addWord("jiao4shi4", "school", "教室", "jiào shì", "Аудитория");
 addWord("lou2", "school", "楼", "lóu", "Этаж");
@@ -218,28 +240,18 @@ addWord("mei3shu4shi4", "school", "美术室", "měi shù shì", "Кабинет
 addWord("yin1yue4shi4", "school", "音乐室", "yīn yuè shì", "Кабинет музыки");
 addWord("you2yong3chi2", "school", "游泳池", "yóu yǒng chí", "Бассейн");
 addWord("xiao3mai4bu4", "school", "小卖部", "xiǎo mài bù", "Буфет");
-addWord("ting2che1chang3", "school", "停车场", "tíng chē chǎng", "Парковка");
-addWord("shu1", "school", "书", "shū", "Книга");
-addWord("bao1", "school", "包", "bāo", "Сумка");
 addWord("shu1bao1", "school", "书包", "shū bāo", "Портфель");
 addWord("ben3zi", "school", "本子", "běn zi", "Тетрадь");
 addWord("ri4ji4ben3", "school", "日记本", "rì jì běn", "Дневник");
 addWord("wen2ju4he2", "school", "文具盒", "wén jù hé", "Пенал");
-addWord("qian1bi3", "school", "铅笔", "qiān bǐ", "Карандаш");
-addWord("la4bi3", "school", "蜡笔", "là bǐ", "Восковой мелок");
-addWord("chi3zi", "school", "尺子", "chǐ zi", "Линейка");
-addWord("xiang4pi2", "school", "橡皮", "xiàng pí", "Ластик");
-addWord("juan3bi3dao1", "school", "卷笔刀", "juǎn bǐ dāo", "Точилка");
 addWord("ke4ben3", "school", "课本", "kè běn", "Учебник");
 addWord("lian4xi2ben3", "school", "练习本", "liàn xí běn", "Рабочая тетрадь");
 addWord("cai3se4bi3", "school", "彩色笔", "cǎi sè bǐ", "Цветной карандаш");
-addWord("jian3dao1", "school", "剪刀", "jiǎn dāo", "Ножницы");
-addWord("gu4ti3jiao1", "school", "固体胶", "gù tǐ jiāo", "Клей-карандаш");
-addWord("jiao1shui3", "school", "胶水", "jiāo shuǐ", "Жидкий клей");
 addWord("cuo4", "school", "错", "cuò", "Ошибка");
 addWord("mei2cuo4", "school", "没错", "méi cuò", "Нет ошибок");
 addWord("da2an4", "school", "答案", "dá àn", "Ответ");
 addWord("cheng2ji4", "school", "成绩", "chéng jì", "Оценка");
+addWord("kao3shi4", "school", "考试", "kǎo shì", "Экзамен");
 addWord("tong1guo4", "school", "通过", "tōng guò", "Сдать экзамен");
 addWord("jiao4_2", "school", "教", "jiào", "Преподавать");
 addWord("ci2zi", "school", "词子", "cí zi", "Слово");
@@ -247,6 +259,18 @@ addWord("ju4zi", "school", "句子", "jù zi", "Предложение, фраз
 addWord("ci2dian3", "school", "词典", "cí diǎn", "Словарь");
 addWord("ye4", "school", "页", "yè", "Страница");
 addWord("fu4xi", "school", "复习", "fù xí", "Повторять, запоминать");
+addWord("huo2dong4", "school", "活动", "huó dòng", "Мероприятие");
+addWord("wan3hui4", "school", "晚会", "wǎn huì", "Вечеринка");
+addWord("han4zi4", "school", "汉字", "hàn zì", "Иероглиф");
+
+addWord("qian1bi3", "office_supplies", "铅笔", "qiān bǐ", "Карандаш");
+addWord("la4bi3", "office_supplies", "蜡笔", "là bǐ", "Восковой мелок");
+addWord("chi3zi", "office_supplies", "尺子", "chǐ zi", "Линейка");
+addWord("xiang4pi2", "office_supplies", "橡皮", "xiàng pí", "Ластик");
+addWord("juan3bi3dao1", "office_supplies", "卷笔刀", "juǎn bǐ dāo", "Точилка");
+addWord("jian3dao1", "office_supplies", "剪刀", "jiǎn dāo", "Ножницы");
+addWord("gu4ti3jiao1", "office_supplies", "固体胶", "gù tǐ jiāo", "Клей-карандаш");
+addWord("jiao1shui3", "office_supplies", "胶水", "jiāo shuǐ", "Жидкий клей");
 
 addWord("chuan1", "clothes", "穿", "chuān", "Надевать");
 addWord("dai4_2", "clothes", "戴", "dài", "Надевать аксессуары");
@@ -267,6 +291,7 @@ addWord("shou3tao4", "clothes", "手套", "shǒu tào", "Перчатки");
 addWord("yan3jing4", "clothes", "眼镜", "yǎn jìng", "Очки");
 
 addWord("tou2", "appearance", "头", "tóu", "Голова");
+addWord("nao3", "appearance", "脑", "nǎo", "Мозг");
 addWord("lian3", "appearance", "脸", "liǎn", "Лицо");
 addWord("yan3jing1", "appearance", "眼睛", "yǎn jīng", "Глаза");
 addWord("bi2zi", "appearance", "鼻子", "bí zi", "Нос");
@@ -316,6 +341,12 @@ addWord("zhu4yuan4", "health", "住院", "zhù yuàn", "Лежать в боль
 addWord("chu1yuan4", "health", "出院", "chū yuàn", "Выписываться из больницы");
 addWord("shu1fu2", "health", "舒服", "shū fú", "Комфортный, приятный");
 
+addWord("hua1", "nature", "花", "huā", "Цветок");
+addWord("shu4", "nature", "树", "shù", "Дерево");
+addWord("mei2gui1", "nature", "玫瑰", "méi guī", "Роза");
+addWord("hua1yuan2", "nature", "花园", "huā yuán", "Сад");
+addWord("he2_2", "nature", "河", "hé", "Река");
+
 addWord("dong4wu4", "animals", "动物", "dòng wù", "Животные");
 addWord("chong3wu4", "animals", "宠物", "chǒng wù", "Домашние животные");
 addWord("dong4wu4yuan2", "animals", "动物园", "dòng wù yuán", "Зоопарк");
@@ -353,9 +384,6 @@ addWord("nan2chi1", "food", "难吃", "nán chī", "Невкусный");
 addWord("ku3", "food", "苦", "kǔ", "Горький");
 addWord("suan1", "food", "酸", "suān", "Кислый");
 addWord("tian2", "food", "甜", "tián", "Сладкий");
-addWord("zao3fan4", "food", "早饭", "zǎo fàn", "Завтрак");
-addWord("wu3fan4", "food", "午饭", "wǔ fàn", "Обед");
-addWord("wan3fan4", "food", "晚饭", "wǎn fàn", "Ужин");
 addWord("kuai4can1", "food", "快餐", "kuài cān", "Фаст фуд");
 addWord("re4gou3", "food", "热狗", "rè gǒu", "Хот дог");
 addWord("han4bao3bao1", "food", "汉堡包", "hàn bǎo bāo", "Гамбургер");
@@ -393,59 +421,61 @@ addWord("shui3guo3", "fruits_and_vegetables", "水果", "shuǐ guǒ", "Фрук�
 addWord("ping2guo3", "fruits_and_vegetables", "苹果", "píng guǒ", "Яблоко");
 addWord("xiang1jiao1", "fruits_and_vegetables", "香蕉", "xiāng jiāo", "Банан");
 addWord("cheng2zi", "fruits_and_vegetables", "橙子", "chéng zi", "Апельсин");
-addWord("pu2tao", "fruits_and_vegetables", "葡萄", "pú tao", "Виноград");
 addWord("cao3mei2", "fruits_and_vegetables", "草莓", "cǎo méi", "Клубника");
 addWord("ning2meng2", "fruits_and_vegetables", "柠檬", "níng méng", "Лимон");
+addWord("pu2tao", "fruits_and_vegetables", "葡萄", "pú tao", "Виноград");
 addWord("xi1gua1", "fruits_and_vegetables", "西瓜", "xī guā", "Арбуз");
 addWord("shu1cai4", "fruits_and_vegetables", "蔬菜", "shū cài", "Овощи");
 addWord("hu2luo2bo", "fruits_and_vegetables", "胡萝卜", "hú luó bo", "Морковь");
 addWord("huang2gua1", "fruits_and_vegetables", "黄瓜", "huáng guā", "Огурец");
 addWord("xi1hong2shi4", "fruits_and_vegetables", "西红柿", "xī hóng shì", "Помидор");
 addWord("tu3dou4", "fruits_and_vegetables", "土豆", "tǔ dòu", "Картошка");
-addWord("bai2cai4", "fruits_and_vegetables", "白菜", "bái cài", "Китайская капуста");
-addWord("qing1cai4", "fruits_and_vegetables", "青菜", "qīng cài", "Салатные листья");
 addWord("luo4bo", "fruits_and_vegetables", "萝卜", "luó bo", "Редиска");
-addWord("yu4mi3", "fruits_and_vegetables", "玉米", "yù mǐ", "Кукуруза");
 addWord("yang2cong1", "fruits_and_vegetables", "洋葱", "yáng cōng", "Лук");
+addWord("yu4mi3", "fruits_and_vegetables", "玉米", "yù mǐ", "Кукуруза");
+addWord("qing1cai4", "fruits_and_vegetables", "青菜", "qīng cài", "Салатные листья");
+addWord("bai2cai4", "fruits_and_vegetables", "白菜", "bái cài", "Китайская капуста");
+addWord("xin1xian1", "fruits_and_vegetables", "新鲜", "xīn xiān", "Свежий");
+addWord("cui4", "fruits_and_vegetables", "脆", "cuì", "Хрустящий");
 
 addWord("he1", "drinks", "喝", "hē", "Пить");
 addWord("hao3he1", "drinks", "好喝", "hǎo hē", "Вкусный");
 addWord("yin3liao4", "drinks", "饮料", "yǐn liào", "Напиток");
 addWord("bei1zi", "drinks", "杯子", "bēi zi", "Стакан, кружка");
 addWord("shui3", "drinks", "水", "shuǐ", "Вода");
-addWord("ke3le4", "drinks", "可乐", "kě lè", "Кока-кола");
-addWord("guo3zhi1", "drinks", "果汁", "guǒ zhī", "Сок");
 addWord("cha2", "drinks", "茶", "chá", "Чай");
 addWord("ka1fei1", "drinks", "咖啡", "kā fēi", "Кофе");
 addWord("niu2nai3", "drinks", "牛奶", "niú nǎi", "Молоко");
+addWord("guo3zhi1", "drinks", "果汁", "guǒ zhī", "Сок");
+addWord("ke3le4", "drinks", "可乐", "kě lè", "Кока-кола");
 addWord("pi2jiu3", "drinks", "啤酒", "pí jiǔ", "Пиво");
 
-addWord("zhu4", "my_house", "住", "zhù", "Жить");
-addWord("lu4", "my_house", "路", "lù", "Улица, дорога");
-addWord("dian4hua4", "my_house", "电话", "diàn huà", "Телефон");
-addWord("shou3ji1", "my_house", "手机", "shǒu jī", "Современный телефон");
-addWord("hao4ma3", "my_house", "号码", "hào mǎ", "Номер");
-addWord("fang2jian1", "my_house", "房间", "fáng jiān", "Комната");
-addWord("wo4shi4", "my_house", "卧室", "wò shì", "Спальня");
-addWord("ke4ting1", "my_house", "客厅", "kè tīng", "Гостиная");
-addWord("yu4shi4", "my_house", "浴室", "yù shì", "Ванная");
-addWord("chu2fang2", "my_house", "厨房", "chú fáng", "Кухня");
-addWord("shu1fang2", "my_house", "书房", "shū fáng", "Кабинет");
-addWord("ce4suo3", "my_house", "厕所", "cè suǒ", "Туалет");
-addWord("yang2tai2", "my_house", "阳台", "yáng tái", "Балкон");
-addWord("can1ting1", "my_house", "餐厅", "cān tīng", "Столовая");
-addWord("yi1gui4", "my_house", "衣柜", "yī guì", "Шкаф, гардероб");
-addWord("chuang2", "my_house", "床", "chuáng", "Кровать");
-addWord("zhuo1zi", "my_house", "桌子", "zhuō zi", "Стол");
-addWord("yi3zi", "my_house", "椅子", "yǐ zi", "Стул");
-addWord("dian4nao3", "my_house", "电脑", "diàn nǎo", "Компьютер");
-addWord("dian4shi4", "my_house", "电视", "diàn shì", "Телевизор");
-addWord("sha1fa1", "my_house", "沙发", "shā fā", "Диван");
-addWord("shu1jia4", "my_house", "书架", "shū jià", "Книжная полка");
-addWord("chuang2tou2gui4", "my_house", "床头柜", "chuáng tóu guì", "Тумбочка");
-addWord("kong1tiao2", "my_house", "空调", "kōng tiáo", "Кондиционер");
-addWord("tai2deng1", "my_house", "台灯", "tái dēng", "Настольная лампа");
-addWord("bing1xiang1", "my_house", "冰箱", "bīng xiāng", "Холодильник");
+addWord("zhu4", "interior", "住", "zhù", "Жить");
+addWord("lu4", "interior", "路", "lù", "Улица, дорога");
+addWord("dian4hua4", "interior", "电话", "diàn huà", "Телефон");
+addWord("shou3ji1", "interior", "手机", "shǒu jī", "Мобильный телефон");
+addWord("hao4ma3", "interior", "号码", "hào mǎ", "Номер");
+addWord("fang2jian1", "interior", "房间", "fáng jiān", "Комната");
+addWord("wo4shi4", "interior", "卧室", "wò shì", "Спальня");
+addWord("ke4ting1", "interior", "客厅", "kè tīng", "Гостиная");
+addWord("yu4shi4", "interior", "浴室", "yù shì", "Ванная");
+addWord("chu2fang2", "interior", "厨房", "chú fáng", "Кухня");
+addWord("shu1fang2", "interior", "书房", "shū fáng", "Кабинет");
+addWord("ce4suo3", "interior", "厕所", "cè suǒ", "Туалет");
+addWord("yang2tai2", "interior", "阳台", "yáng tái", "Балкон");
+addWord("can1ting1", "interior", "餐厅", "cān tīng", "Столовая");
+addWord("yi1gui4", "interior", "衣柜", "yī guì", "Шкаф, гардероб");
+addWord("chuang2", "interior", "床", "chuáng", "Кровать");
+addWord("zhuo1zi", "interior", "桌子", "zhuō zi", "Стол");
+addWord("yi3zi", "interior", "椅子", "yǐ zi", "Стул");
+addWord("dian4nao3", "interior", "电脑", "diàn nǎo", "Компьютер");
+addWord("dian4shi4", "interior", "电视", "diàn shì", "Телевизор");
+addWord("sha1fa1", "interior", "沙发", "shā fā", "Диван");
+addWord("shu1jia4", "interior", "书架", "shū jià", "Книжная полка");
+addWord("chuang2tou2gui4", "interior", "床头柜", "chuáng tóu guì", "Тумбочка");
+addWord("kong1tiao2", "interior", "空调", "kōng tiáo", "Кондиционер");
+addWord("tai2deng1", "interior", "台灯", "tái dēng", "Настольная лампа");
+addWord("bing1xiang1", "interior", "冰箱", "bīng xiāng", "Холодильник");
 
 addWord("ren2", "family", "人", "rén", "Человек");
 addWord("jia1", "family", "家", "jiā", "Дом, семья");
@@ -472,6 +502,20 @@ addWord("yi4ma1", "family", "姨妈", "yí mā", "Тётя со стороны �
 addWord("jiu4jiu4", "family", "舅舅", "jiù jiù", "Дядя со стороны мамы");
 addWord("shu1shu1", "family", "叔叔", "shū shū", "Дядя со стороны папы");
 
+addWord("sheng1ri4", "personal_info", "生日", "shēng rì", "День рождения");
+addWord("chu1sheng1", "personal_info", "出生", "chū shēng", "Родиться");
+addWord("shu3_2", "personal_info", "属", "shǔ", "Родиться (знаки зодиака)");
+
+addWord("qi3chuang1", "schedule", "起床", "qǐ chuáng", "Вставать с кровати");
+addWord("xi3zao3", "schedule", "洗澡", "xǐ zǎo", "Принимать душ/ванну");
+addWord("xi3lian3", "schedule", "洗脸", "xǐ liǎn", "Умываться");
+addWord("xi3shou3", "schedule", "洗手", "xǐ shǒu", "Мыть руки");
+addWord("shua1ya2", "schedule", "刷牙", "shuā yá", "Чистить зубы");
+addWord("zao3fan4", "schedule", "早饭", "zǎo fàn", "Завтрак");
+addWord("wu3fan4", "schedule", "午饭", "wǔ fàn", "Обед");
+addWord("wan3fan4", "schedule", "晚饭", "wǎn fàn", "Ужин");
+addWord("shui4jiao4", "schedule", "睡觉", "shuì jiào", "Спать");
+
 addWord("shi2jian1", "time", "时间", "shí jiān", "Время");
 addWord("ri4", "time", "日", "rì", "День");
 addWord("hao4", "time", "号", "hào", "Число, день");
@@ -491,24 +535,21 @@ addWord("ban4", "time", "半", "bàn", "30 минут, полчаса");
 addWord("zao3shang4", "time", "早上", "zǎo shàng", "Утро");
 addWord("shang4wu3", "time", "上午", "shàng wǔ", "Первая половина дня, утро");
 addWord("zhong1wu3", "time", "中午", "zhōng wǔ", "Полдень");
-addWord("xia4wu3", "time", "下午", "xià wǔ", "День");
+addWord("xia4wu3", "time", "下午", "xià wǔ", "Вторая половина дня, день");
 addWord("wan3shang4", "time", "晚上", "wǎn shàng", "Вечер");
 addWord("ling2chen2", "time", "凌晨", "líng chén", "Ночь");
-addWord("sheng1ri4", "time", "生日", "shēng rì", "День рождения");
 addWord("xiao3shi2hou4", "time", "小时候", "xiǎo shí hòu", "Детство");
-addWord("chu1sheng1", "time", "出生", "chū shēng", "Родиться");
-addWord("shu3_2", "time", "属", "shǔ", "Родиться (знаки зодиака)");
 addWord("mei3tian1", "time", "每天", "měi tiān", "Каждый день");
 addWord("yi1huir4", "time", "一会儿", "yī huìr", "Недолго");
+addWord("cong2lai2", "time", "从来", "cóng lái", "Никогда");
+addWord("you3shi2hou", "time", "有时候", "yǒu shí hou", "Иногда");
 addWord("chang2chang2", "time", "常常", "cháng cháng", "Часто");
 addWord("yi1ban1", "time", "一般", "yī bān", "Обычно");
 addWord("ping2shi2", "time", "平时", "píng shí", "Обычно");
-addWord("you3shi2hou", "time", "有时候", "yǒu shí hou", "Иногда");
-addWord("cong2lai2", "time", "从来", "cóng lái", "Никогда");
-addWord("yi3jing1", "time", "已经", "yǐ jīng", "Уже");
 addWord("zui4jin4", "time", "最近", "zuì jìn", "В последнее время");
-addWord("ye3xu3", "time", "也许", "yě xǔ", "Возможно");
+addWord("yi3jing1", "time", "已经", "yǐ jīng", "Уже");
 addWord("gang1gang1", "time", "刚刚", "gāng gāng", "Только что");
+addWord("ye3xu3", "time", "也许", "yě xǔ", "Возможно");
 
 addWord("e2luo2si1", "countries", "俄罗斯", "é luó sī", "Россия");
 addWord("zhong1guo2", "countries", "中国", "zhōng guó", "Китай");
@@ -536,7 +577,6 @@ addWord("gong1gong4qi4che1", "transport", "公共汽车", "gōng gòng qì chē"
 addWord("xiao4che1", "transport", "校车", "xiào chē", "Школьный автобус");
 addWord("huo3che1", "transport", "火车", "huǒ chē", "Поезд");
 addWord("huo3che1zhan4", "transport", "火车站", "huǒ chē zhàn", "Железнодорожный вокзал");
-addWord("gong1li3", "transport", "公里", "gōng lǐ", "Километр");
 
 addWord("di4fang1", "travelling", "地方", "dì fāng", "Место");
 addWord("shi4zhong1xin1", "travelling", "市中心", "shì zhōng xīn", "Центр города");
@@ -557,16 +597,23 @@ addWord("xiang1ji1", "travelling", "相机", "xiāng jī", "Камера");
 addWord("zhao4pian4", "travelling", "照片", "zhào piàn", "Фотография");
 addWord("pai1zhao4pian4", "travelling", "拍照片", "pāi zhào piàn", "Снимать фотографию");
 addWord("you2le4chang3", "travelling", "游乐场", "yóu lè chǎng", "Парк аттракционов");
+addWord("huan2jing4", "travelling", "环境", "huán jìng", "Окружающая среда, окружение, обстановка");
+addWord("ting2che1chang3", "travelling", "停车场", "tíng chē chǎng", "Парковка");
+addWord("bao1", "travelling", "包", "bāo", "Сумка");
+addWord("gong1li3", "travelling", "公里", "gōng lǐ", "Километр");
 
 addWord("shang1dian4", "shop", "商店", "shāng diàn", "Магазин");
 addWord("cai4shi4chang3", "shop", "菜市场", "cài shì chǎng", "Рынок");
 addWord("mai3", "shop", "买", "mǎi", "Покупать");
+addWord("mai4", "shop", "卖", "mài", "Продавать");
 addWord("qian2", "shop", "钱", "qián", "Деньги");
 addWord("kuai4", "shop", "块", "kuài", "Валюта, кусок");
 addWord("yuan2_2", "shop", "元", "yuán", "Китайская валюта");
 addWord("te4jia4", "shop", "特价", "tè jià", "Специальное предложение, особая цена");
 addWord("dai4_3", "shop", "袋", "dài", "Мешок");
 addWord("su4liao4dai4", "shop", "塑料袋", "sù liào dài", "Пластиковый пакет");
+addWord("bu2yong4le", "shop", "不用了", "bú yòng le", "Не нужно");
+addWord("yi1dianr3", "shop", "一点儿", "yī diǎnr", "Немного");
 
 addWord("gong1zuo4", "work", "工作", "gōng zuò", "Работать");
 addWord("shang4ban1", "work", "上班", "shàng bān", "Идти на работу");
@@ -576,16 +623,14 @@ addWord("yan3yuan2", "work", "演员", "yǎn yuán", "Актёр");
 addWord("gong1cheng2shi1", "work", "工程师", "gōng chéng shī", "Инженер");
 addWord("mian4shi4", "work", "面试", "miàn shì", "Собеседование");
 addWord("shi2xi2", "work", "实习", "shí xí", "Стажировка");
+addWord("lao3ban3", "work", "老板", "lǎo bǎn", "Босс");
+addWord("jing1li3", "work", "经理", "jīng lǐ", "Менеджер");
 
 addWord("tian1qi4", "weather", "天气", "tiān qì", "Погода");
 addWord("leng3", "weather", "冷", "lěng", "Холодно");
 addWord("re4", "weather", "热", "rè", "Жарко, горячо");
 addWord("qing2tian1", "weather", "晴天", "qíng tiān", "Солнечно");
 addWord("yin1tian1", "weather", "阴天", "yīn tiān", "Пасмурно");
-addWord("qi4wen1", "weather", "气温", "qì wēn", "Температура воздуха");
-addWord("du4", "weather", "度", "dù", "Градус");
-addWord("ling2shang4", "weather", "零上", "líng shàng", "Выше нуля");
-addWord("ling2xia4", "weather", "零下", "líng xià", "Ниже нуля");
 addWord("duo1yun2", "weather", "多云", "duō yún", "Облачно");
 addWord("gua1feng1", "weather", "刮风", "guā fēng", "Дует ветер");
 addWord("gua1tai2feng1", "weather", "刮台风", "guā tái fēng", "Тайфун");
@@ -593,6 +638,10 @@ addWord("xia4mao2mao2yu3", "weather", "下毛毛雨", "xià máo máo yǔ", "М�
 addWord("xia4xiao3yu3", "weather", "下小雨", "xià xiǎo yǔ", "Идёт небольшой дождь");
 addWord("xia4yu3", "weather", "下雨", "xià yǔ", "Идёт дождь");
 addWord("xia4xue3", "weather", "下雪", "xià xuě", "Идёт снег");
+addWord("qi4wen1", "weather", "气温", "qì wēn", "Температура воздуха");
+addWord("du4", "weather", "度", "dù", "Градус");
+addWord("ling2shang4", "weather", "零上", "líng shàng", "Выше нуля");
+addWord("ling2xia4", "weather", "零下", "líng xià", "Ниже нуля");
 addWord("ji4jie2", "weather", "季节", "jì jié", "Сезон, время года");
 addWord("dong1tian1", "weather", "冬天", "dōng tiān", "Зима");
 addWord("chun1tian1", "weather", "春天", "chūn tiān", "Весна");
@@ -616,6 +665,14 @@ addWord("pao3bu4", "hobby", "跑步", "pǎo bù", "Бегать");
 addWord("you2yung3", "hobby", "游泳", "yóu yǒng", "Плавать");
 addWord("da3wang3qiu2", "hobby", "打网球", "dǎ wǎng qiú", "Играть в теннис");
 addWord("diao4yu2", "hobby", "钓鱼", "diào yú", "Ловить рыбу");
+
+addWord("shu1", "books", "书", "shū", "Книга");
+addWord("za2zhi4", "books", "杂志", "zá zhì", "Журнал");
+addWord("bao4zhi3", "books", "报纸", "bào zhǐ", "Газета");
+addWord("gu4shi4", "books", "故事", "gù shì", "История, рассказ");
+addWord("xiao3shuo1", "books", "小说", "xiǎo shuō", "Рассказ");
+addWord("qing2jie2", "books", "情节", "qíng jié", "Сюжет");
+addWord("jie2ju2", "books", "结局", "jié jú", "Финал, конец");
 
 addWord("jian1", "counting_words", "间", "jiān", "Счётное слово для комнат");
 addWord("tiao2", "counting_words", "条", "tiáo", "Счётное слово для рыб");
@@ -648,6 +705,7 @@ addWord("zen3me", "questions", "怎么", "zěn me", "Как");
 addWord("zen3meyang4", "questions", "怎么样", "zěn me yàng", "Какой");
 addWord("wei2shen2me", "questions", "为什么", "wéi shén me", "Почему");
 
+addWord("de", "summarize", "的", "de", "Притяжательная частица");
 addWord("he2_1", "summarize", "和", "hé", "И");
 addWord("hai2", "summarize", "还", "hái", "Ещё, и (для глаголов)");
 addWord("you4_2", "summarize", "又", "yòu", "И");
@@ -662,16 +720,14 @@ addWord("dong1xi1", "summarize", "东西", "dōng xī", "Предмет, вещ�
 addWord("zhe4me", "summarize", "这么", "zhè me", "Такой");
 addWord("cha1bu4duo1", "summarize", "差不多", "chā bù duō", "Почти");
 
-addWord("nao3", "other", "脑", "nǎo", "Мозг");
-addWord("hua1", "other", "花", "huā", "Цветок");
-addWord("hua1yuan2", "other", "花园", "huā yuán", "Сад");
-addWord("yi1dianr3", "other", "一点儿", "yī diǎnr", "Немного");
-addWord("he2_2", "other", "河", "hé", "Река");
-addWord("han4zi4", "other", "汉字", "hàn zì", "Иероглиф");
-addWord("xiao3shuo1", "other", "小说", "xiǎo shuō", "Рассказ");
-addWord("za2zhi4", "other", "杂志", "zá zhì", "Журнал");
-addWord("bao4zhi3", "other", "报纸", "bào zhǐ", "Газета");
 addWord("zheng4zai4", "other", "正在", "zhèng zài", "Быть в процессе, длиться");
+addWord("zhu3yi4", "other", "主意", "zhǔ yì", "Идея");
+//todo аккаунт
+addWord("mi4ma3", "other", "密码", "mì mǎ", "Пароль");
+addWord("shou3biao3", "other", "手表", "shǒu biǎo", "Наручные часы");
+addWord("meng4xiang3", "other", "梦想", "mèng xiǎng", "Мечта");
+addWord("xing1qu4", "other", "兴趣", "xīng qù", "Интерес");
+addWord("jiang3", "other", "奖", "jiǎng", "Награда");
 
 
 
