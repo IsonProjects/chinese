@@ -1,11 +1,15 @@
 .words_section .categories {
     display: flex;
     flex-wrap: wrap;
-    padding: 1em;
     gap: 1em;
 
-    .not_found_label {
-        display: none;
+    .words_count_label {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1.5em;
+        background-color: var(--second-color);
+        border-radius: 1em;
+        font-weight: 500;
     }
 }
 
@@ -14,19 +18,18 @@
     padding: 1.5em;
     background-color: var(--second-color);
     border-radius: 1em;
+}
+
+.words_section .categories .category > .info {
+    margin-bottom: 1em;
 
     .name {
-        margin-bottom: 1em;
         font-size: 1.25em;
         font-weight: 600;
     }
-}
 
-.words_section .categories.not_found {
-    justify-content: center;
-
-    .not_found_label {
-        display: block;
+    .words_count {
+        color: var(--hint-color);
     }
 }
 
@@ -54,6 +57,6 @@
     font-weight: 600;
 }
 
-.word .info {
+.word > .info {
     color: var(--hint-color);
 }

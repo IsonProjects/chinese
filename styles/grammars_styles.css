@@ -1,7 +1,6 @@
 .grammars_section .grammars {
     display: flex;
     flex-wrap: wrap;
-    padding: 1em;
     gap: 1em;
 
     .not_found_label {

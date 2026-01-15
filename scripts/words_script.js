@@ -138,6 +138,10 @@ addWord("can1jia1", "verbs", "参加", "cān jiā", "Участвовать, п�
 addWord("na2", "verbs", "拿", "ná", "Держать");
 addWord("nan2guo4", "verbs", "难过", "nán guò", "Огорчаться, расстраиваться");
 addWord("jian4shen1", "verbs", "健身", "jiàn shēn", "Тренироваться");
+addWord("san4bu4", "verbs", "散步", "sàn bù", "Гулять");
+addWord("qi1dai4", "verbs", "期待", "qī dài", "Ожидать");
+addWord("diu1", "verbs", "丟", "diū", "Бросить");
+addWord("zhao3", "verbs", "找", "zhǎo", "Искать, находить");
 
 addWord("xiao3", "adjectives", "小", "xiǎo", "Маленький");
 addWord("da4", "adjectives", "大", "dà", "Большой");
@@ -322,6 +326,7 @@ addWord("nian2qing1", "appearance", "年轻", "nián qīng", "Молодой");
 addWord("shan4liang2", "appearance", "善良", "shàn liáng", "Добрый");
 addWord("yan2ge2", "appearance", "严格", "yán gé", "Строгий");
 addWord("ke3pa4", "appearance", "可怕", "kě pà", "Страшный");
+addWord("kun4", "appearance", "困", "kùn", "Сонный");
 
 addWord("jian4kang1", "health", "健康", "jiàn kāng", "Здоровье");
 addWord("sheng1bing4", "health", "生病", "shēng bìng", "Заболеть, болезнь");
@@ -452,6 +457,8 @@ addWord("pi2jiu3", "drinks", "啤酒", "pí jiǔ", "Пиво");
 
 addWord("zhu4", "interior", "住", "zhù", "Жить");
 addWord("lu4", "interior", "路", "lù", "Улица, дорога");
+addWord("fang2zi", "interior", "房子", "fáng zi", "Дом");
+addWord("gong1yu4", "interior", "公寓", "gōng yù", "Квартира");
 addWord("dian4hua4", "interior", "电话", "diàn huà", "Телефон");
 addWord("shou3ji1", "interior", "手机", "shǒu jī", "Мобильный телефон");
 addWord("hao4ma3", "interior", "号码", "hào mǎ", "Номер");
@@ -625,6 +632,8 @@ addWord("mian4shi4", "work", "面试", "miàn shì", "Собеседование
 addWord("shi2xi2", "work", "实习", "shí xí", "Стажировка");
 addWord("lao3ban3", "work", "老板", "lǎo bǎn", "Босс");
 addWord("jing1li3", "work", "经理", "jīng lǐ", "Менеджер");
+addWord("kai1hui4", "work", "开会", "kāi huì", "Проводить совещание");
+addWord("ban4gong1shi4", "work", "办公室", "bàn gōng shì", "Офис");
 
 addWord("tian1qi4", "weather", "天气", "tiān qì", "Погода");
 addWord("leng3", "weather", "冷", "lěng", "Холодно");
@@ -732,9 +741,14 @@ addWord("jiang3", "other", "奖", "jiǎng", "Награда");
 
 
 let categoriesNode;
+let wordsCountLabelNode;
 
 document.addEventListener("DOMContentLoaded", () => {
+    const wordsSearch = document.querySelector(".search .words_search");
+    wordsSearch.addEventListener("input", filterWords);
+
     categoriesNode = document.querySelector(".words_section .categories");
+    wordsCountLabelNode = categoriesNode.querySelector(".words_count_label");
 
     const categoryTemplate = document.querySelector(".templates .category");
     const wordTemplate = document.querySelector(".templates .word");
@@ -745,6 +759,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const nameNode = categoryNode.querySelector(".name");
         nameNode.innerText = category.name;
+
+        const wordsCountNode = categoryNode.querySelector(".words_count");
+        wordsCountNode.innerText = getWordsCountText(words.reduce((acc, word) =>  acc + (word.category === category.id ? 1 : 0), 0));
 
         categoriesNode.appendChild(categoryNode);
     }
@@ -761,8 +778,7 @@ document.addEventListener("DOMContentLoaded", () => {
         categoriesNode.querySelector(".category_" + word.category + " .words").appendChild(wordNode);
     }
 
-    const wordsSearch = document.querySelector(".search .words_search");
-    wordsSearch.addEventListener("input", filterWords);
+    wordsCountLabelNode.innerText = "Всего " + getWordsCountText(words.length);
 });
 
 function filterWords(e) {
@@ -789,25 +805,35 @@ function filterWords(e) {
         }
     }
 
+    let wordsCount = 0;
     for (const word of words) {
         const wordNode = categoriesNode.querySelector(".words .word_" + word.id);
 
-        if (filteredWords.includes(word.id)) wordNode.style.display = "";
+        if (filteredWords.includes(word.id)) {
+            wordNode.style.display = "";
+            wordsCount++;
+        }
         else wordNode.style.display = "none";
     }
 
-    categoriesNode.classList.add("not_found");
+    if (wordsCount === words.length) wordsCountLabelNode.innerText = "Всего " + getWordsCountText(wordsCount);
+    else if (wordsCount === 0) wordsCountLabelNode.innerText = "Ничего не найдено";
+    else wordsCountLabelNode.innerText = "Найдено " + getWordsCountText(wordsCount);
 
     for (const category of categories) {
         const categoryNode = categoriesNode.querySelector(".category_" + category.id);
         categoryNode.style.display = "none";
 
-        for (const child of categoryNode.querySelector(".words").children) {
+        const wordsNode = categoryNode.querySelector(".words");
+
+        for (const child of wordsNode.children) {
             if (child.style.display !== "none") {
-                categoryNode.style.display = "block";
-                categoriesNode.classList.remove("not_found");
+                categoryNode.style.display = "";
                 break;
             }
         }
+
+        const wordsCountNode = categoryNode.querySelector(".words_count");
+        wordsCountNode.innerText = getWordsCountText(Array.from(wordsNode.children).reduce((acc, child) =>  acc + (child.style.display === "" ? 1 : 0), 0));
     }
 }

@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     gap: 1em;
-    padding: 1em;
 }
 
 .exercises_settings {
@@ -75,7 +74,6 @@
     flex-direction: column;
     align-items: center;
     gap: 5em;
-    padding: 1em;
 }
 
 .exercises_page .header {
@@ -251,7 +249,6 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 1em;
-    padding: 1em;
 }
 
 .exercises_results_page .results_section {
