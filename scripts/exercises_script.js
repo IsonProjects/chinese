@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     stopExercises();
 
     exercisesStartPageNode.querySelector(".categories_settings .select_all_button").addEventListener("click", () => {
-        selectedExerciseCategories = categories.map(category => category.id);
+        selectedExerciseCategories = new Set(categories.map(category => category.id));
         exercisesStartPageNode.querySelectorAll(".categories_selectors input").forEach(input => input.checked = true);
     });
 
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     exercisesStartPageNode.querySelector(".exercise_types_settings .select_all_button").addEventListener("click", () => {
-        selectedExerciseTypes = exerciseTypes.map(exerciseType => exerciseType.id);
+        selectedExerciseTypes = new Set(exerciseTypes.map(exerciseType => exerciseType.id));
         exercisesStartPageNode.querySelectorAll(".exercise_types_selectors input").forEach(input => input.checked = true);
     });
 
@@ -245,11 +245,11 @@ function generateMatchPairsExercise(availableWords) {
         }
         else if (mode === 1) {
             key = word.character;
-            value = word.translation;
+            value = word.translation.join(", ");
         }
         else if (mode === 2) {
             key = word.pinyin;
-            value = word.translation;
+            value = word.translation.join(", ");
         }
 
         if (content.has(key)) continue;
@@ -489,10 +489,10 @@ function loadTranslateWordAudioExercise(exercise, exerciseNode, titleNode) {
     }
 
     exercisesActionButtonNode.onclick = () => {
-        const translation = exercise.content.translation.toLowerCase();
+        const translation = exercise.content.translation.map(el => el.toLowerCase());
         const input = translationInputNode.value.toLowerCase().trim();
 
-        if (input === translation) {
+        if (translation.includes(input)) {
             translationInputNode.classList.add("correct");
             exercisesCorrectAmount++;
         }
@@ -540,10 +540,10 @@ function loadTranslateWordCharacterExercise(exercise, exerciseNode, titleNode) {
     }
 
     exercisesActionButtonNode.onclick = () => {
-        const translation = exercise.content.translation.toLowerCase();
+        const translation = exercise.content.translation.map(el => el.toLowerCase());
         const input = translationInputNode.value.toLowerCase().trim();
 
-        if (input === translation) {
+        if (translation.includes(input)) {
             translationInputNode.classList.add("correct");
             exercisesCorrectAmount++;
         }
