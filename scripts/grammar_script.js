@@ -54,8 +54,8 @@ addGrammar("gei", "Давать, дательный падеж", [
 ]);
 
 addGrammar("again", "Опять, снова", [
-    { construction: "再 + глагол", sentence: "明天我再去踢足球", translation: "Завтра я опять пойду играть в футбол (буд.)" },
-    { construction: "又 + глагол", sentence: "我又吃苹果", translation: "Я опять съел яблоко (прошл.)" }
+    { construction: "再 + глагол", sentence: "明天我再去踢足球", translation: "Завтра я опять пойду играть в футбол (будущее)" },
+    { construction: "又 + глагол", sentence: "我又吃苹果", translation: "Я опять съел яблоко (прошлое)" }
 ]);
 
 addGrammar("le", "Завершённость и изменение ситуации", [
@@ -68,7 +68,7 @@ addGrammar("action_duration", "Продолжительность действи
     { construction: "Глагол + длительность + 的 + дополнение", sentence: "我唱五分钟的歌", translation: "Я пою песню пять минут" }
 ]);
 
-addGrammar("synchronism", "Два действия одновременно", [
+addGrammar("synchronism", "Одновременность действий", [
     { construction: "Глагол + 的时候 + глагол", sentence: "他走路的时候听音乐", translation: "Он шёл и слушал музыку" },
     { construction: "Время/Возраст/... + 的时候 + глагол", sentence: "昨天的时候下雨", translation: "Вчера шёл дождь" }
 ]);
@@ -79,11 +79,11 @@ addGrammar("be_in_process", "Быть в процессе, длиться", [
     { construction: "Глагол + 呢", sentence: "我今天早上做早饭呢", translation: "Сегодня утром я готовил завтрак" }
 ]);
 
-addGrammar("together", "Вместе", [
+addGrammar("together", "Выполнять действие вместе", [
     { construction: "A + 跟 + B + 一起 + глагол", sentence: "我跟朋友一起跑步", translation: "Я бегу вместе с другом" }
 ]);
 
-addGrammar("do_quick", "Недолго, быстро сделать", [
+addGrammar("do_quick", "Сделать быстро/недолго", [
     { construction: "Глагол + 一下", sentence: "看一下", translation: "Взгляни" }
 ]);
 
@@ -110,7 +110,7 @@ addGrammar("de_de_de", "Разные частицы de", [
     { construction: "Глагол + дополнение + глагол + 得 + прилагательное", sentence: "他跑步跑得慢", translation: "Он бегает медленно" }
 ]);
 
-addGrammar("cong", "Когда начал делать, от чего-то до чего-то", [
+addGrammar("cong", "С какого момента началось действие, от чего-то до чего-то", [
     { construction: "从 + время/место + 开始 + глагол", sentence: "我从明天开始跑步", translation: "С завтрашнего дня я начну бегать" },
     { construction: "从 + время/место + 到 + время/место + глагол", sentence: "我从八点到十二点在学校上课", translation: "С восьми до двенадцати я учусь в школе" }
 ]);
@@ -120,6 +120,11 @@ addGrammar("effective_morphemes", "Результативные морфемы",
     { construction: "Глагол + 到 + дополнение", sentence: "买到东西", translation: "Купил вещи" },
     { construction: "Глагол + 懂 + дополнение", sentence: "听懂", translation: "Услышал и понял" },
     { construction: "没 + глагол + РМ + дополнение", sentence: "我没做完考试题", translation: "Я не полностью решил экзамен" }
+]);
+
+addGrammar("similarity", "Одинаковость, схожесть", [
+    { construction: "A + 跟 + B + 一样 + прилагательное", sentence: "我跟我哥哥一样帅", translation: "Я такой же красивый, как и мой брат" },
+    { construction: "A + 跟 + B + 一样 + глагол", sentence: "他跟他的朋友一样是工程师", translation: "Он, как и его друг, инженер" }
 ]);
 
 
