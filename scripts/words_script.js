@@ -992,6 +992,7 @@ function filterWords(e) {
         }
 
         const wordsCountNode = categoryNode.querySelector(".words_count");
-        wordsCountNode.innerText = getWordsCountText(Array.from(wordsNode.children).reduce((acc, child) =>  acc + (child.style.display === "" ? 1 : 0), 0));
+        const wordsCount = Array.from(wordsNode.children).reduce((acc, child) =>  acc + (child.style.display === "" ? 1 : 0), 0);
+        wordsCountNode.innerText = getWordsCountText(wordsCount);
     }
 }

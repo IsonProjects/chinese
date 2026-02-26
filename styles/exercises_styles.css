@@ -80,6 +80,9 @@
     display: flex;
     gap: 0.5em;
     align-items: center;
+    padding: 0.5em;
+    background-color: var(--second-color);
+    border-radius: 1em;
 
     .close_button {
         height: 1.5em;
@@ -93,7 +96,7 @@
     border-radius: 1em;
 
     &::-webkit-progress-bar {
-        background-color: var(--hint-color);
+        background-color: var(--second-color);
         border-radius: 1em;
     }
 
@@ -164,7 +167,7 @@
     }
 
     .pair_item.incorrect {
-        animation: incorrect 0.2s ease-in-out;
+        animation: incorrect 0.5s ease-in-out;
     }
 }
 
@@ -274,7 +277,7 @@
 }
 
 @keyframes incorrect {
-    50% {
+    40%, 60% {
         background-color: var(--incorrect-color);
     }
 }

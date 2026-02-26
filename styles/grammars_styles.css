@@ -5,6 +5,12 @@
 
     .not_found_label {
         display: none;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1.5em;
+        background-color: var(--second-color);
+        border-radius: 1em;
+        font-weight: 500;
     }
 }
 
@@ -21,12 +27,8 @@
     }
 }
 
-.grammars_section .grammars.not_found {
-    justify-content: center;
-
-    .not_found_label {
-        display: block;
-    }
+.grammars_section .grammars.not_found .not_found_label {
+    display: block;
 }
 
 

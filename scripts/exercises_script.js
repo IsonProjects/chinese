@@ -48,21 +48,25 @@ document.addEventListener("DOMContentLoaded", () => {
     exercisesStartPageNode.querySelector(".categories_settings .select_all_button").addEventListener("click", () => {
         selectedExerciseCategories = new Set(categories.map(category => category.id));
         exercisesStartPageNode.querySelectorAll(".categories_selectors input").forEach(input => input.checked = true);
+        localStorage.setItemJson("selected_exercise_categories", [...selectedExerciseCategories]);
     });
 
     exercisesStartPageNode.querySelector(".categories_settings .unselect_all_button").addEventListener("click", () => {
         selectedExerciseCategories = new Set();
         exercisesStartPageNode.querySelectorAll(".categories_selectors input").forEach(input => input.checked = false);
+        localStorage.setItemJson("selected_exercise_categories", [...selectedExerciseCategories]);
     });
 
     exercisesStartPageNode.querySelector(".exercise_types_settings .select_all_button").addEventListener("click", () => {
         selectedExerciseTypes = new Set(exerciseTypes.map(exerciseType => exerciseType.id));
         exercisesStartPageNode.querySelectorAll(".exercise_types_selectors input").forEach(input => input.checked = true);
+        localStorage.setItemJson("selected_exercise_categories", [...selectedExerciseTypes]);
     });
 
     exercisesStartPageNode.querySelector(".exercise_types_settings .unselect_all_button").addEventListener("click", () => {
         selectedExerciseTypes = new Set();
         exercisesStartPageNode.querySelectorAll(".exercise_types_selectors input").forEach(input => input.checked = false);
+        localStorage.setItemJson("selected_exercise_categories", [...selectedExerciseTypes]);
     });
 
     const categorySelectorTemplate = document.querySelector(".templates .category_selector");
@@ -124,8 +128,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     exercisesStartPageNode.querySelector(".exercises_section .start_exercises_button").addEventListener("click", () => {
-        if (selectedExerciseCategories.length === 0) return;
-        if (selectedExerciseTypes.length === 0) return;
+        if (selectedExerciseCategories.size === 0) return;
+        if (selectedExerciseTypes.size === 0) return;
+        if (exercisesAmount < 1) return;
         startExercises();
     });
 
