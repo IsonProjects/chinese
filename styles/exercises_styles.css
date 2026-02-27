@@ -42,7 +42,7 @@
         height: 1.25em;
         padding: 0.3em;
         border-radius: 1em;
-        transition: background-color 0.2s;
+        transition: background-color 0.2s ease-in-out;
         cursor: pointer;
 
         &:hover {
@@ -110,10 +110,6 @@
     position: fixed;
     bottom: 0;
     margin-bottom: 1em;
-
-    .action_button {
-        transition: 0.2s;
-    }
 }
 
 .exercises_page .exercise {
@@ -145,7 +141,7 @@
         background-color: var(--main-color);
         border-radius: 1em;
         cursor: pointer;
-        transition: 0.2s;
+        transition: background-color 0.2s ease-in-out;
 
         .text {
             text-align: center;
@@ -189,7 +185,7 @@
         background-color: var(--main-color);
         border-radius: 1em;
         cursor: pointer;
-        transition: 0.2s;
+        transition: background-color 0.2s ease-in-out;
     }
 
     .pinyin_item:hover {

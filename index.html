@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="styles/words_styles.css">
         <link rel="stylesheet" href="styles/grammars_styles.css">
         <link rel="stylesheet" href="styles/exercises_styles.css">
+        <link rel="stylesheet" href="styles/settings_styles.css">
         
         <script src="scripts/script.js"></script>
         <script src="scripts/sections_script.js"></script>
@@ -198,7 +199,19 @@
 
         <div class="section settings_section">
             <div class="settings">
-                <button class="toggle_theme_button">Сменить тему</button>
+                <div class="hue setting">
+                    <p class="title">Цвет</p>
+
+                    <label>
+                        <input class="hue_slider" type="range" min="0" max="360">
+                    </label>
+                </div>
+
+                <div class="theme setting">
+                    <p class="title">Тема</p>
+
+                    <button class="toggle_theme_button">Сменить</button>
+                </div>
             </div>
         </div>
     </body>

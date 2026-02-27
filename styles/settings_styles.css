@@ -1,0 +1,24 @@
+.settings {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+}
+
+.settings .setting {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 1.5em;
+    background-color: var(--second-color);
+    border-radius: 1em;
+}
+
+.settings .setting .title {
+    font-size: 1.25em;
+    font-weight: 600;
+}
+
+.settings .theme.setting  {
+    gap: 1em;
+}
