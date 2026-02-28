@@ -136,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const grammarTemplate = document.querySelector(".templates .grammar");
     const exampleTemplate = document.querySelector(".templates .example");
+    const sentenceWordTemplate = document.querySelector(".templates .sentence_word");
 
     for (const grammar of grammars) {
         const grammarNode = grammarTemplate.cloneNode(true);
@@ -143,18 +144,52 @@ document.addEventListener("DOMContentLoaded", () => {
         grammarNode.classList.add("grammar_" + grammar.id);
 
         const nameNode = grammarNode.querySelector(".name");
-        nameNode.innerHTML = grammar.name;
+        nameNode.innerText = grammar.name;
 
-        grammar.examples.forEach(example => {
+        for (const example of grammar.examples) {
             const exampleNode = exampleTemplate.cloneNode(true);
-            exampleNode.addEventListener("click", () => pronounce(example.sentence));
+            const sentenceNode = exampleNode.querySelector(".sentence");
 
-            exampleNode.querySelector(".construction").innerHTML = example.construction;
-            exampleNode.querySelector(".sentence").innerHTML = example.sentence;
-            exampleNode.querySelector(".translation").innerHTML = example.translation;
+            exampleNode.querySelector(".construction").innerText = example.construction;
+            exampleNode.querySelector(".translation").innerText = example.translation;
+
+            const speakButtonNode = exampleNode.querySelector(".speak_button");
+            speakButtonNode.addEventListener("click", () => pronounce(example.sentence))
+
+            for (const token of parse(example.sentence)) {
+                const sentenceWordNode = sentenceWordTemplate.cloneNode(true);
+                const word = token.word;
+
+                const characterNode = sentenceWordNode.querySelector(".character");
+                const infoNode = sentenceWordNode.querySelector(".info");
+
+                if (token.valid) {
+                    sentenceWordNode.classList.add("translated");
+
+                    characterNode.innerText = word.character;
+                    infoNode.querySelector(".pinyin").innerText = word.pinyin;
+                    infoNode.querySelector(".translation").innerText = word.translation.join(", ");
+
+                    characterNode.addEventListener("click", () => {
+                        infoNode.classList.toggle("show");
+
+                        if (infoNode.classList.contains("show")) {
+                            pronounce(word.character);
+                            const infoNodes = grammarsNode.querySelectorAll(".grammar .example .sentence .sentence_word .info");
+
+                            for (const otherInfoNode of infoNodes) {
+                                if (otherInfoNode !== infoNode) otherInfoNode.classList.remove("show");
+                            }
+                        }
+                    });
+                }
+                else characterNode.innerText = word;
+
+                sentenceNode.insertBefore(sentenceWordNode, speakButtonNode);
+            }
 
             grammarNode.querySelector(".examples").appendChild(exampleNode);
-        });
+        }
 
         grammarsNode.appendChild(grammarNode);
     }
@@ -189,4 +224,51 @@ function filterGrammars(e) {
         }
         else grammarNode.style.display = "none";
     }
+}
+
+
+
+function parse(sentence) {
+    const tokens = [];
+
+    for (let i = 0; i < sentence.length; i++) {
+        const string = sentence.substring(i);
+        let token = null;
+
+        for (const word of words) {
+            const matcher = string.match("^" + word.character);
+
+            if (matcher != null) {
+                const end = word.character.length;
+                const matched = string.substring(0, end);
+
+                if (token == null || token.word.character.length < matched.length) {
+                    token = {
+                        word: word,
+                        valid: true
+                    };
+                }
+            }
+        }
+
+        if (token != null) {
+            i += token.word.character.length - 1;
+            tokens.push(token);
+        }
+        else {
+            const char = sentence.charAt(i);
+
+            if (char !== " " && char !== "." && char !== "!" && char !== "?") {
+                console.warn(`Unresolved character ${char} at position ${i + 1} inside sentence ${sentence}`);
+            }
+
+            tokens.push({
+                word: char,
+                valid: false
+            });
+        }
+
+    }
+
+    return tokens;
 }
