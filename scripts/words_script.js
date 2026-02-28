@@ -958,7 +958,7 @@ document.addEventListener("DOMContentLoaded", () => {
         nameNode.innerText = category.name;
 
         const wordsCountNode = categoryNode.querySelector(".words_count");
-        wordsCountNode.innerText = getWordsCountText(words.reduce((acc, word) =>  acc + (word.category === category.id ? 1 : 0), 0));
+        wordsCountNode.innerText = getWordsAmountText(words.reduce((acc, word) =>  acc + (word.category === category.id ? 1 : 0), 0));
 
         categoriesNode.appendChild(categoryNode);
     }
@@ -975,7 +975,7 @@ document.addEventListener("DOMContentLoaded", () => {
         categoriesNode.querySelector(".category_" + word.category + " .words").appendChild(wordNode);
     }
 
-    wordsCountLabelNode.innerText = "Всего " + getWordsCountText(words.length);
+    wordsCountLabelNode.innerText = "Всего " + getWordsAmountText(words.length);
 });
 
 function filterWords(e) {
@@ -1013,9 +1013,9 @@ function filterWords(e) {
         else wordNode.style.display = "none";
     }
 
-    if (wordsCount === words.length) wordsCountLabelNode.innerText = "Всего " + getWordsCountText(wordsCount);
+    if (wordsCount === words.length) wordsCountLabelNode.innerText = "Всего " + getWordsAmountText(wordsCount);
     else if (wordsCount === 0) wordsCountLabelNode.innerText = "Ничего не найдено";
-    else wordsCountLabelNode.innerText = "Найдено " + getWordsCountText(wordsCount);
+    else wordsCountLabelNode.innerText = "Найдено " + getWordsAmountText(wordsCount);
 
     for (const category of categories) {
         const categoryNode = categoriesNode.querySelector(".category_" + category.id);
@@ -1032,6 +1032,6 @@ function filterWords(e) {
 
         const wordsCountNode = categoryNode.querySelector(".words_count");
         const wordsCount = Array.from(wordsNode.children).reduce((acc, child) =>  acc + (child.style.display === "" ? 1 : 0), 0);
-        wordsCountNode.innerText = getWordsCountText(wordsCount);
+        wordsCountNode.innerText = getWordsAmountText(wordsCount);
     }
 }

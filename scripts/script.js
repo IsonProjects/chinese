@@ -39,12 +39,13 @@ function getTime(time) {
     return minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
 }
 
-function getWordsCountText(count) {
-    const rem = count % 10;
+function getWordsAmountText(count) {
+    const units = count % 10;
+    const tens = count % 100;
 
-    if (rem === 0 || rem >= 5 || (count >= 11 && count <= 19)) return count + " слов";
-    if (rem === 1) return count + " слово";
-    if (rem >= 2 && rem <= 4) return count + " слова";
+    if (units === 0 || units >= 5 || (tens >= 11 && tens <= 14)) return count + " слов";
+    if (units === 1) return count + " слово";
+    if (units >= 2 && units <= 4) return count + " слова";
     return count + " слов";
 }
 
