@@ -37,7 +37,7 @@ header .row {
         background-color: var(--main-color);
     }
 
-    svg {
+    .icon {
         height: 1.5em;
     }
 }

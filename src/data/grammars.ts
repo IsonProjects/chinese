@@ -1,6 +1,18 @@
-const grammars = [];
+export const grammars: Grammar[] = [];
 
-function addGrammar(id, name, examples) {
+export interface Grammar {
+    id: string;
+    name: string;
+    examples: Example[];
+}
+
+export interface Example {
+    construction: string;
+    sentence: string;
+    translation: string;
+}
+
+function addGrammar(id: string, name: string, examples: Example[]) {
     grammars.push({
         id: id,
         name: name,
@@ -126,149 +138,3 @@ addGrammar("similarity", "Одинаковость, схожесть", [
     { construction: "A + 跟 + B + 一样 + прилагательное", sentence: "我跟我哥哥一样帅", translation: "Я такой же красивый, как и мой брат" },
     { construction: "A + 跟 + B + 一样 + глагол", sentence: "他跟他的朋友一样是工程师", translation: "Он, как и его друг, инженер" }
 ]);
-
-
-
-let grammarsNode;
-
-document.addEventListener("DOMContentLoaded", () => {
-    grammarsNode = document.querySelector(".grammars_section .grammars");
-
-    const grammarTemplate = document.querySelector(".templates .grammar");
-    const exampleTemplate = document.querySelector(".templates .example");
-    const sentenceWordTemplate = document.querySelector(".templates .sentence_word");
-
-    for (const grammar of grammars) {
-        const grammarNode = grammarTemplate.cloneNode(true);
-        grammarNode.style.display = "block";
-        grammarNode.classList.add("grammar_" + grammar.id);
-
-        const nameNode = grammarNode.querySelector(".name");
-        nameNode.innerText = grammar.name;
-
-        for (const example of grammar.examples) {
-            const exampleNode = exampleTemplate.cloneNode(true);
-            const sentenceNode = exampleNode.querySelector(".sentence");
-
-            exampleNode.querySelector(".construction").innerText = example.construction;
-            exampleNode.querySelector(".translation").innerText = example.translation;
-
-            const speakButtonNode = exampleNode.querySelector(".speak_button");
-            speakButtonNode.addEventListener("click", () => pronounce(example.sentence))
-
-            for (const token of parse(example.sentence)) {
-                const sentenceWordNode = sentenceWordTemplate.cloneNode(true);
-                const word = token.word;
-
-                const characterNode = sentenceWordNode.querySelector(".character");
-                const infoNode = sentenceWordNode.querySelector(".info");
-
-                if (token.valid) {
-                    sentenceWordNode.classList.add("translated");
-
-                    characterNode.innerText = word.character;
-                    infoNode.querySelector(".pinyin").innerText = word.pinyin;
-                    infoNode.querySelector(".translation").innerText = word.translation.join(", ");
-
-                    characterNode.addEventListener("click", () => {
-                        infoNode.classList.toggle("show");
-
-                        if (infoNode.classList.contains("show")) {
-                            pronounce(word.character);
-                            const infoNodes = grammarsNode.querySelectorAll(".grammar .example .sentence .sentence_word .info");
-
-                            for (const otherInfoNode of infoNodes) {
-                                if (otherInfoNode !== infoNode) otherInfoNode.classList.remove("show");
-                            }
-                        }
-                    });
-                }
-                else characterNode.innerText = word;
-
-                sentenceNode.insertBefore(sentenceWordNode, speakButtonNode);
-            }
-
-            grammarNode.querySelector(".examples").appendChild(exampleNode);
-        }
-
-        grammarsNode.appendChild(grammarNode);
-    }
-
-    const grammarsSearch = document.querySelector(".search .grammars_search");
-    grammarsSearch.addEventListener("input", filterGrammars);
-});
-
-function filterGrammars(e) {
-    const searchValue = e.target.value.toLowerCase().replaceAll(" ", "");
-    let filteredGrammars;
-
-    if (searchValue === "") filteredGrammars = grammars.map(grammar => grammar.id);
-    else {
-        filteredGrammars = [];
-
-        for (const grammar of grammars) {
-            if (grammar.name.toLowerCase().replaceAll(" ", "").includes(searchValue)) {
-                filteredGrammars.push(grammar.id);
-            }
-        }
-    }
-
-    grammarsNode.classList.add("not_found");
-
-    for (const grammar of grammars) {
-        const grammarNode = grammarsNode.querySelector(".grammar_" + grammar.id);
-
-        if (filteredGrammars.includes(grammar.id)) {
-            grammarNode.style.display = "";
-            grammarsNode.classList.remove("not_found");
-        }
-        else grammarNode.style.display = "none";
-    }
-}
-
-
-
-function parse(sentence) {
-    const tokens = [];
-
-    for (let i = 0; i < sentence.length; i++) {
-        const string = sentence.substring(i);
-        let token = null;
-
-        for (const word of words) {
-            const matcher = string.match("^" + word.character);
-
-            if (matcher != null) {
-                const end = word.character.length;
-                const matched = string.substring(0, end);
-
-                if (token == null || token.word.character.length < matched.length) {
-                    token = {
-                        word: word,
-                        valid: true
-                    };
-                }
-            }
-        }
-
-        if (token != null) {
-            i += token.word.character.length - 1;
-            tokens.push(token);
-        }
-        else {
-            const char = sentence.charAt(i);
-
-            if (char !== " " && char !== "." && char !== "!" && char !== "?") {
-                console.warn(`Unresolved character ${char} at position ${i + 1} inside sentence ${sentence}`);
-            }
-
-            tokens.push({
-                word: char,
-                valid: false
-            });
-        }
-
-    }
-
-    return tokens;
-}

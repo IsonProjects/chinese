@@ -1,14 +1,27 @@
-const words = [];
-const categories = [];
+export const categories: Category[] = [];
+export const words: Word[] = [];
 
-function addCategory(id, name) {
+export interface Category {
+    id: string;
+    name: string;
+}
+
+export interface Word {
+    id: string;
+    category: string;
+    character: string;
+    pinyin: string;
+    translation: string[];
+}
+
+function addCategory(id: string, name: string) {
     categories.push({
         id: id,
         name: name
     });
 }
 
-function addWord(id, categoryId, character, pinyin, translation) {
+function addWord(id: string, categoryId: string, character: string, pinyin: string, translation: string | string[]) {
     if (!categories.some(category => category.id === categoryId)) {
         console.error(`Unknown category "${categoryId}" word id "${id}"`);
         return;
@@ -203,7 +216,7 @@ addWord("fei1chang2", "adjectives", "非常", "fēi cháng", "Очень");
 addWord("ting3de", "adjectives", "挺的", "tǐng de", "Очень");
 addWord("tai4le", "adjectives", "太了", "tài le", "Слишком");
 addWord("hao3", "adjectives", "好", "hǎo", ["Хорошо", "Хороший"]);
-addWord("cha1", "adjectives", "差", "chā", ["Плохо", "Плохой"])
+addWord("cha1", "adjectives", "差", "chā", ["Плохо", "Плохой"]);
 addWord("qing1", "adjectives", "轻", "qīng", "Лёгкий");
 addWord("zhong4", "adjectives", "重", "zhòng", "Тяжёлый");
 addWord("fang1bian4", "adjectives", "方便", "fāng biàn", "Удобный");
@@ -218,7 +231,7 @@ addWord("xing4yun4", "adjectives", "幸运", "xìng yùn", "Везучий");
 addWord("xing4fu2", "adjectives", "幸福", "xìng fú", "Счастливый");
 addWord("qing1chu3", "adjectives", "清楚", "qīng chǔ", ["Ясный", "Ясно"]);
 addWord("bang4", "adjectives", "棒", "bàng", ["Классный", "Крутой", "Отличный"]);
-addWord("jing1cai3", "adjectives", "精彩", "jīng cǎi", "Замечательный", "Чудесный");
+addWord("jing1cai3", "adjectives", "精彩", "jīng cǎi", ["Замечательный", "Чудесный"]);
 addWord("li4hai4", "adjectives", "厉害", "lì hài", ["Впечатляющий", "Невероятный"]);
 addWord("you3qu4", "adjectives", "有趣", "yǒu qù", "Интересный");
 addWord("wu2liao2", "adjectives", "无聊", "wú liáo", "Скучный");
@@ -349,7 +362,7 @@ addWord("qi4fen1", "events", "气氛", "qì fēn", "Атмосфера");
 addWord("la1ji1tong3", "events", "垃圾桶", "lā jī tǒng", "Мусорное ведро");
 addWord("shou4huo4ji1", "events", "售货机", "shòu huò jī", "Торговый автомат");
 addWord("xing1qu4", "events", "兴趣", "xīng qù", "Интерес");
-addWord("you3xing1qu4", "events", "有兴趣", "yǒu xīng qù", "Заинтересованный", "Быть заинтересованным");
+addWord("you3xing1qu4", "events", "有兴趣", "yǒu xīng qù", ["Заинтересованный", "Быть заинтересованным"]);
 
 addWord("qian1bi3", "office_supplies", "铅笔", "qiān bǐ", "Карандаш");
 addWord("la4bi3", "office_supplies", "蜡笔", "là bǐ", "Восковой мелок");
@@ -484,7 +497,7 @@ addWord("xian2", "food", "咸", "xián", "Солёный");
 addWord("bao3", "food", "饱", "bǎo", ["Наедаться", "Быть сытым"]);
 addWord("hao3le", "food", "好了", "hǎo le", ["Готов", "Доведён до готовности"]);
 addWord("kuai4can1", "food", "快餐", "kuài cān", "Фаст фуд");
-addWord("re4gou3", "food", "热狗", "rè gǒu", "Хот дог");
+addWord("re4gou3", "food", "热狗", "rè gǒu", "Хот-дог");
 addWord("han4bao3bao1", "food", "汉堡包", "hàn bǎo bāo", "Гамбургер");
 addWord("ling2shi2", "food", "零食", "líng shí", "Закуски");
 addWord("san1ming2zhi4", "food", "三明治", "sān míng zhì", "Сэндвич");
@@ -934,104 +947,3 @@ addWord("meng4xiang3", "other", "梦想", "mèng xiǎng", "Мечта");
 addWord("jiang3", "other", "奖", "jiǎng", "Награда");
 addWord("chou1yan1", "other", "抽烟", "chōu yān", "Курить");
 addWord("bao4jing3", "other", "报警", "bào jǐng", "Вызвать полицию");
-
-
-
-let categoriesNode;
-let wordsCountLabelNode;
-
-document.addEventListener("DOMContentLoaded", () => {
-    const wordsSearch = document.querySelector(".search .words_search");
-    wordsSearch.addEventListener("input", filterWords);
-
-    categoriesNode = document.querySelector(".words_section .categories");
-    wordsCountLabelNode = categoriesNode.querySelector(".words_count_label");
-
-    const categoryTemplate = document.querySelector(".templates .category");
-    const wordTemplate = document.querySelector(".templates .word");
-
-    for (const category of categories) {
-        const categoryNode = categoryTemplate.cloneNode(true);
-        categoryNode.classList.add("category_" + category.id);
-
-        const nameNode = categoryNode.querySelector(".name");
-        nameNode.innerText = category.name;
-
-        const wordsCountNode = categoryNode.querySelector(".words_count");
-        wordsCountNode.innerText = getWordsAmountText(words.reduce((acc, word) =>  acc + (word.category === category.id ? 1 : 0), 0));
-
-        categoriesNode.appendChild(categoryNode);
-    }
-
-    for (const word of words) {
-        const wordNode = wordTemplate.cloneNode(true);
-        wordNode.classList.add("word_" + word.id);
-
-        wordNode.querySelector(".character").innerText = word.character;
-        wordNode.querySelector(".info").innerText = word.pinyin + " - " + word.translation.join(", ");
-
-        wordNode.addEventListener("click", () => pronounce(word.character));
-
-        categoriesNode.querySelector(".category_" + word.category + " .words").appendChild(wordNode);
-    }
-
-    wordsCountLabelNode.innerText = "Всего " + getWordsAmountText(words.length);
-});
-
-function filterWords(e) {
-    const searchValue = e.target.value.toLowerCase().replaceAll(" ", "");
-    let filteredWords;
-
-    if (searchValue === "") filteredWords = words.map(word => word.id);
-    else {
-        filteredWords = [];
-
-        for (const word of words) {
-            if (word.id.split("_")[0].includes(searchValue) ||
-                word.translation.some(el => el.toLowerCase().replaceAll(" ", "").includes(searchValue))) {
-                filteredWords.push(word.id);
-            }
-        }
-
-        if (filteredWords.length === 0) {
-            for (const word of words) {
-                if (word.id.split("_")[0].replaceAll(/[0-9]/g, "").includes(searchValue)) {
-                    filteredWords.push(word.id);
-                }
-            }
-        }
-    }
-
-    let wordsCount = 0;
-    for (const word of words) {
-        const wordNode = categoriesNode.querySelector(".words .word_" + word.id);
-
-        if (filteredWords.includes(word.id)) {
-            wordNode.style.display = "";
-            wordsCount++;
-        }
-        else wordNode.style.display = "none";
-    }
-
-    if (wordsCount === words.length) wordsCountLabelNode.innerText = "Всего " + getWordsAmountText(wordsCount);
-    else if (wordsCount === 0) wordsCountLabelNode.innerText = "Ничего не найдено";
-    else wordsCountLabelNode.innerText = "Найдено " + getWordsAmountText(wordsCount);
-
-    for (const category of categories) {
-        const categoryNode = categoriesNode.querySelector(".category_" + category.id);
-        categoryNode.style.display = "none";
-
-        const wordsNode = categoryNode.querySelector(".words");
-
-        for (const child of wordsNode.children) {
-            if (child.style.display !== "none") {
-                categoryNode.style.display = "";
-                break;
-            }
-        }
-
-        const wordsCountNode = categoryNode.querySelector(".words_count");
-        const wordsCount = Array.from(wordsNode.children).reduce((acc, child) =>  acc + (child.style.display === "" ? 1 : 0), 0);
-        wordsCountNode.innerText = getWordsAmountText(wordsCount);
-    }
-}
