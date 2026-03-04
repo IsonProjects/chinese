@@ -1,44 +1,54 @@
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { getWordsAmountText, pronounce } from "../utils.ts"
 import { type Category, categories, words, type Word } from "../data/words.ts";
 import "../styles/words_styles.css";
 
 const WordsSection = () => {
+    const wordsByCategory = useMemo(() =>
+            words.reduce((acc, word) => {
+                if (!acc[word.category]) acc[word.category] = [];
+                acc[word.category].push(word);
+                return acc;
+            }, {} as Record<string, Word[]>),
+    []);
+
     return (
         <div className="section words_section">
             <div className="categories">
                 <p className="words_count_label">Всего {getWordsAmountText(words.length)}</p>
-                { categories.map((category) => Category(category)) }
+                { categories.map((category) => <Category category={category} words={wordsByCategory[category.id]} key={"category_" + category.id}/>) }
             </div>
         </div>
     );
 };
 
-const Category = (category: Category) => {
-    const categoryWords = words.filter(word => word.category === category.id);
-
+const Category = memo(({category, words}: {category: Category, words: Word[]}) => {
     return (
-        <div className={`category category_${category.id}`} key={category.id}>
+        <div className={`category category_${category.id}`}>
             <div className="info">
                 <p className="name">{category.name}</p>
-                <p className="words_count">{getWordsAmountText(categoryWords.length)}</p>
+                <p className="words_count">{getWordsAmountText(words.length)}</p>
             </div>
 
             <div className="words">
-                { categoryWords.map(word => Word(word)) }
+                { words.map(word => <Word word={word} key={"word_" + word.id}/>) }
             </div>
         </div>
     );
-};
+});
 
-const Word = (word: Word) => {
+const Word = memo(({word}: {word: Word}) => {
+    const handleClick = useCallback(() => {
+        pronounce(word.character);
+    }, [word.character]);
+
     return (
-        <div className={`word word_${word.id}`} key={word.id} onClick={() => pronounce(word.character)}>
+        <div className={`word word_${word.id}`} onClick={handleClick}>
             <p className="character selectable_text chinese_text">{word.character}</p>
             <p className="info selectable_text">{word.pinyin} - {word.translation.join(", ")}</p>
         </div>
     );
-};
+});
 
 
 

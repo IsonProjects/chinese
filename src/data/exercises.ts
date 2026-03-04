@@ -24,7 +24,7 @@ export interface Exercise {
 export type GenerateFunction = (words: Word[]) => any;
 export type LayoutFunction = ({exercise}: {exercise: Exercise}) => ReactElement;
 
-export function addExerciseType(id: string, name: string, title: string, generate: GenerateFunction, layout: LayoutFunction) {
+function addExerciseType(id: string, name: string, title: string, generate: GenerateFunction, layout: LayoutFunction) {
     exerciseTypes.push({
         id: id,
         name: name,
@@ -34,12 +34,8 @@ export function addExerciseType(id: string, name: string, title: string, generat
     });
 }
 
-export function findExerciseType(id: string): ExerciseType | null {
-    for (const exerciseType of exerciseTypes) {
-        if (exerciseType.id === id) return exerciseType;
-    }
-
-    return null;
+export function findExerciseType(id: string): ExerciseType | undefined {
+    return exerciseTypes.find(exerciseType => exerciseType.id == id);
 }
 
 

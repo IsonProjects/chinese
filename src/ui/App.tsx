@@ -1,10 +1,6 @@
 import { useEffect } from "react";
-import toSection from "../sections.ts";
+import toSection, { sections } from "../data/sections.ts";
 import Header from "./Header.tsx";
-import WordsSection from "./WordsSection.tsx";
-import GrammarsSection from "./GrammarsSection.tsx";
-import ExercisesSection from "./exercises/ExercisesSection.tsx";
-import SettingsSection from "./SettingsSection.tsx";
 import "../styles/styles.css";
 
 const App = () => {
@@ -15,10 +11,11 @@ const App = () => {
     return (
         <>
             <Header/>
-            <WordsSection/>
-            <GrammarsSection/>
-            <ExercisesSection/>
-            <SettingsSection/>
+
+            { sections.map(section => {
+                const Section = section.node;
+                return <Section key={section.id}/>
+            }) }
         </>
     );
 };

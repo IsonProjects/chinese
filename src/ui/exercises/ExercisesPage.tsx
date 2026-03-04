@@ -1,6 +1,7 @@
 import React, { type RefObject, useRef } from "react";
 import { getExercisesAmount, setActionButtonRef, setProgressBarRef, stopExercises } from "./ExercisesSection.tsx";
 import { type Exercise, findExerciseType } from "../../data/exercises.ts";
+import { closeIcon } from "../icons.ts";
 
 const ExercisesPage = ({exercise}: {exercise: Exercise}) => {
     const progressBarRef = useRef(null);
@@ -16,7 +17,7 @@ const ExercisesPage = ({exercise}: {exercise: Exercise}) => {
         <div className="exercises_page">
             <div className="header">
                 <svg className="close_button" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" onClick={stopExercises}>
-                    <path d="M252-189.85 191.85-252l227-228-227-230L252-772.15l229 230 227-230L768.15-710l-227 230 227 228L708-189.85l-227-230-229 230Z"/>
+                    <path d={closeIcon}/>
                 </svg>
 
                 <progress className="progress_bar" value={0} max={getExercisesAmount()} ref={progressBarRef}/>
