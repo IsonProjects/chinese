@@ -32,9 +32,17 @@ header .row {
     text-align: center;
     font-weight: 600;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
+    transition-property: background-color, border-color;
+
+    &:hover {
+        background-color: var(--main-color);
+        border-color: var(--pale-color);
+    }
 
     &.selected {
-        background-color: var(--main-color);
+        background-color: var(--pale-color);
+        border-color: var(--pale-color);
     }
 
     .icon {
