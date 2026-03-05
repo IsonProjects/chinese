@@ -7,6 +7,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: background-color 0.2s ease-in-out;
 }
 
 header .row {
@@ -15,6 +16,7 @@ header .row {
     gap: 1em;
     padding: 1em;
     border-bottom: 3px solid var(--main-color);
+    transition: border-bottom-color 0.2s ease-in-out;
 }
 
 

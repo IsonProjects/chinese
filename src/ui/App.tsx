@@ -14,7 +14,7 @@ const App = () => {
 
             { sections.map(section => {
                 const Section = section.node;
-                return <Section key={section.id}/>
+                return <Section key={section.id}/>;
             }) }
         </>
     );

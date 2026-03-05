@@ -9,7 +9,7 @@
         margin-right: auto;
         padding: 1.5em;
         background-color: var(--second-color);
-        border-radius: 1em;
+        border-radius: 1.5em;
         font-weight: 500;
     }
 }
@@ -18,7 +18,7 @@
     width: 100%;
     padding: 1.5em;
     background-color: var(--second-color);
-    border-radius: 1em;
+    border-radius: 2em;
 
     .name {
         font-size: 1.25em;
