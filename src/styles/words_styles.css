@@ -60,3 +60,130 @@
 .word > .info {
     color: var(--hint-color);
 }
+
+
+
+dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    max-width: calc(100% - 2em);
+    max-height: calc(100% - 2em);
+    padding: 1em;
+    border: none;
+    outline: none;
+    background: none;
+
+    &:not([open]) {
+        display: none !important;
+    }
+
+    &::backdrop {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+}
+
+.word_dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5em;
+    padding: 1.5em;
+    border-radius: 2em;
+    background-color: var(--main-color);
+}
+
+.word_dialog .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+
+    .character {
+        font-size: 1.25em;
+        font-weight: 600;
+    }
+
+    .pinyin_line {
+        display: flex;
+        gap: 0.5em;
+
+        .pinyin {
+            white-space: nowrap;
+        }
+
+        .speak_button {
+            height: 1.5em;
+            cursor: pointer;
+        }
+    }
+}
+
+.word_dialog .box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 1em;
+    background-color: var(--second-color);
+    border-radius: 1em;
+
+    .title {
+        font-size: 1.1em;
+        font-weight: 500;
+    }
+}
+
+.word_dialog .parts_of_speech_box .parts_of_speech {
+    display: flex;
+    gap: 0.5em;
+
+    .part_of_speech {
+        background-color: var(--main-color);
+        border-radius: 1em;
+        padding: 0.5em;
+        font-size: 0.9em;
+    }
+}
+
+.word_dialog .translations_box .translations {
+    display: flex;
+    gap: 0.5em;
+
+    .translation {
+        background-color: var(--main-color);
+        border-radius: 1em;
+        padding: 0.5em;
+        font-size: 0.9em;
+    }
+}
+
+.word_dialog .note_box .note {
+    font-size: 0.9em;
+}
+
+.word_dialog .examples_box .examples {
+    display: flex;
+    gap: 0.5em;
+
+    .example {
+        background-color: var(--main-color);
+        border-radius: 1em;
+        padding: 0.5em;
+        font-size: 0.9em;
+    }
+}
+
+.word_dialog .close_button {
+    position: absolute;
+    padding: 0.2em;
+    height: 1.3em;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: var(--pale-color);
+    }
+}

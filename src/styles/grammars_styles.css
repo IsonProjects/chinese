@@ -66,6 +66,7 @@
 
     .sentence_word .character {
         white-space: nowrap;
+        white-space-collapse: preserve;
         cursor: pointer;
     }
 

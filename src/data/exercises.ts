@@ -61,11 +61,11 @@ function generateMatchPairsExercise(availableWords: Word[]): Map<string, string>
         }
         else if (mode === 1) {
             key = word.character;
-            value = word.translation.join(", ");
+            value = word.translations.join(", ");
         }
         else if (mode === 2) {
             key = word.pinyin;
-            value = word.translation.join(", ");
+            value = word.translations.join(", ");
         }
 
         if (content.has(key)) continue;

@@ -92,7 +92,7 @@ const TranslatedSentenceWord = memo(({word}: {word: Word}) => {
 
             <div className="info">
                 <p className="pinyin selectable_text">{word.pinyin}</p>
-                <p className="translation selectable_text">{word.translation.join(", ")}</p>
+                <p className="translation selectable_text">{word.translations.join(", ")}</p>
             </div>
         </div>
     );
@@ -165,7 +165,7 @@ function parse(sentence: string): Token[] {
         else {
             const char = sentence.charAt(i);
 
-            if (char !== " " && char !== "." && char !== "!" && char !== "?") {
+            if (char !== " " && char !== "." && char !== "," && char !== "!" && char !== "?") {
                 console.warn(`Unresolved character ${char} at position ${i + 1} inside sentence ${sentence}`);
             }
 

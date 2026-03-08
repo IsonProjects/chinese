@@ -131,6 +131,7 @@ addGrammar("effective_morphemes", "Результативные морфемы",
     { construction: "Глагол + 完 + дополнение", sentence: "找完衣服", translation: "Закончил искать одежду" },
     { construction: "Глагол + 到 + дополнение", sentence: "买到东西", translation: "Купил вещи" },
     { construction: "Глагол + 懂 + дополнение", sentence: "听懂", translation: "Услышал и понял" },
+    { construction: "Глагол + 饱 + дополнение", sentence: "吃饱, 看饱", translation: "Наесться досыта, насмотреться досыта (так, что больше уже не можешь смотреть)" },
     { construction: "没 + глагол + РМ + дополнение", sentence: "我没做完考试题", translation: "Я не полностью решил экзамен" }
 ]);
 
