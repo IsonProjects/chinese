@@ -137,6 +137,7 @@ dialog {
 
 .word_dialog .parts_of_speech_box .parts_of_speech {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5em;
 
     .part_of_speech {
@@ -149,6 +150,7 @@ dialog {
 
 .word_dialog .translations_box .translations {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5em;
 
     .translation {
@@ -165,6 +167,7 @@ dialog {
 
 .word_dialog .examples_box .examples {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5em;
 
     .example {
