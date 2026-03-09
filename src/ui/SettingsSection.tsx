@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
 import { getHue, getTheme, resetHue, setHue, setTheme, type Theme } from "../data/settings.ts";
-import "../styles/settings_styles.css";
+import "../styles/settings.css";
 
 const SettingsSection = () => {
     useEffect(() => {

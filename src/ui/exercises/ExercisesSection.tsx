@@ -5,7 +5,7 @@ import { type Exercise, findExerciseType } from "../../data/exercises.ts";
 import StartPage from "./StartPage.tsx";
 import ExercisesPage from "./ExercisesPage.tsx";
 import ResultsPage from "./ResultsPage.tsx";
-import "../../styles/exercises_styles.css";
+import "../../styles/exercises.css";
 
 let selectedExerciseCategories: Set<string> = new Set(localStorage.getItemOrDefault("selected_exercise_categories", []));
 let selectedExerciseTypes: Set<string> = new Set(localStorage.getItemOrDefault("selected_exercise_types", []));

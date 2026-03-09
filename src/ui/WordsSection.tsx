@@ -1,8 +1,9 @@
 import React, { memo, type RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getWordsAmountText, pronounce } from "../utils.ts"
 import { type Category, categories, words, type Word, PartOfSpeech, filterWords } from "../data/words.ts";
-import "../styles/words_styles.css";
 import { closeIcon, speakerIcon } from "./icons.ts";
+import Sentence from "./Sentence.tsx";
+import "../styles/words.css";
 
 let setDialog: (dialog: any) => void;
 
@@ -138,8 +139,8 @@ const WordDialog = memo(({word}: {word: Word}) => {
                                 word.examples.map(example => {
                                     return (
                                         <div className="content" key={example.sentence}>
-                                            <p className="sentence">{example.sentence}</p>
-                                            <p className="translation">{example.translation}</p>
+                                            <Sentence sentence={example.sentence}/>
+                                            <p className="translation selectable_text">{example.translation}</p>
                                         </div>
                                     );
                                 })

@@ -2,7 +2,7 @@ import type { InputEventHandler } from "react";
 import toSection, { sections } from "../data/sections.ts";
 import { handleWordsSearchInput } from "./WordsSection.tsx";
 import { handleGrammarsSearchInput } from "./GrammarsSection.tsx";
-import "../styles/header_styles.css";
+import "../styles/header.css";
 
 const Header = () => {
     return (

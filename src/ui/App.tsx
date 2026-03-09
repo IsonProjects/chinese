@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import toSection, { sections } from "../data/sections.ts";
 import Header from "./Header.tsx";
-import "../styles/styles.css";
+import "../styles/main.css";
 
 const App = () => {
     useEffect(() => {

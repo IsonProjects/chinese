@@ -1,0 +1,42 @@
+.sentence {
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.sentence .speak_button {
+    margin-left: 0.5em;
+    height: 1.3em;
+    cursor: pointer;
+}
+
+.sentence .sentence_word .character {
+    white-space: nowrap;
+    white-space-collapse: preserve;
+    cursor: pointer;
+}
+
+.sentence .sentence_word.translated .character {
+    text-decoration: underline dotted var(--hint-color);
+    text-underline-offset: 0.3em;
+}
+
+.sentence .sentence_word .info {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+    font-size: 0.8em;
+    background-color: var(--second-color);
+    border: 2px solid var(--main-color);
+    border-radius: 1em;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    pointer-events: none;
+
+    &.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
