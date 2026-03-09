@@ -1,5 +1,8 @@
 export const categories: Category[] = [];
 export const words: Word[] = [];
+const wordTranslationRegex = new RegExp("[А-Я0-9][А-Яа-я0-9- ]*");
+
+
 
 export interface Category {
     id: string;
@@ -14,15 +17,10 @@ export interface Word {
     translations: string[];
     partsOfSpeech: PartOfSpeech[];
     note?: string;
-    examples?: WordInfoExample[];
+    examples?: WordExampleSentence[];
 }
 
-interface WordInfo {
-    note?: string;
-    examples?: WordInfoExample[];
-}
-
-export interface WordInfoExample {
+export interface WordExampleSentence {
     sentence: string;
     translation: string;
 }
@@ -43,6 +41,81 @@ export const PartOfSpeech = {
 
 export type PartOfSpeech = keyof typeof PartOfSpeech;
 
+
+
+export function filterWords(value: string): Word[] {
+    if (value === "") return words;
+    const filteredWords: Word[] = [];
+
+    for (const word of words) {
+        if (word.id.split("_")[0].includes(value) ||
+            word.translations.some(translation => translation.toLowerCase().replaceAll(" ", "").includes(value)) ||
+            word.partsOfSpeech.some(partOfSpeech => PartOfSpeech[partOfSpeech].toLowerCase().replaceAll(" ", "").includes(value))) {
+            filteredWords.push(word);
+        }
+    }
+
+    if (filteredWords.length === 0) {
+        for (const word of words) {
+            if (word.id.split("_")[0].replaceAll(/[0-9]/g, "").includes(value)) {
+                filteredWords.push(word);
+            }
+        }
+    }
+
+    return filteredWords;
+}
+
+
+
+export type InvalidToken = { valid: false, word: string };
+export type ValidToken = { valid: true, word: Word };
+export type Token = InvalidToken | ValidToken;
+
+export function parseSentence(sentence: string): Token[] {
+    const tokens: Token[] = [];
+
+    for (let i = 0; i < sentence.length; i++) {
+        const string = sentence.substring(i);
+        let token: ValidToken | null = null;
+
+        for (const word of words) {
+            if (string.match("^" + word.character) != null) {
+                const end = word.character.length;
+                const matched = string.substring(0, end);
+
+                if (token == null || token.word.character.length < matched.length) {
+                    token = {
+                        word: word,
+                        valid: true
+                    };
+                }
+            }
+        }
+
+        if (token != null) {
+            i += token.word.character.length - 1;
+            tokens.push(token);
+        }
+        else {
+            const char = sentence.charAt(i);
+
+            if (char !== " " && char !== "." && char !== "," && char !== "!" && char !== "?") {
+                console.warn(`Unresolved character ${char} at position ${i + 1} inside sentence ${sentence}`);
+            }
+
+            tokens.push({
+                word: char,
+                valid: false
+            });
+        }
+    }
+
+    return tokens;
+}
+
+
+
 function addCategory(id: string, name: string) {
     categories.push({
         id: id,
@@ -50,7 +123,10 @@ function addCategory(id: string, name: string) {
     });
 }
 
-function addWord(id: string, categoryId: string, character: string, pinyin: string, translations: string | string[], partsOfSpeech: PartOfSpeech | PartOfSpeech[], info?: WordInfo) {
+function addWord(
+    id: string, categoryId: string, character: string, pinyin: string, translations: string | string[], partsOfSpeech: PartOfSpeech | PartOfSpeech[],
+    info?: { note?: string; examples?: WordExampleSentence[]; }
+) {
     if (!categories.some(category => category.id === categoryId)) {
         console.error(`Unknown category "${categoryId}" word id "${id}"`);
         return;
@@ -69,16 +145,16 @@ function addWord(id: string, categoryId: string, character: string, pinyin: stri
         translations = [translations];
     }
 
-    if (translations.some(el => {
-        const ch = el.charAt(0);
-        if (ch !== ch.toUpperCase()) return true;
-        return el.includes(",");
-    })) {
-        console.warn(`Word with id "${id}" has invalid translation`);
+    if (translations.some(translation => !wordTranslationRegex.test(translation))) {
+        console.warn(`Word with id "${id}" has incorrect translation`);
     }
 
     if (typeof partsOfSpeech === "string") {
         partsOfSpeech = [partsOfSpeech];
+    }
+
+    if ((new Set(partsOfSpeech)).size !== partsOfSpeech.length) {
+        console.warn(`Word with id "${id}" has duplicate part of speech`);
     }
 
     words.push({
@@ -92,6 +168,8 @@ function addWord(id: string, categoryId: string, character: string, pinyin: stri
         examples: info?.examples,
     });
 }
+
+
 
 
 
@@ -137,8 +215,8 @@ addCategory("other", "Другое");
 addWord("wo3", "pronouns", "我", "wǒ", "Я", "pronoun");
 addWord("wo3men", "pronouns", "我们", "wǒ men", "Мы", "pronoun");
 addWord("ni3", "pronouns", "你", "nǐ", "Ты", "pronoun");
-addWord("nin2", "pronouns", "您", "nín", "Вы", "pronoun");
-addWord("ni3men", "pronouns", "你们", "nǐ men", "Вы", "pronoun");
+addWord("nin2", "pronouns", "您", "nín", "Вы", "pronoun", { note: "Уважительное обращение к одному человеку" });
+addWord("ni3men", "pronouns", "你们", "nǐ men", "Вы", "pronoun", { note: "Множественное число слова \"ты\"" });
 addWord("ta1_1", "pronouns", "他", "tā", "Он", "pronoun");
 addWord("ta1_2", "pronouns", "她", "tā", "Она", "pronoun");
 addWord("ta1_3", "pronouns", "它", "tā", "Оно", "pronoun");
@@ -331,7 +409,7 @@ addWord("tong2xue2", "school", "同学", "tóng xué", "Одноклассник
 addWord("peng2you3", "school", "朋友", "péng yǒu", "Друг", "noun");
 addWord("ban1", "school", "班", "bān", "Класс", "noun", { note: "Имеются в виду люди" });
 addWord("zuo4ye4", "school", "作业", "zuò yè", "Домашнее задание", "noun");
-addWord("ke4", "school", "课", "kè", ["Урок", "Занятие"], "noun");
+addWord("ke4_1", "school", "课", "kè", ["Урок", "Занятие"], "noun");
 addWord("han4yu3", "school", "汉语", "hàn yǔ", "Китайский язык", "noun");
 addWord("ying1yu3", "school", "英语", "yīng yǔ", "Английский язык", "noun");
 addWord("shu4xue2", "school", "数学", "shù xué", "Математика", "noun");
@@ -569,7 +647,7 @@ addWord("you2", "food", "油", "yóu", "Масло", "noun");
 addWord("nai3you2", "food", "奶油", "nǎi yóu", ["Сливочное масло", "Сливки", "Крем"], "noun");
 addWord("jiang4you2", "food", "酱油", "jiàng yóu", "Соевый соус", "noun");
 addWord("ye4xiao1", "food", "夜宵", "yè xiāo", "Ночной перекус", "noun");
-addWord("ke4_1", "food", "克", "kè", "Грамм", "noun");
+addWord("ke4_2", "food", "克", "kè", "Грамм", "noun");
 addWord("jin1", "food", "斤", "jīn", ["Полкило", "Полкилограмма"], "noun");
 addWord("shao2", "food", "勺", "sháo", "Ложка", "noun");
 addWord("guo1", "food", "锅", "guō", "Кастрюля", "noun");
@@ -714,7 +792,7 @@ addWord("xian4zai4", "time", "现在", "xiàn zài", "Сейчас", "adverb");
 addWord("dian3", "time", "点", "diǎn", ["Час", "Заказывать"], ["adverb", "verb"]);
 addWord("fen1", "time", "分", "fēn", "Минута", "noun", { note: "Используется для указания времени на часах" });
 addWord("fen1zhong1", "time", "分钟", "fēn zhōng", "Минута", "noun", { note: "Используется для указания длительности" });
-addWord("ke4_2", "time", "刻", "kè", ["15 минут", "Четверть часа"], "adverb");
+addWord("ke4_3", "time", "刻", "kè", ["15 минут", "Четверть часа"], "adverb");
 addWord("ban4", "time", "半", "bàn", ["30 минут", "Полчаса", "Половина"], ["adverb", "noun"]);
 addWord("zao3shang4", "time", "早上", "zǎo shàng", "Утро", "adverb");
 addWord("shang4wu3", "time", "上午", "shàng wǔ", ["Первая половина дня", "Утро"], "adverb");

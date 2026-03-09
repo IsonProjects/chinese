@@ -1,7 +1,7 @@
 import type { InputEventHandler } from "react";
 import toSection, { sections } from "../data/sections.ts";
-import { filterWords } from "./WordsSection.tsx";
-import { filterGrammars } from "./GrammarsSection.tsx";
+import { handleWordsSearchInput } from "./WordsSection.tsx";
+import { handleGrammarsSearchInput } from "./GrammarsSection.tsx";
 import "../styles/header_styles.css";
 
 const Header = () => {
@@ -12,8 +12,8 @@ const Header = () => {
             </div>
 
             <div className="row search">
-                <SearchBar id="words" onInput={filterWords}/>
-                <SearchBar id="grammars" onInput={filterGrammars}/>
+                <SearchBar id="words" onInput={handleWordsSearchInput}/>
+                <SearchBar id="grammars" onInput={handleGrammarsSearchInput}/>
             </div>
         </header>
     );

@@ -4,13 +4,18 @@
     gap: 1em;
 
     .not_found_label {
-        display: none;
         margin-left: auto;
         margin-right: auto;
         padding: 1.5em;
         background-color: var(--second-color);
         border-radius: 1.5em;
         font-weight: 500;
+    }
+
+    &:has(.grammar:not(.hidden)) {
+        .not_found_label {
+            display: none;
+        }
     }
 }
 
@@ -24,6 +29,10 @@
         font-size: 1.25em;
         font-weight: 600;
         margin-bottom: 1em;
+    }
+
+    &.hidden {
+        display: none;
     }
 }
 

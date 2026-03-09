@@ -20,6 +20,19 @@ function addGrammar(id: string, name: string, examples: Example[]) {
     });
 }
 
+export function filterGrammars(value: string): Grammar[] {
+    if (value === "") return grammars;
+    const filteredGrammars = [];
+
+    for (const grammar of grammars) {
+        if (grammar.name.toLowerCase().replaceAll(" ", "").includes(value)) {
+            filteredGrammars.push(grammar);
+        }
+    }
+
+    return filteredGrammars;
+}
+
 
 
 addGrammar("thing_in_space", "Предмет в пространстве", [

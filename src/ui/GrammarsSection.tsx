@@ -1,7 +1,7 @@
 import React, { memo, useCallback } from "react";
 import { pronounce } from "../utils.ts";
-import { type Word, words } from "../data/words.ts";
-import { type Example, type Grammar, grammars } from "../data/grammars.ts";
+import { parseSentence, type Word } from "../data/words.ts";
+import { type Example, filterGrammars, type Grammar, grammars } from "../data/grammars.ts";
 import "../styles/grammars_styles.css";
 import { speakerIcon } from "./icons.ts";
 
@@ -29,7 +29,7 @@ const Grammar = memo(({grammar}: {grammar: Grammar}) => {
 
 const Example = memo(({example}: {example: Example}) => {
     const elements = [];
-    const tokens = parse(example.sentence);
+    const tokens = parseSentence(example.sentence);
 
     for (let i = 0; i < tokens.length; i++) {
         const token = tokens[i];
@@ -100,84 +100,16 @@ const TranslatedSentenceWord = memo(({word}: {word: Word}) => {
 
 
 
-export function filterGrammars(e: React.InputEvent<HTMLInputElement>) {
+export function handleGrammarsSearchInput(e: React.InputEvent<HTMLInputElement>) {
     const searchValue = (e.target as HTMLInputElement).value.toLowerCase().replaceAll(" ", "");
-    let filteredGrammars;
-
-    if (searchValue === "") filteredGrammars = grammars.map(grammar => grammar.id);
-    else {
-        filteredGrammars = [];
-
-        for (const grammar of grammars) {
-            if (grammar.name.toLowerCase().replaceAll(" ", "").includes(searchValue)) {
-                filteredGrammars.push(grammar.id);
-            }
-        }
-    }
+    const filteredGrammars = filterGrammars(searchValue);
 
     const grammarsNode = document.querySelector(".grammars_section .grammars")!;
-    grammarsNode.classList.add("not_found");
 
     for (const grammar of grammars) {
         const grammarNode: HTMLElement = grammarsNode.querySelector(".grammar_" + grammar.id)!;
-
-        if (filteredGrammars.includes(grammar.id)) {
-            grammarNode.style.display = "";
-            grammarsNode.classList.remove("not_found");
-        }
-        else grammarNode.style.display = "none";
+        grammarNode.classList.toggle("hidden", !filteredGrammars.includes(grammar));
     }
-}
-
-
-
-type InvalidToken = { valid: false, word: string };
-type ValidToken = { valid: true, word: Word };
-type Token = InvalidToken | ValidToken;
-
-function parse(sentence: string): Token[] {
-    const tokens: Token[] = [];
-
-    for (let i = 0; i < sentence.length; i++) {
-        const string = sentence.substring(i);
-        let token: ValidToken | null = null;
-
-        for (const word of words) {
-            const matcher = string.match("^" + word.character);
-
-            if (matcher != null) {
-                const end = word.character.length;
-                const matched = string.substring(0, end);
-
-                if (token == null || token.word.character.length < matched.length) {
-                    token = {
-                        word: word,
-                        valid: true
-                    };
-                }
-            }
-        }
-
-        if (token != null) {
-            i += token.word.character.length - 1;
-            tokens.push(token);
-        }
-        else {
-            const char = sentence.charAt(i);
-
-            if (char !== " " && char !== "." && char !== "," && char !== "!" && char !== "?") {
-                console.warn(`Unresolved character ${char} at position ${i + 1} inside sentence ${sentence}`);
-            }
-
-            tokens.push({
-                word: char,
-                valid: false
-            });
-        }
-
-    }
-
-    return tokens;
 }
 
 export default GrammarsSection;

@@ -18,6 +18,10 @@
     padding: 1.5em;
     background-color: var(--second-color);
     border-radius: 2em;
+
+    &:not(:has(.word:not(.hidden))) {
+        display: none;
+    }
 }
 
 .words_section .categories .category > .info {
@@ -49,6 +53,10 @@
 
     p {
         cursor: pointer;
+    }
+
+    &.hidden {
+        display: none;
     }
 }
 
@@ -133,49 +141,23 @@ dialog {
         font-size: 1.1em;
         font-weight: 500;
     }
-}
 
-.word_dialog .parts_of_speech_box .parts_of_speech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
+    .contents {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em;
 
-    .part_of_speech {
-        background-color: var(--main-color);
-        border-radius: 1em;
-        padding: 0.5em;
-        font-size: 0.9em;
-    }
-}
-
-.word_dialog .translations_box .translations {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-
-    .translation {
-        background-color: var(--main-color);
-        border-radius: 1em;
-        padding: 0.5em;
-        font-size: 0.9em;
+        .content {
+            background-color: var(--main-color);
+            border-radius: 1em;
+            padding: 0.5em;
+            font-size: 0.9em;
+        }
     }
 }
 
 .word_dialog .note_box .note {
     font-size: 0.9em;
-}
-
-.word_dialog .examples_box .examples {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-
-    .example {
-        background-color: var(--main-color);
-        border-radius: 1em;
-        padding: 0.5em;
-        font-size: 0.9em;
-    }
 }
 
 .word_dialog .close_button {
