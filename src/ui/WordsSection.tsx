@@ -1,7 +1,7 @@
 import React, { memo, type RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getWordsAmountText, pronounce } from "../utils.ts"
 import { type Category, categories, words, type Word, PartOfSpeech, filterWords } from "../data/words.ts";
-import { closeIcon, speakerIcon } from "./icons.ts";
+import { crossIcon, speakerIcon } from "./icons.ts";
 import Sentence from "./Sentence.tsx";
 import "../styles/words.css";
 
@@ -81,7 +81,7 @@ const WordDialog = memo(({word}: {word: Word}) => {
         <dialog ref={dialogRef} onClose={handleDialogClose}>
             <div className="word_dialog">
                 <svg className="close_button" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" onClick={handleDialogClose}>
-                    <path d={closeIcon}/>
+                    <path d={crossIcon}/>
                 </svg>
 
                 <div className="info">

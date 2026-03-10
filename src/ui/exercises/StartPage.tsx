@@ -6,7 +6,7 @@ import {
     getSelectedExerciseCategories, getSelectedExerciseTypes,
     setExercisesAmount, setSelectedExerciseCategories, setSelectedExerciseTypes, startExercises
 } from "./ExercisesSection.tsx";
-import { selectAllIcon, unselectAllIcon } from "../icons.ts";
+import { checkIcon, crossIcon } from "../icons.ts";
 
 const StartPage = () => {
     const ref = useRef<HTMLDivElement>(null);
@@ -116,11 +116,11 @@ const SelectableSettingsSection = ({id, title, children, selectAll, unselectAll}
                 <div className="space"></div>
 
                 <svg className="select_all_button" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" onClick={selectAll}>
-                    <path d={selectAllIcon}/>
+                    <path d={checkIcon}/>
                 </svg>
 
                 <svg className="unselect_all_button" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" onClick={unselectAll}>
-                    <path d={unselectAllIcon}/>
+                    <path d={crossIcon}/>
                 </svg>
             </div>
 
