@@ -125,7 +125,8 @@ input[type="checkbox"]:hover {
 }
 
 input[type="checkbox"]:checked {
-    border-color: var(--selection-color);
+    background-color: var(--main-color);
+    border-color: var(--pale-color);
 }
 
 

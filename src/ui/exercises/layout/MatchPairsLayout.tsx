@@ -96,7 +96,7 @@ const MatchPairsLayout = ({exercise}: {exercise: Exercise}) => {
 const PairItem = ({id, type, text, onClick, ref}: {id: string, type: string, text: string, onClick: () => void, ref: React.Ref<HTMLDivElement>}) => {
     return (
         <div className={`pair_item ${type}`} onClick={onClick} id={id} ref={ref}>
-            <p className="text">{text}</p>
+            <p>{text}</p>
         </div>
     );
 };

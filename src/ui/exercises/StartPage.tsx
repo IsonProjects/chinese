@@ -1,6 +1,6 @@
 import { categories } from "../../data/words.ts";
 import { exerciseTypes } from "../../data/exercises.ts";
-import React, { useRef, useState } from "react";
+import React, { type RefObject, useRef, useState } from "react";
 import {
     getExercisesAmount,
     getSelectedExerciseCategories, getSelectedExerciseTypes,
@@ -101,12 +101,16 @@ const StartPage = () => {
 };
 
 const SelectableSettingsSection = ({id, title, children, selectAll, unselectAll}: {id: string, title: string, children: any, selectAll: () => void, unselectAll: () => void}) => {
-    const handleTitleClick = (event: React.MouseEvent<HTMLElement>) => {
-        (event.target as HTMLInputElement).parentElement?.parentElement?.classList.toggle("collapsed");
+    const ref: RefObject<HTMLDivElement | null> = useRef(null);
+
+    const handleTitleClick = () => {
+        const section = ref.current!;
+        section.classList.toggle("collapsed");
+        sessionStorage.setItem(`${id}_settings_collapsed`, String(section.classList.contains("collapsed")));
     };
 
     return (
-        <div className={`${id}_settings settings_section collapsed`}>
+        <div className={`${id}_settings settings_section collapsable ${sessionStorage.getItem(`${id}_settings_collapsed`) == "false" ? "" : "collapsed"}`} ref={ref}>
             <div className="top">
                 <p className="title" onClick={handleTitleClick}>{title}</p>
                 <div className="space"></div>

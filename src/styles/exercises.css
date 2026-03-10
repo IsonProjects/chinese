@@ -21,6 +21,10 @@
     &.collapsed .settings_selectors {
         display: none;
     }
+
+    &.collapsable .top .title {
+        cursor: pointer;
+    }
 }
 
 .exercises_settings .settings_section .top {
@@ -31,7 +35,6 @@
     .title {
         font-size: 1.25em;
         font-weight: 600;
-        cursor: pointer;
     }
 
     .space {
@@ -80,13 +83,13 @@
     display: flex;
     gap: 0.5em;
     align-items: center;
-    padding: 0.5em;
+    padding: 0.5em 1em;
     background-color: var(--second-color);
-    border-radius: 1em;
+    border-radius: 2em;
 
     .close_button {
         height: 1.5em;
-        fill: var(--hint-color);
+        fill: var(--pale-color);
         cursor: pointer;
     }
 }
@@ -96,7 +99,7 @@
     border-radius: 1em;
 
     &::-webkit-progress-bar {
-        background-color: var(--second-color);
+        background-color: var(--main-color);
         border-radius: 1em;
     }
 
@@ -128,22 +131,22 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(5, 1fr);
-    gap: 0.5em;
-    padding: 1em;
+    gap: 0.75em;
+    padding: 1.5em;
     background-color: var(--second-color);
-    border-radius: 1em;
+    border-radius: 2em;
 
     .pair_item {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 0.5em;
+        padding: 0.5em 1em;
         background-color: var(--main-color);
         border-radius: 1em;
         cursor: pointer;
         transition: background-color 0.2s ease-in-out;
 
-        .text {
+        p {
             text-align: center;
         }
     }
@@ -170,22 +173,35 @@
 .exercises_page .exercise .select_pinyin_layout {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
-    gap: 0.5em;
-    padding: 1em;
+    gap: 0.75em;
+    padding: 1.5em;
     background-color: var(--second-color);
-    border-radius: 1em;
+    border-radius: 2em;
 
     .character_item {
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+            text-align: center;
+            font-size: 1.1em;
+        }
     }
-    
+
     .pinyin_item {
-        text-align: center;
-        padding: 0.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5em 1em;
         background-color: var(--main-color);
         border-radius: 1em;
         cursor: pointer;
         transition: background-color 0.2s ease-in-out;
+
+        p {
+            text-align: center;
+        }
     }
 
     .pinyin_item:hover {
@@ -209,14 +225,15 @@
     }
 }
 
-.exercises_page .exercise .translate_word_audio_layout,
-.exercises_page .exercise .translate_word_character_layout {
+.exercises_page .exercise .translate_word_character_layout,
+.exercises_page .exercise .translate_word_audio_layout {
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
-    padding: 1em;
+    align-items: center;
+    gap: 0.75em;
+    padding: 1.5em;
     background-color: var(--second-color);
-    border-radius: 1em;
+    border-radius: 2em;
 
     .translation_input.correct {
         background-color: var(--correct-color);
@@ -229,16 +246,25 @@
     .correct_answer {
         font-size: 0.9em;
         font-weight: 500;
+        color: var(--hint-color);
     }
-}
-
-.exercises_page .exercise .translate_word_audio_layout .audio_button {
-    height: 1.5em;
-    cursor: pointer;
 }
 
 .exercises_page .exercise .translate_word_character_layout .character {
     font-weight: 500;
+    font-size: 1.1em;
+}
+
+.exercises_page .exercise .translate_word_audio_layout .audio_button {
+    height: 1.5em;
+    padding: 0.3em;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: var(--main-color);
+    }
 }
 
 

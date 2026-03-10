@@ -4,8 +4,6 @@ import { exerciseFinished, getActionButtonRef } from "../ExercisesSection.tsx";
 
 const SelectPinyinLayout = ({exercise}: {exercise: Exercise}) => {
     const layoutNodeRef: RefObject<HTMLDivElement | null> = useRef(null);
-    const children = [];
-
     const contentLength = exercise.content.length;
 
     const variants: string[] = [];
@@ -15,6 +13,7 @@ const SelectPinyinLayout = ({exercise}: {exercise: Exercise}) => {
         }
     }
 
+    const children = [];
     for (let i = 0; i < contentLength; i++) {
         const characterElement = <CharacterItem key={"character_" + i} character={exercise.content[i].character}/>;
         children.push(characterElement);
@@ -60,7 +59,7 @@ const SelectPinyinLayout = ({exercise}: {exercise: Exercise}) => {
 };
 
 const PinyinItem = ({pinyin, id, contentLength, layoutNodeRef}: {pinyin: string, id: number, contentLength: number, layoutNodeRef: RefObject<HTMLDivElement | null>}) => {
-    const ref: RefObject<HTMLParagraphElement | null> = useRef(null);
+    const ref: RefObject<HTMLDivElement | null> = useRef(null);
     const column = id % contentLength;
 
     const onClick = () => {
@@ -79,13 +78,17 @@ const PinyinItem = ({pinyin, id, contentLength, layoutNodeRef}: {pinyin: string,
     };
 
     return (
-        <p className={`pinyin_item id_${id} column_${column}`} ref={ref} onClick={onClick}>{pinyin}</p>
+        <div className={`pinyin_item id_${id} column_${column}`} ref={ref} onClick={onClick}>
+            <p>{pinyin}</p>
+        </div>
     );
 };
 
 const CharacterItem = ({character}: {character: string}) => {
     return (
-        <p className="character_item chinese_text">{character}</p>
+        <div className="character_item">
+            <p className="chinese_text">{character}</p>
+        </div>
     );
 };
 

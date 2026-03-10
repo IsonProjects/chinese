@@ -19,7 +19,7 @@ export const TranslateWordCharacterLayout = ({exercise}: {exercise: Exercise}) =
         getActionButtonRef().current!.onclick = () => {
             const translationInputNode = translationInputRef.current!;
 
-            const translation = exercise.content.translation.map((el: string) => el.toLowerCase());
+            const translation = exercise.content.translations.map((el: string) => el.toLowerCase());
             const input = translationInputNode.value.toLowerCase().trim();
 
             let correct;
@@ -29,7 +29,7 @@ export const TranslateWordCharacterLayout = ({exercise}: {exercise: Exercise}) =
             }
             else {
                 translationInputNode.classList.add("incorrect");
-                setCorrectAnswer(exercise.content.translation);
+                setCorrectAnswer(exercise.content.translations.join(", "));
                 correct = false;
             }
 
@@ -66,7 +66,7 @@ export const TranslateWordAudioLayout = ({exercise}: {exercise: Exercise}) => {
         getActionButtonRef().current!.onclick = () => {
             const translationInputNode = translationInputRef.current!;
 
-            const translation = exercise.content.translation.map((el: string) => el.toLowerCase());
+            const translation = exercise.content.translations.map((el: string) => el.toLowerCase());
             const input = translationInputNode.value.toLowerCase().trim();
 
             let correct;
@@ -76,7 +76,7 @@ export const TranslateWordAudioLayout = ({exercise}: {exercise: Exercise}) => {
             }
             else {
                 translationInputNode.classList.add("incorrect");
-                setCorrectAnswer(exercise.content.translation);
+                setCorrectAnswer(exercise.content.translations.join(", "));
                 correct = false;
             }
 
