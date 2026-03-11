@@ -2,18 +2,18 @@
 
 :root {
     color-scheme: light dark;
-    --color-hue: 230;
+    --color-hue: 275;
 
-    --main-color:   light-dark(hsl(var(--color-hue), 55%, 90%), hsl(var(--color-hue), 25%, 25%));
-    --second-color: light-dark(hsl(var(--color-hue), 55%, 97%), hsl(var(--color-hue), 25%, 15%));
-    --pale-color:   light-dark(hsl(var(--color-hue), 55%, 85%), hsl(var(--color-hue), 25%, 35%));
-    --hint-color:   light-dark(hsl(var(--color-hue), 30%, 65%), hsl(var(--color-hue), 10%, 50%));
+    --main-color:   light-dark(oklch(90% 7.5% var(--color-hue)),  oklch(35% 15% var(--color-hue)));
+    --second-color: light-dark(oklch(97% 2.5% var(--color-hue)),  oklch(25% 10% var(--color-hue)));
+    --pale-color:   light-dark(oklch(85% 12.5% var(--color-hue)), oklch(40% 15% var(--color-hue)));
+    --hint-color:   light-dark(oklch(65% 15% var(--color-hue)),   oklch(55% 10% var(--color-hue)));
     --font-color:   light-dark(black, white);
-    --error-color:  light-dark(rgb(240, 100, 100), rgb(187, 65, 65));
+    --error-color:  light-dark(oklch(70% 40% 25), oklch(55% 40% 25));
 
-    --correct-color: light-dark(rgb(192, 239, 192), rgb(80, 148, 80));
-    --incorrect-color: light-dark(rgb(255, 160, 160), rgb(180, 90, 90));
-    --selection-color: light-dark(rgb(188, 203, 255), rgb(105, 116, 159));
+    --correct-color: light-dark(oklch(85% 25% 145), oklch(60% 30% 145));
+    --incorrect-color: light-dark(oklch(85% 25% 20), oklch(60% 30% 20));
+    --selection-color: light-dark(oklch(85% 25% 270), oklch(60% 30% 270));
 }
 
 * {
@@ -146,6 +146,7 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 50%;
     height: 1em;
     width: 1em;
+    transition: background-color 0.2s ease-in-out;
 }
 
 input[type="range"]:hover {

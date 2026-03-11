@@ -30,9 +30,9 @@ const SelectPinyinLayout = ({exercise}: {exercise: Exercise}) => {
 
             for (let i = 0; i < contentLength; i++) {
                 const correct = exercise.content[i].correct;
-                const selectedNode = layoutNode.querySelector(".pinyin_item.selected.column_" + i)!;
+                const selectedNode: HTMLElement = layoutNode.querySelector(".pinyin_item.selected.column_" + i)!;
 
-                if (selectedNode.innerHTML === correct) {
+                if (selectedNode.innerText === correct) {
                     selectedNode.classList.add("correct");
                 }
                 else {

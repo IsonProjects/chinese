@@ -3,7 +3,7 @@ if (localStorage.getItem("theme") == null) {
 }
 
 if (localStorage.getItem("hue") == null) {
-    localStorage.setItem("hue", "230");
+    localStorage.setItem("hue", "275");
 }
 
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", event => {
@@ -38,5 +38,5 @@ export function setHue(hue: Hue) {
 }
 
 export function resetHue() {
-    setHue(230);
+    setHue(275);
 }

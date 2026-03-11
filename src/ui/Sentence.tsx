@@ -1,6 +1,6 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, type RefObject, useCallback, useRef, useState } from "react";
 import { parseSentence, type Word } from "../data/words.ts";
-import { pronounce } from "../utils.ts";
+import { generateRandomId, pronounce } from "../utils.ts";
 import { speakerIcon } from "./icons.ts";
 import "../styles/sentence.css";
 
@@ -41,26 +41,21 @@ const SentenceWord = memo(({word}: {word: string}) => {
 });
 
 const TranslatedSentenceWord = memo(({word}: {word: Word}) => {
-    const handleClick = useCallback((e: React.MouseEvent<HTMLSpanElement>) => {
-        const parent = (e.target as HTMLSpanElement).parentElement!;
+    const [uuid] = useState("info_" + word.id + "_" + generateRandomId());
+    const ref: RefObject<HTMLDivElement | null> = useRef(null);
 
-        const infoNode = parent.querySelector(".info") as HTMLElement;
-        infoNode.classList.toggle("show");
-
-        if (infoNode.classList.contains("show")) {
-            pronounce(word.character);
-
-            for (const otherInfoNode of document.querySelectorAll(".sentence .sentence_word .info")) {
-                if (otherInfoNode !== infoNode) otherInfoNode.classList.remove("show");
-            }
-        }
+    const handleClick = useCallback(() => {
+        const open = !ref.current!.matches(":popover-open");
+        if (open) pronounce(word.character);
     }, [word.character]);
 
     return (
         <div className="sentence_word translated">
-            <span className="character selectable_text chinese_text" onClick={handleClick}>{word.character}</span>
+            <button className="character selectable_text chinese_text" onClick={handleClick} popoverTarget={uuid} style={{anchorName: "--" + uuid}}>
+                {word.character}
+            </button>
 
-            <div className="info">
+            <div className="info" id={uuid} popover="" style={{positionAnchor: "--" + uuid}} ref={ref}>
                 <p className="pinyin selectable_text">{word.pinyin}</p>
                 <p className="translation selectable_text">{word.translations.join(", ")}</p>
             </div>
