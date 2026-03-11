@@ -12,10 +12,12 @@ const App = () => {
         <>
             <Header/>
 
-            { sections.map(section => {
-                const Section = section.node;
-                return <Section key={section.id}/>;
-            }) }
+            <main>
+                { sections.map(section => {
+                    const Section = section.node;
+                    return <Section key={section.id}/>;
+                }) }
+            </main>
         </>
     );
 };

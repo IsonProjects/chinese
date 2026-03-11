@@ -1,7 +1,7 @@
 import { exercisesIcon, grammarsIcon, settingsIcon, wordsIcon } from "../ui/icons.ts";
-import WordsSection from "../ui/WordsSection.tsx";
-import type { ReactElement } from "react";
-import GrammarsSection from "../ui/GrammarsSection.tsx";
+import WordsSection, { handleWordsSearchInput } from "../ui/WordsSection.tsx";
+import React, { type ReactElement } from "react";
+import GrammarsSection, { handleGrammarsSearchInput } from "../ui/GrammarsSection.tsx";
 import ExercisesSection from "../ui/exercises/ExercisesSection.tsx";
 import SettingsSection from "../ui/SettingsSection.tsx";
 
@@ -16,14 +16,16 @@ export interface Section {
     name: string;
     iconPath: string;
     node: () => ReactElement;
+    onSearch?: (e: React.InputEvent<HTMLInputElement>) => void;
 }
 
-function addSection(id: string, name: string, iconPath: string, node: () => ReactElement) {
+function addSection(id: string, name: string, iconPath: string, node: () => ReactElement, onSearch?: (e: React.InputEvent<HTMLInputElement>) => void) {
     sections.push({
         id: id,
         name: name,
         iconPath: iconPath,
-        node: node
+        node: node,
+        onSearch: onSearch
     });
 }
 
@@ -33,8 +35,8 @@ export function findSection(id: string): Section | undefined {
 
 
 
-addSection("words", "Слова", wordsIcon, WordsSection);
-addSection("grammars", "Грамматика", grammarsIcon, GrammarsSection);
+addSection("words", "Слова", wordsIcon, WordsSection, handleWordsSearchInput);
+addSection("grammars", "Грамматика", grammarsIcon, GrammarsSection, handleGrammarsSearchInput);
 addSection("exercises", "Упражнения", exercisesIcon, ExercisesSection);
 addSection("settings", "Настройки", settingsIcon, SettingsSection);
 

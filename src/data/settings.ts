@@ -10,6 +10,8 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", eve
     setTheme(event.matches ? "dark" : "light");
 });
 
+setHue(getHue());
+
 
 
 export type Theme = "light" | "dark";

@@ -8,12 +8,13 @@
     --second-color: light-dark(oklch(97% 2.5% var(--color-hue)),  oklch(25% 10% var(--color-hue)));
     --pale-color:   light-dark(oklch(85% 12.5% var(--color-hue)), oklch(40% 15% var(--color-hue)));
     --hint-color:   light-dark(oklch(65% 15% var(--color-hue)),   oklch(55% 10% var(--color-hue)));
-    --font-color:   light-dark(black, white);
-    --error-color:  light-dark(oklch(70% 40% 25), oklch(55% 40% 25));
 
-    --correct-color: light-dark(oklch(85% 25% 145), oklch(60% 30% 145));
-    --incorrect-color: light-dark(oklch(85% 25% 20), oklch(60% 30% 20));
+    --correct-color:   light-dark(oklch(85% 25% 145), oklch(60% 30% 145));
+    --incorrect-color: light-dark(oklch(85% 25% 20),  oklch(60% 30% 20));
     --selection-color: light-dark(oklch(85% 25% 270), oklch(60% 30% 270));
+
+    --font-color:  light-dark(black, white);
+    --error-color: light-dark(oklch(70% 40% 25), oklch(55% 40% 25));
 }
 
 * {

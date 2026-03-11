@@ -1,19 +1,19 @@
 import type { InputEventHandler } from "react";
 import toSection, { sections } from "../data/sections.ts";
-import { handleWordsSearchInput } from "./WordsSection.tsx";
-import { handleGrammarsSearchInput } from "./GrammarsSection.tsx";
 import "../styles/header.css";
 
 const Header = () => {
     return (
         <header>
             <div className="row sections_selectors">
-                { sections.map(section => <SectionSelector id={section.id} title={section.name} path={section.iconPath} key={section.id}/>) }
+                { sections.map(section => <SectionSelector id={section.id} title={section.name} path={section.iconPath} key={"section_" + section.id}/>) }
             </div>
 
             <div className="row search">
-                <SearchBar id="words" onInput={handleWordsSearchInput}/>
-                <SearchBar id="grammars" onInput={handleGrammarsSearchInput}/>
+                { sections
+                    .filter(section => section.onSearch != null)
+                    .map(section => <SearchBar id={section.id} onInput={section.onSearch!} key={"search_" + section.id}/>)
+                }
             </div>
         </header>
     );
