@@ -7,7 +7,7 @@
         margin-left: auto;
         margin-right: auto;
         padding: 1.5em;
-        background-color: var(--second-color);
+        background-color: var(--color2);
         border-radius: 1.5em;
         font-weight: 500;
     }
@@ -16,7 +16,7 @@
 .words_section .categories .category {
     width: 100%;
     padding: 1.5em;
-    background-color: var(--second-color);
+    background-color: var(--color2);
     border-radius: 2em;
 
     &:not(:has(.word:not(.hidden))) {
@@ -47,7 +47,7 @@
 
 .words .word {
     padding: 1em;
-    background-color: var(--main-color);
+    background-color: var(--color3);
     border-radius: 1em;
     cursor: pointer;
 
@@ -89,7 +89,7 @@ dialog {
     }
 
     &::backdrop {
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: oklch(from var(--color1) calc(l - 0.2) c h / 0.3);
     }
 }
 
@@ -100,7 +100,7 @@ dialog {
     gap: 1.5em;
     padding: 1.5em;
     border-radius: 2em;
-    background-color: var(--main-color);
+    background-color: var(--color2);
 }
 
 .word_dialog .info {
@@ -134,7 +134,7 @@ dialog {
     flex-direction: column;
     gap: 0.5em;
     padding: 1em;
-    background-color: var(--second-color);
+    background-color: var(--color3);
     border-radius: 1em;
 
     .title {
@@ -148,7 +148,7 @@ dialog {
         gap: 0.5em;
 
         .content {
-            background-color: var(--main-color);
+            background-color: var(--color4);
             border-radius: 1em;
             padding: 0.5em;
             font-size: 0.9em;
@@ -169,6 +169,6 @@ dialog {
     transition: background-color 0.2s ease-in-out;
 
     &:hover {
-        background-color: var(--pale-color);
+        background-color: var(--color3);
     }
 }

@@ -1,9 +1,11 @@
+const defaultHue = 260;
+
 if (localStorage.getItem("theme") == null) {
     localStorage.setItem("theme", window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 }
 
 if (localStorage.getItem("hue") == null) {
-    localStorage.setItem("hue", "275");
+    localStorage.setItem("hue", String(defaultHue));
 }
 
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", event => {
@@ -40,5 +42,5 @@ export function setHue(hue: Hue) {
 }
 
 export function resetHue() {
-    setHue(275);
+    setHue(defaultHue);
 }

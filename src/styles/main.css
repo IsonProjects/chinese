@@ -2,18 +2,20 @@
 
 :root {
     color-scheme: light dark;
-    --color-hue: 275;
+    --color-hue: 260;
 
-    --main-color:   light-dark(oklch(90% 7.5% var(--color-hue)),  oklch(35% 15% var(--color-hue)));
-    --second-color: light-dark(oklch(97% 2.5% var(--color-hue)),  oklch(25% 10% var(--color-hue)));
-    --pale-color:   light-dark(oklch(85% 12.5% var(--color-hue)), oklch(40% 15% var(--color-hue)));
-    --hint-color:   light-dark(oklch(65% 15% var(--color-hue)),   oklch(55% 10% var(--color-hue)));
+    --color1:     light-dark(oklch(98% 5% var(--color-hue)),  oklch(25% 15% var(--color-hue)));
+    --color2:     light-dark(oklch(94% 8% var(--color-hue)),  oklch(30% 15% var(--color-hue)));
+    --color3:     light-dark(oklch(90% 12% var(--color-hue)), oklch(35% 15% var(--color-hue)));
+    --color4:     light-dark(oklch(86% 15% var(--color-hue)), oklch(40% 15% var(--color-hue)));
+    --color5:     light-dark(oklch(80% 20% var(--color-hue)), oklch(45% 20% var(--color-hue)));
+    --hint-color: light-dark(oklch(65% 15% var(--color-hue)), oklch(55% 10% var(--color-hue)));
 
     --correct-color:   light-dark(oklch(85% 25% 145), oklch(60% 30% 145));
     --incorrect-color: light-dark(oklch(85% 25% 20),  oklch(60% 30% 20));
     --selection-color: light-dark(oklch(85% 25% 270), oklch(60% 30% 270));
 
-    --font-color:  light-dark(black, white);
+    --font-color:  light-dark(#202020, #efefef);
     --error-color: light-dark(oklch(70% 40% 25), oklch(55% 40% 25));
 }
 
@@ -25,7 +27,7 @@
 }
 
 html {
-    background-color: var(--main-color);
+    background-color: var(--color1);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     font-optical-sizing: auto;
     color: var(--font-color);
@@ -46,10 +48,10 @@ svg {
 button {
     padding: 0.5em 1em;
     color: var(--font-color);
-    background-color: var(--second-color);
-    border: 2px solid var(--main-color);
+    background-color: var(--color2);
+    border: 2px solid var(--color3);
     border-radius: 1em;
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-weight: 500;
     font-family: inherit;
     cursor: pointer;
@@ -58,13 +60,14 @@ button {
 }
 
 button:hover, button:active {
-    background-color: var(--main-color);
-    border-color: var(--pale-color);
+    background-color: var(--color3);
+    border-color: var(--color4);
 }
 
 button:disabled {
     opacity: 1;
     pointer-events: none;
+    filter: brightness(80%);
 }
 
 
@@ -72,8 +75,8 @@ button:disabled {
 input {
     padding: 0.5em;
     color: var(--font-color);
-    background-color: var(--second-color);
-    border: 2px solid var(--main-color);
+    background-color: var(--color2);
+    border: 2px solid var(--color3);
     border-radius: 1em;
     font-size: 1em;
     font-family: inherit;
@@ -82,9 +85,13 @@ input {
     transition-property: background-color, border-color;
 }
 
+input::placeholder {
+    color: var(--hint-color);
+}
+
 input:hover, input:focus-visible {
-    background-color: var(--main-color);
-    border-color: var(--pale-color);
+    background-color: var(--color3);
+    border-color: var(--color4);
 }
 
 input:invalid {
@@ -110,8 +117,8 @@ label {
 input[type="checkbox"] {
     width: 1.5em;
     height: 1.5em;
-    background-color: var(--second-color);
-    border: solid 2px var(--main-color);
+    background-color: var(--color2);
+    border: solid 2px var(--color3);
     border-radius: 1em;
     cursor: pointer;
     appearance: none;
@@ -122,28 +129,30 @@ input[type="checkbox"] + label {
 }
 
 input[type="checkbox"]:hover {
-    border-color: var(--pale-color);
+    background-color: var(--color2);
+    border-color: var(--color4);
 }
 
 input[type="checkbox"]:checked {
-    background-color: var(--main-color);
-    border-color: var(--pale-color);
+    background-color: var(--color3);
+    border-color: var(--color4);
 }
 
 
 
 input[type="range"] {
     -webkit-appearance: none !important;
-    background-color: var(--main-color);
+    background-color: var(--color3);
+    border: none;
     padding: 0;
     margin: 0;
-    height: 0.25em;
+    height: 0.5em;
     cursor: pointer;
 }
 
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none !important;
-    background-color: var(--pale-color);
+    background-color: var(--color4);
     border-radius: 50%;
     height: 1em;
     width: 1em;
@@ -151,10 +160,10 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 input[type="range"]:hover {
-    background-color: var(--pale-color);
+    background-color: var(--color4);
 
     &::-webkit-slider-thumb {
-        background-color: var(--hint-color);
+        background-color: var(--color5);
     }
 }
 
