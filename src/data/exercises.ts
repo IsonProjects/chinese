@@ -1,7 +1,7 @@
 import type { Word } from "./words.ts";
 import type { ReactElement } from "react";
 import MatchPairsLayout from "../ui/exercises/layout/MatchPairsLayout.tsx";
-import { findToneChar, toneChars } from "../utils.ts";
+import { findToneChar, shuffle, toneChars } from "../utils.ts";
 import SelectPinyinLayout from "../ui/exercises/layout/SelectPinyinLayout.tsx";
 import { TranslateWordAudioLayout, TranslateWordCharacterLayout } from "../ui/exercises/layout/TranslateWordLayout.tsx";
 
@@ -47,17 +47,27 @@ addExerciseType("translate_word_audio", "Перевести слово на сл
 
 
 
-function generateMatchPairsExercise(availableWords: Word[]): Map<string, string> {
-    const content = new Map();
+export interface MatchPairsExerciseContentItem {
+    word: Word;
+    data: string;
+    pronounce: boolean;
+}
+
+function generateMatchPairsExercise(availableWords: Word[]): Map<MatchPairsExerciseContentItem, MatchPairsExerciseContentItem> {
     const mode = Math.floor(Math.random() * 3);
 
-    while (content.size < 5) {
+    const usedKeys: MatchPairsExerciseContentItem[] = [];
+    const usedValues: MatchPairsExerciseContentItem[] = [];
+
+    while (usedKeys.length < 5) {
         const word = availableWords[Math.floor(Math.random() * availableWords.length)];
 
-        let key, value;
+        let key: string, value: string;
+        let pronounceKey: boolean = false, pronounceValue: boolean = false;
         if (mode === 0) {
             key = word.character;
             value = word.pinyin;
+            pronounceValue = true;
         }
         else if (mode === 1) {
             key = word.character;
@@ -66,11 +76,22 @@ function generateMatchPairsExercise(availableWords: Word[]): Map<string, string>
         else if (mode === 2) {
             key = word.pinyin;
             value = word.translations.join(", ");
+            pronounceKey = true;
         }
+        else continue;
 
-        if (content.has(key)) continue;
-        if (Array.from(content.values()).includes(value)) continue;
-        content.set(key, value);
+        if (usedKeys.map(tuple => tuple.data).includes(key)) continue;
+        if (usedValues.map(tuple => tuple.data).includes(value)) continue;
+
+        usedKeys.push({ word: word, data: key, pronounce: pronounceKey });
+        usedValues.push({ word: word, data: value, pronounce: pronounceValue });
+    }
+
+    const content = new Map();
+    shuffle(usedValues);
+
+    for (let i = 0; i < usedKeys.length; i++) {
+        content.set(usedKeys[i], usedValues[i]);
     }
 
     return content;

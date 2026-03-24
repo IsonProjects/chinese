@@ -1,104 +1,130 @@
-import type { Exercise } from "../../../data/exercises.ts";
-import { shuffle } from "../../../utils.ts";
-import React, { type RefObject, useEffect, useRef } from "react";
+import type { Exercise, MatchPairsExerciseContentItem } from "../../../data/exercises.ts";
+import React, { useEffect, useRef, useState } from "react";
 import { exerciseFinished, getActionButtonRef } from "../ExercisesSection.tsx";
+import { pronounce } from "../../../utils.ts";
 
 const MatchPairsLayout = ({exercise}: {exercise: Exercise}) => {
     useEffect(() => {
         getActionButtonRef().current!.style.display = "none";
     });
 
-    const keys: string[] = Array.from(exercise.content.keys());
-    const values: string[] = Array.from(exercise.content.values());
-    const nonShuffledValues = Array.from(values);
-    shuffle(values);
+    const layoutNodeRef = useRef<HTMLDivElement | null>(null);
+    const selectedKeyRef = useRef<HTMLDivElement | null>(null);
+    const selectedValueRef = useRef<HTMLDivElement | null>(null);
 
-    const layoutNodeRef: RefObject<HTMLDivElement | null> = useRef(null);
+    const [selectedKeyId, setSelectedKeyId] = useState<string | null>(null);
+    const [selectedValueId, setSelectedValueId] = useState<string | null>(null);
+    const [correctWordIds, setCorrectWordIds] = useState<Set<string>>(new Set());
+    const [incorrectWordId, setIncorrectWordId] = useState<[string, string] | null>(null);
+    const [correct, setCorrect] = useState(true);
+
+    const content = exercise.content as Map<MatchPairsExerciseContentItem, MatchPairsExerciseContentItem>;
     const children = [];
 
-    for (let i = 0; i < exercise.content.size; i++) {
-        const key = keys[i];
-        const value = values[i];
+    for (const [key, value] of content) {
+        const keyElementRef = useRef<HTMLDivElement | null>(null);
 
-        const keyElementRef: RefObject<HTMLDivElement | null> = useRef(null);
+        const keyElement = <PairItem
+            key={"key_" + key.word.id}
+            id={key.word.id}
+            type="key"
+            text={key.data}
+            state={correctWordIds.has(key.word.id) ? "correct" : incorrectWordId != null && incorrectWordId[0] == key.word.id ? "incorrect" : selectedKeyId == key.word.id ? "selected" : ""}
+            ref={keyElementRef}
+            onClick={() => {
+                if (correctWordIds.has(key.word.id)) return;
 
-        const keyElement = <PairItem key={"key_" + i} id={String(i)} type="key" text={key} ref={keyElementRef} onClick={() => {
-            const pairItemKeyNode = keyElementRef.current!;
+                if (selectedKeyId == key.word.id) {
+                    setSelectedKeyId(null);
+                    selectedKeyRef.current = null;
+                    return;
+                }
 
-            if (pairItemKeyNode.classList.contains("correct")) return;
-            if (pairItemKeyNode.classList.contains("selected")) {
-                pairItemKeyNode.classList.remove("selected");
-                return;
-            }
+                if (key.pronounce) pronounce(key.word.character);
 
-            layoutNodeRef.current!.querySelector(".key.selected")?.classList?.remove("selected");
-            pairItemKeyNode.classList.add("selected");
-            checkAnswer();
-        }}/>;
+                setSelectedKeyId(key.word.id);
+                selectedKeyRef.current = keyElementRef.current;
+                checkAnswer();
+            }}
+        />;
 
         children.push(keyElement);
 
-        const valueElementRef: RefObject<HTMLDivElement | null> = useRef(null);
+        const valueElementRef = useRef<HTMLDivElement | null>(null);
 
-        const valueElement = <PairItem key={"value_" + i} id={String(nonShuffledValues.indexOf(value))} type="value" text={value} ref={valueElementRef} onClick={() => {
-            const pairItemValueNode = valueElementRef.current!;
+        const valueElement = <PairItem
+            key={"value_" + value.word.id}
+            id={value.word.id}
+            type="value"
+            text={value.data}
+            state={correctWordIds.has(value.word.id) ? "correct" : incorrectWordId != null && incorrectWordId[1] == value.word.id ? "incorrect" : selectedValueId == value.word.id ? "selected" : ""}
+            ref={valueElementRef}
+            onClick={() => {
+                if (correctWordIds.has(value.word.id)) return;
 
-            if (pairItemValueNode.classList.contains("correct")) return;
-            if (pairItemValueNode.classList.contains("selected")) {
-                pairItemValueNode.classList.remove("selected");
-                return;
-            }
+                if (selectedValueId == value.word.id) {
+                    setSelectedValueId(null);
+                    selectedValueRef.current = null;
+                    return;
+                }
 
-            layoutNodeRef.current!.querySelector(".value.selected")?.classList?.remove("selected");
-            pairItemValueNode.classList.add("selected");
-            checkAnswer();
-        }}/>;
+                if (value.pronounce) pronounce(value.word.character);
+
+                setSelectedValueId(value.word.id);
+                selectedValueRef.current = valueElementRef.current;
+                checkAnswer();
+            }}
+        />;
 
         children.push(valueElement);
     }
 
-    function checkAnswer() {
-        const layoutNode = layoutNodeRef.current!;
+    const checkAnswer = () => {
+        const selectedKeyId = selectedKeyRef.current?.id;
+        const selectedValueId = selectedValueRef.current?.id;
+        if (selectedKeyId == null || selectedValueId == null) return;
 
-        const selectedKey: HTMLElement | null = layoutNode.querySelector(".key.selected");
-        const selectedValue = layoutNode.querySelector(".value.selected");
-        if (selectedKey == null || selectedValue == null) return;
-
-        selectedKey.classList.remove("selected");
-        selectedValue.classList.remove("selected");
-        selectedKey.classList.remove("incorrect");
-        selectedValue.classList.remove("incorrect");
-        void selectedKey.offsetWidth;
-
-        if (selectedKey.id === selectedValue.id) {
-            selectedKey.classList.add("correct");
-            selectedValue.classList.add("correct");
+        if (selectedKeyId === selectedValueId) {
+            setCorrectWordIds(pairs => new Set([...pairs, selectedKeyId]));
         }
         else {
-            selectedKey.classList.add("incorrect");
-            selectedValue.classList.add("incorrect");
-            layoutNode.classList.add("incorrect");
+            setIncorrectWordId([selectedKeyId, selectedValueId]);
+
+            setTimeout(() => {
+                setIncorrectWordId(null);
+            }, 500);
+
+            setCorrect(false);
         }
 
-        if (layoutNode.querySelectorAll(".key.correct").length >= 5) {
-            const correct = !layoutNode.classList.contains("incorrect");
+        setSelectedKeyId(null);
+        setSelectedValueId(null);
+
+        selectedKeyRef.current = null;
+        selectedValueRef.current = null;
+    };
+
+    useEffect(() => {
+        if (correctWordIds.size >= 5) {
             exerciseFinished(correct);
         }
-    }
+    }, [correctWordIds.size, correct]);
 
     return (
-        <div className="match_pairs_layout layout" ref={layoutNodeRef}>
+        <div className="match_pairs_layout layout" key={"exercise_" + exercise.index} ref={layoutNodeRef}>
             {children}
         </div>
     );
 };
 
-const PairItem = ({id, type, text, onClick, ref}: {id: string, type: string, text: string, onClick: () => void, ref: React.Ref<HTMLDivElement>}) => {
+const PairItem = ({id, type, text, state, onClick, ref}: {id: string, type: string, text: string, state: PairItemState, onClick: () => void, ref: React.Ref<HTMLDivElement>}) => {
     return (
-        <div className={`pair_item ${type}`} onClick={onClick} id={id} ref={ref}>
+        <div className={`pair_item ${type} ${state}`} onClick={onClick} id={id} ref={ref}>
             <p>{text}</p>
         </div>
     );
 };
+
+type PairItemState = "correct" | "incorrect" | "selected" | "";
 
 export default MatchPairsLayout;

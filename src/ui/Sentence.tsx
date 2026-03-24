@@ -1,6 +1,6 @@
-import React, { memo, type RefObject, useCallback, useRef, useState } from "react";
+import React, { memo, useCallback, useId, useRef, useState } from "react";
 import { parseSentence, type Word } from "../data/words.ts";
-import { generateRandomId, pronounce } from "../utils.ts";
+import { pronounce } from "../utils.ts";
 import { speakerIcon } from "./icons.ts";
 import "../styles/sentence.css";
 
@@ -41,8 +41,8 @@ const SentenceWord = memo(({word}: {word: string}) => {
 });
 
 const TranslatedSentenceWord = memo(({word}: {word: Word}) => {
-    const [uuid] = useState("info_" + word.id + "_" + generateRandomId());
-    const ref: RefObject<HTMLDivElement | null> = useRef(null);
+    const [uuid] = useState("info_" + word.id + "_" + useId());
+    const ref = useRef<HTMLDivElement | null>(null);
 
     const handleClick = useCallback(() => {
         const open = !ref.current!.matches(":popover-open");

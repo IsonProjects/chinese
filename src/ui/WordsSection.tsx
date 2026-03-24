@@ -1,11 +1,11 @@
-import React, { memo, type RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { memo, type ReactElement, type RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getWordsAmountText, pronounce } from "../utils.ts"
 import { type Category, categories, words, type Word, PartOfSpeech, filterWords } from "../data/words.ts";
 import { crossIcon, speakerIcon } from "./icons.ts";
 import Sentence from "./Sentence.tsx";
 import "../styles/words.css";
 
-let setDialog: (dialog: any) => void;
+let setDialog: (dialog: ReactElement | null) => void;
 
 const WordsSection = () => {
     const wordsByCategory = useMemo(() =>
@@ -16,7 +16,7 @@ const WordsSection = () => {
             }, {} as Record<string, Word[]>),
     []);
 
-    const [Dialog, setDialogFunction] = useState(null);
+    const [Dialog, setDialogFunction] = useState<ReactElement | null>(null);
     setDialog = setDialogFunction;
 
     return (

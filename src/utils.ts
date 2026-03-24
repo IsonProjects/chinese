@@ -49,19 +49,6 @@ export function shuffle(array: any[]) {
     }
 }
 
-const randomCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_";
-const randomCharactersLength = randomCharacters.length;
-
-export function generateRandomId(): string {
-    let result = "";
-
-    for (let i = 0; i < 10; i++) {
-        result += randomCharacters.charAt(Math.floor(Math.random() * randomCharactersLength));
-    }
-
-    return result;
-}
-
 
 
 export const toneChars = [
